@@ -1,0 +1,22 @@
+--cpu Cortex-M0
+".\objects\main.o"
+".\objects\jump_table.o"
+".\objects\gpio_demo.o"
+".\objects\gpio_main.o"
+".\objects\osal_gpio.o"
+".\objects\gpio.o"
+".\objects\my_printf.o"
+".\objects\uart.o"
+".\objects\pwrmgr.o"
+".\objects\clock.o"
+".\objects\adc.o"
+".\objects\common.o"
+".\objects\key.o"
+"..\..\..\lib\rf.lib"
+".\objects\startup_armcm0.o"
+".\objects\system_armcm0.o"
+--library_type=microlib --scatter ".\scatter_load.sct"
+
+..\..\..\misc\rom1Sym.txt --keep=jump_table_base  --keep=global_config --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\gpio.map" -o .\Objects\gpio.axf

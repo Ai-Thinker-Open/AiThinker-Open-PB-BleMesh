@@ -1,0 +1,22 @@
+--cpu Cortex-M0
+".\objects\main.o"
+".\objects\jump_table.o"
+".\objects\voice_demo.o"
+".\objects\voice_main.o"
+".\objects\osal_voice.o"
+".\objects\gpio.o"
+".\objects\my_printf.o"
+".\objects\uart.o"
+".\objects\pwrmgr.o"
+".\objects\clock.o"
+".\objects\common.o"
+".\objects\voice.o"
+".\objects\sbc.o"
+".\objects\sbc_primitives.o"
+"..\..\..\lib\rf.lib"
+".\objects\startup_armcm0.o"
+".\objects\system_armcm0.o"
+--library_type=microlib --scatter ".\scatter_load.sct"
+..\..\..\misc\rom1Sym.txt --keep=jump_table_base --keep=global_config --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\voicedemo.map" -o .\Objects\voicedemo.axf

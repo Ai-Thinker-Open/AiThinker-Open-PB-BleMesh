@@ -1,0 +1,15 @@
+.\objects\em_os.o: ..\..\..\components\ethermind\osal\src\phyos\EM_os.c
+.\objects\em_os.o: ..\..\..\components\ethermind\osal\src\phyos\EM_os.h
+.\objects\em_os.o: ..\..\..\components\ethermind\platforms\phy6200\EM_platform.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\em_os.o: ..\..\..\components\osal\include\osal.h
+.\objects\em_os.o: ..\..\..\components\osal\include\comdef.h
+.\objects\em_os.o: ..\..\..\components\inc\types.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\em_os.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\em_os.o: ..\..\..\components\common\hal_defs.h
+.\objects\em_os.o: ..\..\..\components\osal\include\OSAL_Memory.h
+.\objects\em_os.o: ..\..\..\components\osal\include\OSAL_Timers.h

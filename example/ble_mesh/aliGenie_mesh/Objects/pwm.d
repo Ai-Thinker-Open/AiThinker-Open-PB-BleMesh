@@ -1,0 +1,17 @@
+.\objects\pwm.o: ..\..\..\components\driver\pwm\pwm.c
+.\objects\pwm.o: ..\..\..\components\inc\ap_cp.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h
+.\objects\pwm.o: ..\..\..\components\driver\clock\clock.h
+.\objects\pwm.o: ..\..\..\components\inc\types.h
+.\objects\pwm.o: D:\Johhn\kile5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\pwm.o: ..\..\..\components\common\hal_mcu.h
+.\objects\pwm.o: ..\..\..\components\common\hal_defs.h
+.\objects\pwm.o: ..\..\..\components\driver\common\common.h
+.\objects\pwm.o: ..\..\..\components\driver\pwm\pwm.h
+.\objects\pwm.o: ..\..\..\components\driver\gpio\gpio.h
+.\objects\pwm.o: ..\..\..\components\driver\pwrmgr\pwrmgr.h

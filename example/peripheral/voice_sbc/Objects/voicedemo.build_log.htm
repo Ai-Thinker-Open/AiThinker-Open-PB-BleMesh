@@ -1,0 +1,81 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.20.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: test Dell, test, LIC=W9630-B9EEB-C0SN2-94E3Y-AUNXS-944YL
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.20
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 2 (build 183)
+Assembler:       Armasm.exe V5.06 update 2 (build 183)
+Linker/Locator:  ArmLink.exe V5.06 update 2 (build 183)
+Library Manager: ArmAr.exe V5.06 update 2 (build 183)
+Hex Converter:   FromElf.exe V5.06 update 2 (build 183)
+CPU DLL:         SARMCM3.DLL V5.20
+Dialog DLL:      DARMCM1.DLL V1.14.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.20.0
+Dialog DLL:      TARMCM1.DLL V1.10.0.0
+ 
+<h2>Project:</h2>
+D:\res\Proj_2\PRIME\software\newSDK_A2\example\peripheral\voice_sbc\voice.uvprojx
+Project File Date:  04/04/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 2 (build 183)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'voice'
+compiling voice_demo.c...
+Source\voice_demo.c(60): error:  #5: cannot open source input file "sbc.h": No such file or directory
+  #include "sbc.h"
+Source\voice_demo.c: 0 warnings, 1 error
+compiling jump_table.c...
+compiling main.c...
+compiling voice_Main.c...
+compiling OSAL_voice.c...
+compiling gpio.c...
+compiling my_printf.c...
+compiling uart.c...
+compiling clock.c...
+compiling pwrmgr.c...
+compiling sbc.c...
+"no source": Error:  #5: cannot open source input file "..\..\..\components\driver\voice\sbc\sbc.c": No such file or directory
+..\..\..\components\driver\voice\sbc\sbc.c: 0 warnings, 1 error
+compiling common.c...
+compiling sbc_primitives.c...
+"no source": Error:  #5: cannot open source input file "..\..\..\components\driver\voice\sbc\sbc_primitives.c": No such file or directory
+..\..\..\components\driver\voice\sbc\sbc_primitives.c: 0 warnings, 1 error
+compiling voice.c...
+assembling startup_ARMCM0.s...
+compiling system_ARMCM0.c...
+".\Objects\voicedemo.axf" - 1 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.4.5.0.pack
+                ARM::CMSIS:CORE:4.3.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 4.3.0
+   * Component: Startup Version: 1.0.1
+
+<h2>Collection of Component include folders:</h2>
+  D:\res\Proj_2\PRIME\software\newSDK_A2\example\peripheral\voice_sbc\RTE
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\Device\ARM\ARMCM0\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:4.3.0
+
+   * Component: ARM::Device:Startup:1.0.1
+      Source file:   Device\ARM\ARMCM0\Source\ARM\startup_ARMCM0.s
+      Include file:  Device\ARM\ARMCM0\Include\ARMCM0.h
+      Source file:   Device\ARM\ARMCM0\Source\system_ARMCM0.c
+Target not created.
+Build Time Elapsed:  00:00:03
+</pre>
+</body>
+</html>
