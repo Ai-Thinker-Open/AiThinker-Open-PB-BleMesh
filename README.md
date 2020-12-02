@@ -1,1 +1,1 @@
-#pbxiliealimesh_lightgujian
+# 安信可蓝牙模块 PB 系列 SDK 源码仓库
