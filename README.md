@@ -1,18 +1,12 @@
 # SKD Release Notes
 
-## ChipSet
+## ModuleSet
 
-***PHY6212***
-
----
-
-## SDK Version
-
-***PHY62XX_SDK_2.X.X***
-
+***Ai-Thinker PB-01/02***
 
 ---
-### **Version**: PHY62XX_SDK_2.1.2
+
+### **Version**:  2.1.2
 
 ### **Change List**:
     1. update sdk_build.yml for multi_stack.lib copy. 
@@ -39,7 +33,7 @@
 
 
 ---
-### **Version**: PHY62XX_SDK_2.1.1
+### **Version**:   2.1.1
 
 ### **Change List**:
     1. spi:    optimize spi code struct,impove its compatibility. 
@@ -62,7 +56,7 @@
     18. fix some bugs
 
 ---
-### **Version**: PHY62XX_SDK_2.1.0
+### **Version**:   2.1.0
 
 ### **Change List**:
     1. add mesh switch example for mesh ligth remote
@@ -75,40 +69,40 @@
 
 
 ---
-### **Version**: PHY62XX_SDK_2.0.2
+### **Version**:  2.0.2
 
 ### **Change List**：
     1. fix uart IOMux pin issue
-
+    
     2.  1. add LL_IRQHandler1 in patch.c
         2. update rf_phy_driver.c for DTM BQB test
-
+    
     3. 	1. update blebrr  advIntv to 6ms *5
     	2. update scan intervl to 20ms*3
     	3. path.c change the rx_max_lenght in ll_hw_go while ll_hw_mode==LL_HW_TRX
     	   to avoid rx err long packet which will impact the next adv event
     	4. update rf_phy_driver for dtm version update 3.2.2
-
+    
     4. 	1. change dongleKey
     	2. update adv/scan timing
     	3. fix other bug
-
+    
     5. 	1. mesh lib rebuild, fix prov_internal.c prov_ack count bug
     	2. rf lib upddate ,add rxtimeout reset in LL_SetupAdv1
-
+    
     6. ancs:support ble pairing by passkey
     
     7. OTA:support PHY6202 OTA flow
     
     8. removing compile error and config SYS_USE_SRAM0_SRAM1=1
-
+    
     9.  1. rebuild mesh.lib for prov_interal (do not retx ack while tx_id=rx_id)
         2. update scene_server.c
     	3. update rf.lib  fixed LL_SetScanControl issue
     	4. update mesh.lib improve proxy and relay performance
-
+    
     10. file system(fs)support flash access address >512KB
-
+    
     11.	1. update mesh_lib LIMIT setting
     	   SEQ Number BLock SIZE 2048->512
     	   Default TTL 0x7F -> 0x05
