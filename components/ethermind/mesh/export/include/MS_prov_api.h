@@ -662,6 +662,12 @@ API_RESULT MS_prov_register
                /* IN */ PROV_UI_NOTIFY_CB     cb
            );
 
+API_RESULT MS_prov_stop_interleave_timer
+          (
+              void
+          );
+
+
 /**
  *  \brief Setup the device for provisioning
  *
@@ -682,7 +688,8 @@ API_RESULT MS_prov_setup
                /* IN */  PROV_ROLE       role,
                /* IN */  PROV_BRR        bearer,
                /* IN */  PROV_DEVICE_S * pdevice,
-               /* IN */  UINT16          timeout
+               /* IN */  UINT16          gatt_timeout,
+               /* IN */  UINT16          adv_timeout
            );
 
 /**

@@ -41,8 +41,8 @@
 
 
 #define GPIO_GREEN    P23
-#define GPIO_BLUE     P32
-#define GPIO_RED      P31
+#define GPIO_BLUE   P23 // P32 sensor board is different p32 p31 are used as iic io
+#define GPIO_RED    P23 //  P31
 
 
 

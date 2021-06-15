@@ -243,13 +243,15 @@ API_RESULT cli_core_provision_get_dev_list(UINT32 argc, UCHAR *argv[])
     UINT32            index;
     MS_PROV_DEV_ENTRY cli_prov_dev_list[MS_MAX_DEV_KEYS];
     UINT16            cli_req_entries;
+    UINT16            cli_pointer_entries;
 
     cli_req_entries = MS_MAX_DEV_KEYS;
 
     retval = MS_access_cm_get_prov_devices_list
              (
                  &cli_prov_dev_list[0],
-                 &cli_req_entries
+                 &cli_req_entries,
+                 &cli_pointer_entries
              );
 
     if (API_SUCCESS == retval)

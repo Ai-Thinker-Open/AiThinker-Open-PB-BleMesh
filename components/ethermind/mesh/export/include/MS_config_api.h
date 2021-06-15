@@ -751,6 +751,12 @@ API_RESULT MS_config_client_init
                /* IN */    MS_CONFIG_MODEL_CB          appl_cb
            );
 
+API_RESULT MS_config_client_set_publish_address
+          (
+              /* IN */ MS_NET_ADDR    pub_addr
+          );
+
+
 /**
  *  \brief API to set configuration server
  *

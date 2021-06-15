@@ -48,8 +48,15 @@ typedef enum{
 void clk_gate_enable(MODULE_e module);
 void clk_gate_disable(MODULE_e module);
 void clk_reset(MODULE_e module);
+
 uint32_t clk_hclk(void);
 uint32_t clk_pclk(void);
+uint32_t clk_ap_pclk(void);
+uint32_t clk_cp_pclk(void);
+
+bool clk_div_ap_pclk(uint32_t div);
+bool clk_div_cp_pclk(uint32_t div);
+																									
 void hal_rtc_clock_config(uint8_t clk32Mode);
 
 void hal_rtc_clock_from_Xtal32K(void);

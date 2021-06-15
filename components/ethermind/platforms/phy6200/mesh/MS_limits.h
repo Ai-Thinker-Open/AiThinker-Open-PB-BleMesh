@@ -51,7 +51,7 @@
  *  Minimum Value: 1
  *  Maximum Value: can be anything.
  */
-#define MS_MAX_DEV_KEYS                                5
+#define MS_MAX_DEV_KEYS                                256
 
 /*
  *  Maximum number of addresses present in each proxy filter list.
@@ -158,7 +158,7 @@
  *  Minimum Value: 200 MS
  *  Maximum Value: can be anything.
  */
-#define LTRN_RTX_TIMEOUT                500 /* Millisecond */
+#define LTRN_RTX_TIMEOUT                200 /* Millisecond */
 
 /*
  *  Segment Transmission Count.
@@ -166,8 +166,8 @@
  *  Minimum Value: 2
  *  Maximum Value: can be anything.
  */
-#define LTRN_RTX_COUNT_UNICASS              3
-#define LTRN_RTX_COUNT_GROUP                2
+#define LTRN_RTX_COUNT_UNICASS              5
+#define LTRN_RTX_COUNT_GROUP                3
 
 
 /*
@@ -247,7 +247,7 @@
  *  Minimum Value: 1
  *  Maximum Value: can be anything.
  */
-#define MS_ACCESS_ELEMENT_COUNT                        2
+#define MS_ACCESS_ELEMENT_COUNT                        5
 
 /*
  *  This parameter specifies the maximum number of models.
@@ -263,7 +263,7 @@
  *  Minimum Value: 1
  *  Maximum Value: can be anything.
  */
-#define MS_MAX_APPS                                    10
+#define MS_MAX_APPS                                    5
 
 /*
  *  Maximum number of Virtual Addresses the device can store information about.

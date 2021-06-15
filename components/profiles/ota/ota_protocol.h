@@ -101,6 +101,7 @@ extern bool aes_ccm_phyplus_dec(const unsigned char* iv, unsigned char* din,int 
 
 void otaProtocol_mtu(uint16_t mtu);
 void otaProtocol_TimerEvt(void);
+bool otaProtocol_address_plus(void);
 void otaProtocol_BootMode(void);
 void otaProtocol_RunApp(void);
 int otaProtocol_init(uint8_t task_id, uint16_t tm_evt);

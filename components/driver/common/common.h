@@ -410,4 +410,22 @@ void WaitRTCCount(uint32_t rtcDelyCnt);
 uint8 char_array_cmp(uint8 *s1, uint8 *s2, uint8 len);
 
 void hal_system_soft_reset(void);
+
+/**************************************************************************************
+ * @fn          osal_memory_statics
+ *
+ * @brief       This function process for osal memory analize
+ *
+ * input parameters
+ *
+ * @param       None.
+ *
+ * output parameters
+ *
+ * @param       None.
+ *
+ * @return      Memmory free size.
+ **************************************************************************************/
+uint32_t  osal_memory_statics(void) ;
+
 #endif

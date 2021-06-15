@@ -499,8 +499,8 @@
 0x00009849 T enable_WDT
 
 0x000075cd T rom_enable_spif_flash_write
-0x000075ed T enterSleepProcess
-0x000076d5 T enter_sleep_off_mode
+0x00009879 T enterSleepProcess
+0x000099a5 T enter_sleep_off_mode
 
 
 0x00009c35 T rom_fmux_control

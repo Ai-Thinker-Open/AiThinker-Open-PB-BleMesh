@@ -1,261 +1,318 @@
-/**************************************************************************************************
- 
-  Phyplus Microelectronics Limited confidential and proprietary. 
-  All rights reserved.
 
-  IMPORTANT: All rights of this software belong to Phyplus Microelectronics 
-  Limited ("Phyplus"). Your use of this Software is limited to those 
-  specific rights granted under  the terms of the business contract, the 
-  confidential agreement, the non-disclosure agreement and any other forms 
-  of agreements as a customer or a partner of Phyplus. You may not use this 
-  Software unless you agree to abide by the terms of these agreements. 
-  You acknowledge that the Software may not be modified, copied, 
-  distributed or disclosed unless embedded on a Phyplus Bluetooth Low Energy 
-  (BLE) integrated circuit, either as a product or is integrated into your 
-  products.  Other than for the aforementioned purposes, you may not use, 
-  reproduce, copy, prepare derivative works of, modify, distribute, perform, 
-  display or sell this Software and/or its documentation for any purposes.
-
-  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
-  PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
-  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
-  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
-  PHYPLUS OR ITS SUBSIDIARIES BE LIABLE OR OBLIGATED UNDER CONTRACT,
-  NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR OTHER
-  LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-  INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE
-  OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT
-  OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-  (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-  
-**************************************************************************************************/
-
+#include "types.h"
 #include <stdarg.h>
 #include <string.h>
 #include "uart.h"
-#define OPEN_LOG
-#define LOG_OUT_BUFFER
-#ifdef OPEN_LOG
-#ifdef LOG_OUT_BUFFER
-#define PRINTF_MAX_SIZE 120
-uint8_t put_char[PRINTF_MAX_SIZE];
-uint16_t put_char_size=0;
-#endif
+#include "log.h"
 
-static void printchar(char **str, int c)
+
+
+#define ZEROPAD 1               // Pad with zero
+#define SIGN    2               // Unsigned/signed long
+#define PLUS    4               // Show plus
+#define SPACE   8               // Space if plus
+#define LEFT    16              // Left justified
+#define SPECIAL 32              // 0x
+#define LARGE   64              // Use 'ABCDEF' instead of 'abcdef'
+#define is_digit(c) ((c) >= '0' && (c) <= '9')
+static const char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+static const char *upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+static size_t _strnlen(const char *s, size_t count)
 {
-    if (str) 
-    {
-        **str = c;
-        ++(*str);
-    }
-    else 
-    {
-#ifdef LOG_OUT_BUFFER
-            if(put_char_size < PRINTF_MAX_SIZE)
-                put_char[put_char_size++] = c;
-#else
-        hal_uart_send_byte(c);
-#endif
-    }
+	const char *sc;
+	for (sc = s; *sc != '\0' && count--; ++sc);
+	return sc - s;
+}
+static int skip_atoi(const char **s)
+{
+	int i = 0;
+	while (is_digit(**s)) i = i * 10 + *((*s)++) - '0';
+	return i;
+}
+static void number(std_putc putc, long num, int base, int size, int precision, int type)
+{
+	char c, sign, tmp[66];
+	const char *dig = digits;
+	int i;
+	char tmpch;
+
+	if (type & LARGE)  dig = upper_digits;
+	if (type & LEFT) type &= ~ZEROPAD;
+	if (base < 2 || base > 36) return;
+
+	c = (type & ZEROPAD) ? '0' : ' ';
+	sign = 0;
+	if (type & SIGN)
+	{
+		if (num < 0)
+		{
+			sign = '-';
+			num = -num;
+			size--;
+		}
+		else if (type & PLUS)
+		{
+			sign = '+';
+			size--;
+		}
+		else if (type & SPACE)
+		{
+			sign = ' ';
+			size--;
+		}
+	}
+	if (type & SPECIAL)
+	{
+		if (base == 16)
+			size -= 2;
+		else if (base == 8)
+			size--;
+	}
+	i = 0;
+	if (num == 0)
+		tmp[i++] = '0';
+	else
+	{
+		while (num != 0)
+		{
+			tmp[i++] = dig[((unsigned long)num) % (unsigned)base];
+			num = ((unsigned long)num) / (unsigned)base;
+		}
+	}
+	if (i > precision) precision = i;
+	size -= precision;
+	if (!(type & (ZEROPAD | LEFT))){
+		while (size-- > 0){
+			tmpch = ' ';
+			putc(&tmpch, 1);
+		}
+	}
+	if (sign){
+		putc(&sign, 1);
+	}
+
+	if (type & SPECIAL)
+	{
+		if (base == 8){
+			tmpch = '0';
+			putc(&tmpch, 1);
+		}
+		else if (base == 16)
+		{
+			tmpch = '0';
+			putc(&tmpch, 1);
+			tmpch = digits[33];
+			putc(&tmpch, 1);
+		}
+	}
+	if (!(type & LEFT)){
+		while (size-- > 0){
+			putc(&c, 1);
+		}
+	}
+	while (i < precision--){
+		tmpch = '0';
+		putc(&tmpch, 1);
+	}
+	while (i-- > 0){
+		tmpch = tmp[i];
+		putc(&tmpch, 1);
+	}
+	while (size-- > 0){
+		tmpch = ' ';
+		putc(&tmpch, 1);
+	}
 }
 
-#define PAD_RIGHT 1
-#define PAD_ZERO 2
 
-static int prints(char **out, const char *string, int width, int pad)
+
+static void log_vsprintf(std_putc putc, const char *fmt, va_list args)
 {
-	register int pc = 0, padchar = ' ';
+	int len;
+	unsigned long num;
+	int base;
+	char *s;
+	int flags;            // Flags to number()
+	int field_width;      // Width of output field
+	int precision;        // Min. # of digits for integers; max number of chars for from string
+	int qualifier;        // 'h', 'l', or 'L' for integer fields
+	char* tmpstr = NULL;
+	int tmpstr_size = 0;
+	char tmpch;
+	for (; *fmt; fmt++)
+	{
 
-	if (width > 0) {
-		register int len = 0;
-		register const char *ptr;
-
-		for (ptr = string; *ptr; ++ptr) {
-			++len;
+		if (*fmt != '%')
+		{
+			if (tmpstr == NULL)
+			{
+				tmpstr = (char*)fmt;
+				tmpstr_size = 0;
+			}
+			tmpstr_size ++;
+			continue;
+		}
+		else if (tmpstr_size){
+			putc(tmpstr, tmpstr_size);
+			tmpstr = NULL;
+			tmpstr_size = 0;
 		}
 
-		if (len >= width) {
-			width = 0;
-		}
-		else {
-			width -= len;
+		// Process flags
+		flags = 0;
+	repeat:
+		fmt++; // This also skips first '%'
+		switch (*fmt)
+		{
+		case '-': flags |= LEFT; goto repeat;
+		case '+': flags |= PLUS; goto repeat;
+		case ' ': flags |= SPACE; goto repeat;
+		case '#': flags |= SPECIAL; goto repeat;
+		case '0': flags |= ZEROPAD; goto repeat;
 		}
 
-		if (pad & PAD_ZERO) {
-			padchar = '0';
+		// Get field width
+		field_width = -1;
+		if (is_digit(*fmt))
+			field_width = skip_atoi(&fmt);
+		else if (*fmt == '*')
+		{
+			fmt++;
+			field_width = va_arg(args, int);
+			if (field_width < 0)
+			{
+				field_width = -field_width;
+				flags |= LEFT;
+			}
 		}
+		// Get the precision
+		precision = -1;
+		if (*fmt == '.')
+		{
+			++fmt;
+			if (is_digit(*fmt))
+				precision = skip_atoi(&fmt);
+			else if (*fmt == '*')
+			{
+				++fmt;
+				precision = va_arg(args, int);
+			}
+			if (precision < 0) precision = 0;
+		}
+		// Get the conversion qualifier
+		qualifier = -1;
+		if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L')
+		{
+			qualifier = *fmt;
+			fmt++;
+		}
+		// Default base
+		base = 10;
+		switch (*fmt)
+		{
+		case 'c':
+			if (!(flags & LEFT)){
+				while (--field_width > 0)
+				{
+					tmpch = ' ';
+					putc(&tmpch, 1);
+				}
+			}
+			tmpch = (unsigned char)va_arg(args, int);
+			putc(&tmpch, 1);
+
+			while (--field_width > 0){
+				tmpch = ' ';
+				putc(&tmpch, 1);
+			}
+			continue;
+		case 's':
+			s = va_arg(args, char *);
+			if (!s)
+				s = "<NULL>";
+			len = _strnlen(s, precision);
+			if (!(flags & LEFT)){
+				while (len < field_width--){
+					tmpch = ' ';
+					putc(&tmpch, 1);
+				}
+			}
+			putc(s, len);
+			while (len < field_width--){
+				tmpch = ' ';
+				putc(&tmpch, 1);
+			}
+			continue;
+		case 'p':
+			if (field_width == -1)
+			{
+				field_width = 2 * sizeof(void *);
+				flags |= ZEROPAD;
+			}
+			number(putc,(unsigned long)va_arg(args, void *), 16, field_width, precision, flags);
+			continue;
+		case 'n':
+			continue;
+		case 'A':
+			continue;
+			// Integer number formats - set up the flags and "break"
+		case 'o':
+			base = 8;
+			break;
+		case 'X':
+			flags |= LARGE;
+		case 'x':
+			base = 16;
+			break;
+		case 'd':
+		case 'i':
+			flags |= SIGN;
+		case 'u':
+			break;
+		default:
+			if (*fmt != '%'){
+				tmpch = '%';
+				putc(&tmpch, 1);
+			}
+			if (*fmt){
+				tmpch = *fmt;
+				putc(&tmpch, 1);
+			}
+			else
+			{
+				--fmt;
+			}
+			continue;
+		}
+		if (qualifier == 'l')
+			num = va_arg(args, unsigned long);
+		else if (qualifier == 'h')
+		{
+			if (flags & SIGN)
+				num = va_arg(args, int);
+			else
+				num = va_arg(args, unsigned int);
+		}
+		else if (flags & SIGN)
+			num = va_arg(args, int);
+		else
+			num = va_arg(args, unsigned int);
+		number(putc, num, base, field_width, precision, flags);
 	}
-
-	if (!(pad & PAD_RIGHT)) {
-		for ( ; width > 0; --width) {
-			printchar (out, padchar);
-			++pc;
-		}
+	if (tmpstr_size){
+		putc(tmpstr, tmpstr_size);
+		tmpstr = NULL;
+		tmpstr_size = 0;
 	}
-
-	for ( ; *string ; ++string) {
-		printchar (out, *string);
-		++pc;
-	}
-
-	for ( ; width > 0; --width) {
-		printchar (out, padchar);
-		++pc;
-	}
-
-	return pc;
 }
 
-/* the following should be enough for 32 bit int */
-#define PRINT_BUF_LEN 12
-
-static int printi(char **out, int i, int b, int sg, int width, int pad, int letbase)
+void phy_printf(const char *format, ...)
 {
-	char print_buf[PRINT_BUF_LEN];
-	register char *s;
-	register int t, neg = 0, pc = 0;
-	register unsigned int u = i;
-
-	if (i == 0) {
-		print_buf[0] = '0';
-		print_buf[1] = '\0';
-		return prints (out, print_buf, width, pad);
-	}
-
-	if (sg && b == 10 && i < 0) {
-		neg = 1;
-		u = -i;
-	}
-
-	s = print_buf + PRINT_BUF_LEN-1;
-	*s = '\0';
-
-	while (u) {
-		t = u % b;
-
-		if( t >= 10 ) {
-			t += letbase - '0' - 10;
-		}
-
-		*--s = t + '0';
-		u /= b;
-	}
-
-	if (neg) {
-		if( width && (pad & PAD_ZERO) ) {
-			printchar (out, '-');
-			++pc;
-			--width;
-		}
-		else {
-			*--s = '-';
-		}
-	}
-
-	return pc + prints (out, s, width, pad);
-}
-static int print(char **out, const char *format, va_list args )
-{
-	register int width, pad;
-	register int pc = 0;
-	char scr[2];
-
-	for (; *format != 0; ++format) {
-		if (*format == '%') {
-			++format;
-			width = pad = 0;
-
-			if (*format == '\0') {
-				break;
-			}
-
-			if (*format == '%') {
-				goto out;
-			}
-
-			if (*format == '-') {
-				++format;
-				pad = PAD_RIGHT;
-			}
-
-			while (*format == '0') {
-				++format;
-				pad |= PAD_ZERO;
-			}
-
-			for ( ; *format >= '0' && *format <= '9'; ++format) {
-				width *= 10;
-				width += *format - '0';
-			}
-
-			if( *format == 's' ) {
-				register char *s = (char *)va_arg( args, int );
-				pc += prints (out, s?s:"(null)", width, pad);
-				continue;
-			}
-
-			if( *format == 'd' ) {
-				pc += printi (out, va_arg( args, int ), 10, 1, width, pad, 'a');
-				continue;
-			}
-
-			if( *format == 'x' ) {
-				pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'a');
-				continue;
-			}
-
-			if( *format == 'X' ) {
-				pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'A');
-				continue;
-			}
-
-			if( *format == 'u' ) {
-				pc += printi (out, va_arg( args, int ), 10, 0, width, pad, 'a');
-				continue;
-			}
-
-			if( *format == 'c' ) {
-				/* char are converted to int then pushed on the stack */
-				scr[0] = (char)va_arg( args, int );
-				scr[1] = '\0';
-				pc += prints (out, scr, width, pad);
-				continue;
-			}
-		}
-		else {
-out:
-			printchar (out, *format);
-			++pc;
-		}
-	}
-
-	if (out) {
-		**out = '\0';
-	}
-
-	va_end( args );
-	return pc;
-}
-#endif
-int phy_printf(const char *format, ...)
-{
-#ifdef OPEN_LOG
 	va_list args;
-  memset(put_char, 0, PRINTF_MAX_SIZE);
-	va_start( args, format );
-#ifdef LOG_OUT_BUFFER
-    print( 0, format, args );
-    hal_uart_send_buff((uint8_t*)put_char, strlen((const char*)put_char));
-    //hal_uart_send_buff_fun(put_char, put_char_size);
-    put_char_size =0;
-    return 0;
-#else
-	return print( 0, format, args );
-#endif
-#else
-    return 0;
-#endif
+	va_start(args, format);
+  log_vsprintf((std_putc)hal_uart_send_buff, format, args);
 }
 
 void phy_printf_init(void)
@@ -274,4 +331,6 @@ void phy_printf_init(void)
   };
   hal_uart_init(cfg);//uart init
 }
+
+
 

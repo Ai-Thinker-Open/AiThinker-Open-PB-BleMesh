@@ -25,7 +25,7 @@ LR_IROM2  0x1fff0800 0x00800 {
 
 LR_IROM3  0x11032000 0x030000 {
   ER_IROM3 0x11032000 0x030000  {  ; load address = execution address
-   libethermind_mesh_models.lib (+RO) 
+   ;libethermind_mesh_models.lib (+RO) 
    ;libethermind_utils.lib (+RO) 
    libethermind_mesh_core.lib (+RO) 
    ;devinfoservice.o(+RO)

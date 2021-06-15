@@ -1442,10 +1442,10 @@ static bStatus_t gattServApp_ProcessWriteReq( gattMsgEvent_t *pMsg, uint16 *pErr
         // Send a response back
         //VOID ATT_WriteRsp( pMsg->connHandle );
         uint8 st=ATT_WriteRsp( pMsg->connHandle );
-        if(st)
-        {
-            AT_LOG("[ATT_RSP ERR] %x %x\n",st,l2capSegmentPkt.fragment);
-        }
+//        if(st)
+//        {
+//            AT_LOG("[ATT_RSP ERR] %x %x\n",st,l2capSegmentPkt.fragment);
+//        }
         
       }
     }

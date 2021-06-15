@@ -54,8 +54,24 @@ extern void hal_rom_code_ini(void);
 extern int ota_main(void);
 extern void init_config(void);
 extern  uint32_t pclk;
-#define     LARGE_HEAP_SIZE  12*1024
-uint8       g_largeHeap[LARGE_HEAP_SIZE];
+#define     LARGE_HEAP_SIZE  10*1024
+uint8       g_largeHeap[LARGE_HEAP_SIZE] __attribute__((section("large_heap_buffer_area")));;
+
+
+static void hal_calibrate_freqency_offset(void)
+{
+  int32_t freqPpm=0;
+  freqPpm= *(volatile int32_t *) 0x11004008;
+  if(freqPpm!=0xffffffff)
+  {
+    g_rfPhyFreqOffSet=(int8_t)freqPpm;
+  }
+  else
+  { 
+    g_rfPhyFreqOffSet   =RF_PHY_FREQ_FOFF_00KHZ;
+  }
+}
+
 
 static void hal_rfphy_init(void)
 {
@@ -69,6 +85,8 @@ static void hal_rfphy_init(void)
     g_rfPhyFreqOffSet   =RF_PHY_FREQ_FOFF_00KHZ;
 
     hal_rom_code_ini();
+
+    hal_calibrate_freqency_offset();
     
     //Quick Boot setting and 
      *(volatile uint32_t *) 0x4000f01c = 0x0000004;       //  3'b1xx: 62.5us.  control bits for main digital part reset wait time after power up charge pump. 

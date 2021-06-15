@@ -120,6 +120,10 @@
  */
 #define MS_LPN_SUPPORT
 
+#ifndef CFG_HEARTBEAT_MODE
+#define CFG_HEARTBEAT_MODE 0
+#endif
+
 
 /* ----------------------------------------------------------------------- */
 /* ==== Stack Architecture Flags ========================================= */
@@ -302,7 +306,7 @@
  *
  * Enables Low Power Mode interfaces in the bearer.
  */
-#define BLEBRR_LP_SUPPORT
+#undef BLEBRR_LP_SUPPORT
 
 
 /* ----------------------------------------------------------------------- */

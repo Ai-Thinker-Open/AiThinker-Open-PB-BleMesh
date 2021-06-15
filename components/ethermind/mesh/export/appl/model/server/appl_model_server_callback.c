@@ -818,8 +818,7 @@ API_RESULT appl_generic_user_property_server_cb
 {
     MS_STATE_GENERIC_USER_PROPERTY_STRUCT  user_prop_param;
     MS_STATE_GENERIC_PROPERTY_IDS_STRUCT   prop_ids;
-    void                                 * param;
-
+    void*                                  param = NULL;
     /* As sample example. The array size need to defined, based on the final configuration */
     UINT16                                 prop_ids_list[10];
 
@@ -849,10 +848,12 @@ API_RESULT appl_generic_user_property_server_cb
             prop_ids.property_ids_count = sizeof(prop_ids_list) / sizeof(UINT16);
         }
 
-        appl_model_state_get(state_params->state_type, 0, param, 0);
-
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = param;
+        if(param != NULL)
+        {
+            appl_model_state_get(state_params->state_type, 0, param, 0);
+            current_state_params.state_type = state_params->state_type;
+            current_state_params.state = param;
+        }        
     }
     else if (MS_ACCESS_MODEL_REQ_MSG_T_SET == req_type->type)
     {
@@ -973,8 +974,7 @@ API_RESULT appl_generic_admin_property_server_cb
 {
     MS_STATE_GENERIC_ADMIN_PROPERTY_STRUCT  prop_param;
     MS_STATE_GENERIC_PROPERTY_IDS_STRUCT    prop_ids;
-    void                                  * param;
-
+    void*                                   param = NULL;
     /* As sample example. The array size need to defined, based on the final configuration */
     UINT16                                  prop_ids_list[10];
 
@@ -1004,10 +1004,12 @@ API_RESULT appl_generic_admin_property_server_cb
             prop_ids.property_ids_count = sizeof(prop_ids_list) / sizeof(UINT16);
         }
 
-        appl_model_state_get(state_params->state_type, 0, param, 0);
-
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = param;
+        if(param != NULL)
+        {
+            appl_model_state_get(state_params->state_type, 0, param, 0);
+            current_state_params.state_type = state_params->state_type;
+            current_state_params.state = param;
+        }
     }
     else if (MS_ACCESS_MODEL_REQ_MSG_T_SET == req_type->type)
     {
@@ -1121,8 +1123,7 @@ API_RESULT appl_generic_manufacturer_property_server_cb
 {
     MS_STATE_GENERIC_MANUFACTURER_PROPERTY_STRUCT   prop_param;
     MS_STATE_GENERIC_PROPERTY_IDS_STRUCT            prop_ids;
-    void                                          * param;
-
+    void*                                           param = NULL;
     /* As sample example. The array size need to defined, based on the final configuration */
     UINT16                                          prop_ids_list[10];
 
@@ -1152,10 +1153,12 @@ API_RESULT appl_generic_manufacturer_property_server_cb
             prop_ids.property_ids_count = sizeof(prop_ids_list) / sizeof(UINT16);
         }
 
-        appl_model_state_get(state_params->state_type, 0, param, 0);
-
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = param;
+        if(param != NULL)
+        {
+            appl_model_state_get(state_params->state_type, 0, param, 0);
+            current_state_params.state_type = state_params->state_type;
+            current_state_params.state = param;
+        }        
     }
     else if (MS_ACCESS_MODEL_REQ_MSG_T_SET == req_type->type)
     {
@@ -1203,8 +1206,7 @@ API_RESULT appl_generic_client_property_server_cb
            )
 {
     MS_STATE_GENERIC_PROPERTY_IDS_STRUCT  prop_ids;
-    void                                * param;
-
+    void*                                 param = NULL;
     /* As sample example. The array size need to defined, based on the final configuration */
     UINT16                                prop_ids_list[10];
 
@@ -1229,10 +1231,12 @@ API_RESULT appl_generic_client_property_server_cb
             prop_ids.property_ids_count = sizeof(prop_ids_list) / sizeof(UINT16);
         }
 
-        appl_model_state_get(state_params->state_type, 0, param, 0);
-
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = param;
+        if(param != NULL)
+        {
+            appl_model_state_get(state_params->state_type, 0, param, 0);
+            current_state_params.state_type = state_params->state_type;
+            current_state_params.state = param;
+        }
     }
 
     /* See if to be acknowledged */

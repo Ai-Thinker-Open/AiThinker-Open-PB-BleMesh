@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  </MiscControls>
-              <Define>CFG_CP CFG_QFN32 CFG_FLASH=4096 CFG_SLEEP_MODE=PWR_MODE_NO_SLEEP CFG_MTU_23=1 CFG_OTA_BANK_MODE=OTA_SINGLE_BANK  USE_FCT=0 DEBUG_INFO=3</Define>
+              <Define>CFG_CP CFG_QFN32 CFG_FLASH=512 CFG_SLEEP_MODE=PWR_MODE_NO_SLEEP CFG_MTU_23=0 CFG_OTA_BANK_MODE=OTA_SINGLE_BANK  USE_FCT=0 DEBUG_INFO=1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\components\inc;..\..\..\components\common;..\..\..\components\osal\include;..\..\..\components\ble\include;..\..\..\components\ble\hci;..\..\..\components\ble\host;..\..\..\components\ble\controller\include;..\..\..\components\profiles\DevInfo;..\..\..\components\profiles\GATT;..\..\..\components\profiles\SimpleProfile;..\..\..\components\profiles\Roles;..\..\..\components\profiles\ota;..\..\..\components\profiles\ota_app;..\..\..\components\libraries\crc16;..\..\..\components\driver\common;..\..\..\components\driver\log;..\..\..\components\driver\gpio;..\..\..\components\driver\pwrmgr;..\..\..\components\driver\uart;..\..\..\components\driver\clock;..\..\..\components\driver\adc;..\..\..\components\driver\flash;..\..\..\components\driver\kscan;..\..\..\components\driver\i2c;..\..\..\components\driver\spi;..\..\..\components\driver\watchdog;..\..\..\components\driver\timer;..\..\..\lib;.\Source</IncludePath>
             </VariousControls>

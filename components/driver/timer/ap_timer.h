@@ -64,7 +64,7 @@ int ap_timer_init(ap_tm_hdl_t callback);
 int ap_timer_deinit(void);
 
 //set timer registers,ready to run.
-//timeId should form 1 to 4.time mutiple four should not more than 0xffffff.
+//timeId should form 0 to 3.time mutiple four should not more than 0xffffff.
 int ap_timer_set(uint8_t timeId, uint32_t us);
 
 //clear timer registers,stop it.

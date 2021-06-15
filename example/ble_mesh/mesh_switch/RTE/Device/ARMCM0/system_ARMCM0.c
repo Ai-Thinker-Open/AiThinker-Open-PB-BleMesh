@@ -2,10 +2,13 @@
  * @file     system_ARMCM0.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM0 Device Series
- * @version  V2.00
- * @date     18. August 2015
+ * @version  V1.09
+ * @date     27. August 2014
+ *
+ * @note
+ *
  ******************************************************************************/
-/* Copyright (c) 2011 - 2015 ARM LIMITED
+/* Copyright (c) 2011 - 2014 ARM LIMITED
 
    All rights reserved.
    Redistribution and use in source and binary forms, with or without
@@ -38,24 +41,46 @@
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
-#define  XTAL            ( 5000000U)      /* Oscillator frequency             */
+#define __HSI             ( 8000000UL)
+#define __XTAL            ( 5000000UL)    /* Oscillator frequency             */
 
-#define  SYSTEM_CLOCK    (5 * XTAL)
+#define __SYSTEM_CLOCK    (5*__XTAL)
 
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
-uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency      */
+uint32_t SystemCoreClock = __SYSTEM_CLOCK;/* System Core Clock Frequency      */
 
 
+/**
+ * Update SystemCoreClock variable
+ *
+ * @param  none
+ * @return none
+ *
+ * @brief  Updates the SystemCoreClock with current core Clock
+ *         retrieved from cpu registers.
+ */
 void SystemCoreClockUpdate (void)
 {
-  SystemCoreClock = SYSTEM_CLOCK;
+
+  SystemCoreClock = __SYSTEM_CLOCK;
+
 }
 
+/**
+ * Initialize the system
+ *
+ * @param  none
+ * @return none
+ *
+ * @brief  Setup the microcontroller system.
+ *         Initialize the System.
+ */
 void SystemInit (void)
 {
 
-  SystemCoreClock = SYSTEM_CLOCK;
+  SystemCoreClock = __SYSTEM_CLOCK;
+
 }

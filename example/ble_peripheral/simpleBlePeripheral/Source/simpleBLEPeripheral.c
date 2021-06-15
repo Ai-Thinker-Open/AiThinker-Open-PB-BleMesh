@@ -261,7 +261,7 @@ static void updateAdvData(void);
 static void peripheralStateReadRssiCB( int8 rssi  );
 char *bdAddr2Str( uint8 *pAddr );
 static uint8_t simpleBLEPeripheral_ScanRequestFilterCBack(void);
-static uint8_t simpleBLEPeripheral_MasterRssiScanCBack(void);
+//static uint8_t simpleBLEPeripheral_MasterRssiScanCBack(void);
 /*********************************************************************
  * PROFILE CALLBACKS
  */
@@ -308,7 +308,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     simpleBLEPeripheral_TaskID = task_id;
 
     //LL_PLUS_LoadMACFromFlash(0x5070);
-    pplus_LoadMACFromChipMAddr();
+    //pplus_LoadMACFromChipMAddr();
 	LL_PLUS_SetScanRequestFilterCB(simpleBLEPeripheral_ScanRequestFilterCBack);
 	//LL_PLUS_SetScanRequestFilterCB(simpleBLEPeripheral_MasterRssiScanCBack);
     
@@ -383,6 +383,10 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     uint8 mitm = TRUE;
     uint8 ioCap = GAPBOND_IO_CAP_NO_INPUT_NO_OUTPUT;
     uint8 bonding = TRUE;
+		uint8 oob_enable = TRUE;
+		uint8 oob_data[16]={1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,0x10,0x11};
+		GAPBondMgr_SetParameter( GAPBOND_OOB_ENABLED,sizeof ( uint8 ), &oob_enable);
+		GAPBondMgr_SetParameter( GAPBOND_OOB_DATA,16, oob_data);
     GAPBondMgr_SetParameter( GAPBOND_DEFAULT_PASSCODE, sizeof ( uint32 ), &passkey );
     GAPBondMgr_SetParameter( GAPBOND_PAIRING_MODE, sizeof ( uint8 ), &pairMode );
     GAPBondMgr_SetParameter( GAPBOND_MITM_PROTECTION, sizeof ( uint8 ), &mitm );
@@ -1212,6 +1216,7 @@ uint8_t simpleBLEPeripheral_ScanRequestFilterCBack(void)
 * @return  none
 
 */
+#if(0)
 uint8_t simpleBLEPeripheral_MasterRssiScanCBack(void)
 {
 	LL_PLUS_GetScanerAddr(g_scan_info.scan_mac);
@@ -1219,6 +1224,6 @@ uint8_t simpleBLEPeripheral_MasterRssiScanCBack(void)
 	osal_set_event(simpleBLEPeripheral_TaskID,SBP_SCAN_RSP_EVT);
 	return 1;
 }
-
+#endif
 /*********************************************************************
 *********************************************************************/

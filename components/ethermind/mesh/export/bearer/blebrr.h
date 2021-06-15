@@ -16,6 +16,7 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "MS_common.h"
 #include "MS_brr_api.h"
+extern UCHAR blebrr_state; 
 
 #define BLEBRR_LOG                          printf
 #define BLEBRR_dump_bytes                   appl_dump_bytes
@@ -50,6 +51,33 @@
 #define BLEBRR_GATT_IFACE_DOWN                  0x01
 #define BLEBRR_GATT_IFACE_ENABLE                0x02
 #define BLEBRR_GATT_IFACE_DISABLE               0x03
+
+/** Bearer state defines */
+#define BLEBRR_STATE_IDLE                   0x00
+#define BLEBRR_STATE_IN_SCAN_ENABLE         0x01
+#define BLEBRR_STATE_IN_SCAN_DISABLE        0x02
+#define BLEBRR_STATE_SCAN_ENABLED           0x04
+#define BLEBRR_STATE_IN_ADV_ENABLE          0x10
+#define BLEBRR_STATE_IN_ADV_DISABLE         0x20
+#define BLEBRR_STATE_ADV_ENABLED            0x40
+
+/*define Queue Size*/
+#define BLEBRR_QUEUE_SIZE                   64
+
+#define BLEBRR_SET_STATE(x)                 blebrr_state = (x)
+#define BLEBRR_GET_STATE()                  blebrr_state
+
+//#define BLEBRR_LP_SUPPORT
+
+#ifdef BLEBRR_LP_SUPPORT
+#define BLEBRR_LP_OFF                           1
+#define BLEBRR_LP_SLEEP                         2
+#define BLEBRR_LP_WKP                           3
+#define BLEBRR_LP_PROXY                         4
+#endif
+
+
+
 
 /* --------------------------------------------- Structures/Data Types */
 /* Call Back to Inform Application Layer about GATT Bearer Iface Events */
@@ -106,5 +134,13 @@ API_RESULT blebrr_register_gatt_iface_event_pl
            (
                BLEBRR_GATT_IFACE_EVENT_PL_CB gatt_iface_evt_cb
            );
+API_RESULT blebrr_sleep_handler(void);
+API_RESULT blebrr_wakeup_handler(void);
+API_RESULT blebrr_lp_start(UCHAR mode);
+void blebrr_lp_stop(void);
+
+
+UCHAR blebrr_get_queue_depth(void);
+
 #endif /* _H_BLEBRR_ */
 

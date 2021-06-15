@@ -26,8 +26,94 @@ TIMER_ENTITY *timer_q_end   = NULL;
 EM_thread_mutex_type timer_mutex;
 #endif /* 0 */
 
-/* ----------------------------------------------- Static Global Variables */
+#if 1
+/* Timer */
+#if defined ( OSAL_CBTIMER_NUM_TASKS )
+  #include "osal_cbTimer.h"
+#endif
 
+
+/* ----------------------------------------------- Static Global Variables */
+/*********************************************************************
+ * CONSTANTS
+ */
+// Number of callback timers supported per task (limited by the number of OSAL event timers)
+#define NUM_CBTIMERS_PER_TASK32          15
+
+// Total number of callback timers
+#define NUM_CBTIMERS32                   ( OSAL_CBTIMER_NUM_TASKS * NUM_CBTIMERS_PER_TASK32 )
+
+
+typedef struct
+{
+  pfnCbTimer_t pfnCbTimer; // callback function to be called when timer expires
+  uint8 *pData;            // data to be passed in to callback function
+} cbTimer_t;
+
+extern cbTimer_t cbTimers[];
+
+extern uint16 baseTaskID;
+#define EVENT_ID32( timerId )            ( 0x0001 << ( ( timerId ) % NUM_CBTIMERS_PER_TASK32 ) )
+
+// Find out task id using timer id
+#define TASK_ID32( timerId )             ( ( ( timerId ) / NUM_CBTIMERS_PER_TASK32 ) + baseTaskID )
+
+// Find out bank task id using task id
+#define BANK_TASK_ID32( taskId )         ( ( baseTaskID - ( taskId ) ) * NUM_CBTIMERS32 )
+
+
+//extern uint16 $Sub$$osal_CbTimerProcessEvent( uint8 taskId, uint16 events );
+//uint16 $Sub$$osal_CbTimerProcessEvent( uint8 taskId, uint16 events )
+//{
+//    if ( events & SYS_EVENT_MSG )
+//  {
+//    // Process OSAL messages
+
+//    // return unprocessed events
+//    return ( events ^ SYS_EVENT_MSG );
+//  }
+
+//  if ( events )
+//  {
+//    uint8 i;
+//    uint16 event;
+
+//    // Process event timers
+//    for ( i = 0; i < NUM_CBTIMERS_PER_TASK32; i++ )
+//    {
+//      if ( ( events >> i ) & 0x0001 )
+//      {
+//        cbTimer_t *pTimer = &cbTimers[BANK_TASK_ID32( taskId )+i];
+
+//        // Found the first event
+//        event =  0x0001 << i;
+
+//        // Timer expired, call the registered callback function
+//        if(pTimer->pfnCbTimer==NULL)
+//        {
+//        }
+//        pTimer->pfnCbTimer( pTimer->pData );
+
+//        // Mark entry as free
+//        pTimer->pfnCbTimer = NULL;
+//        
+//        // Null out data pointer
+//        pTimer->pData = NULL;
+//      
+//        // We only process one event at a time
+//        break;
+//      }
+//    }
+
+//    // return unprocessed events
+//    return ( events ^ event );
+//}
+//}
+
+
+#endif
+
+#undef EM_RESTART_TIMER
 
 /* ----------------------------------------------- Functions */
 
@@ -117,6 +203,46 @@ void timer_em_shutdown ( void )
     timer_unlock();
     return;
 }
+
+#if 1
+Status_t osal_CbTimerStart32( pfnCbTimer_t pfnCbTimer, uint8 *pData,  
+                           uint32 timeout, uint8 *pTimerId )
+{
+  uint8 i;
+ 
+  // Validate input parameters
+  if ( pfnCbTimer == NULL )
+  {
+    return ( INVALIDPARAMETER );
+  }
+
+  // Look for an unused timer first
+  for ( i = 0; i < NUM_CBTIMERS32; i++ )
+  {
+    if ( cbTimers[i].pfnCbTimer == NULL )
+    {
+      // Start the OSAL event timer first
+      if ( osal_start_timerEx( TASK_ID32( i ), EVENT_ID32( i ), timeout ) == SUCCESS )
+      {
+        // Set up the callback timer
+        cbTimers[i].pfnCbTimer = pfnCbTimer;
+        cbTimers[i].pData = pData;
+
+        if ( pTimerId != NULL )
+        {
+          // Caller is intreseted in the timer id
+          *pTimerId = i;
+        }
+
+        return ( SUCCESS );
+      }
+    }
+  }
+
+  // No timer available
+  return ( NO_TIMER_AVAIL );
+}
+#endif
 
 
 EM_RESULT EM_start_timer
@@ -224,7 +350,7 @@ void timer_timeout_handler (UINT8 * handle)
     TIMER_ENTITY *timer;
 
     EM_TIMER_TRC (
-    "In Timer handler (Timer Handle: 0x%02X)\n", *handle);
+    "In Timer handler (Timer Handle: 0x%02X)\n", *handle);    
 
     /* Lock Timer */
     timer_lock();
@@ -280,7 +406,76 @@ EM_RESULT EM_stop_timer
     TIMER_ENTITY *timer;
     EM_RESULT retval;
     UINT8  timer_id;
+    UINT32 new_timeout;
     Status_t status;
+
+    if (EM_TIMER_MAX_ENTITIES <= handle)
+    {
+        EM_TIMER_ERR(
+        "NULL Argument Unacceptable for Timer Handles.\r\n");
+
+        /* TODO: Use appropriate error value */
+        return EM_TIMER_HANDLE_IS_NULL;
+    }
+
+    retval = EM_FAILURE;
+
+    /* Lock Timer */
+    timer_lock();
+
+    timer = &timer_entity[handle];
+
+    /* Store the timer id before deleting entity */
+    timer_id = timer->timer_id;
+
+    new_timeout = 0x10;
+    if(osal_CbTimerUpdate(timer_id,new_timeout) == EM_SUCCESS)
+    {
+        retval = timer_del_entity(timer, 0x01);
+
+        if (EM_SUCCESS != retval)
+        {
+            EM_TIMER_ERR(
+            "FAILED to find Timer Element. Handle = 0x%02X. Error Code = 0x%04X\n",
+            handle, retval);
+        }
+        else
+        {
+            EM_TIMER_TRC(
+            "Successfully Deleted Timer Element for Handle 0x%02X.\n",
+            handle);
+
+            /* Stop Timer */
+            status = osal_CbTimerStop(timer_id);
+
+            osal_clear_event(TASK_ID32( timer->timer_id ),EVENT_ID32( timer->timer_id ));
+            
+
+            if (SUCCESS != status)
+            {
+                retval = EM_FAILURE;
+            }
+
+            EM_TIMER_TRC("*** Stopped Timer [ID: %04X]\n",
+            timer_id);
+        }
+    }
+    
+
+    /* Unlock Timer */
+    timer_unlock();
+
+    return retval;
+}
+
+
+UINT32 EM_get_remain_timer
+          (
+              EM_timer_handle handle
+          )
+{
+    TIMER_ENTITY *timer;
+    UINT32 remain_timeout;
 
     if (EM_TIMER_MAX_ENTITIES <= handle)
     {
@@ -296,51 +491,72 @@ EM_RESULT EM_stop_timer
 
     timer = &timer_entity[handle];
 
-    /* Store the timer id before deleting entity */
-    timer_id = timer->timer_id;
+    remain_timeout = osal_get_timeoutEx(TASK_ID32( timer->timer_id ),EVENT_ID32( timer->timer_id ));
+    
+    /* Unlock Timer */
+    timer_unlock();
 
-    retval = timer_del_entity(timer, 0x01);
+    return remain_timeout;
+}          
+
+
+
+EM_RESULT EM_restart_timerEx
+            (
+                EM_timer_handle handle,
+                UINT32 new_timeout
+            )
+{
+    TIMER_ENTITY *timer;
+    EM_RESULT retval;
+    
+    if (EM_TIMER_MAX_ENTITIES <= handle)
+    {
+        EM_TIMER_ERR(
+        "NULL Argument Unacceptable for Timer Handles.\n");
+    
+        /* TODO: Use appropriate error value */
+        return EM_TIMER_HANDLE_IS_NULL;
+    }
+
+    timer_lock();
+
+    timer = &timer_entity[handle];
+
+    retval = timer_search_entity(timer);
 
     if (EM_SUCCESS != retval)
     {
         EM_TIMER_ERR(
-        "FAILED to find Timer Element. Handle = 0x%02X. Error Code = 0x%04X\n",
+        "FAILED to Find Timer ELement for Handle 0x%02X. Error Code = 0x%04X\n",
         handle, retval);
     }
     else
     {
-        EM_TIMER_TRC(
-        "Successfully Deleted Timer Element for Handle 0x%02X.\n",
-        handle);
-
-        /* Stop Timer */
-        status = osal_CbTimerStop(timer_id);
-
-        if (SUCCESS != status)
+        if(osal_CbTimerUpdate(timer->timer_id,new_timeout) == EM_SUCCESS)
         {
-            retval = EM_FAILURE;
+            return ( SUCCESS );
         }
-
-        EM_TIMER_TRC("*** Stopped Timer [ID: %04X]\n",
-        timer_id);
     }
-
-    /* Unlock Timer */
-    timer_unlock();
-
-    return retval;
+    
+    // No timer available
+    return ( NO_TIMER_AVAIL );
+    
 }
 
-
+#ifdef EM_RESTART_TIMER
 EM_RESULT EM_restart_timer
           (
               EM_timer_handle handle,
-              UINT16 new_timeout
+              UINT32 new_timeout
           )
 {
     TIMER_ENTITY *timer;
     Status_t   ret;
     EM_RESULT retval;
+
+    // HZF
+	osalTimeUpdate();
 
     if (EM_TIMER_MAX_ENTITIES <= handle)
     {
@@ -372,7 +588,7 @@ EM_RESULT EM_restart_timer
         osal_CbTimerStop(timer->timer_id);
 
         /* Start Timer. */
-        ret = osal_CbTimerStart
+        ret = osal_CbTimerStart32
               (
                   timer_timeout_handler,
                   &timer->handle,
@@ -396,7 +612,7 @@ EM_RESULT EM_restart_timer
     timer_unlock();
     return retval;
 }
-
+#endif
 
 EM_RESULT EM_is_active_timer
           (
@@ -532,8 +748,8 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
     {
         EM_TIMER_ERR(
         "FAILED to Allocate New Timer Entity. Timer List FULL !\n");
-        printf(
-        "FAILED to Allocate New Timer Entity. Timer List FULL !\n");
+//        printf(
+//        "FAILED to Allocate New Timer Entity. Timer List FULL !\n");
 
 #ifdef EM_STATUS
         /* Timer List Full: Update EtherMind Status Flag */
@@ -567,7 +783,7 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
 #endif /* EM_TIMER_SUPPORT_REMAINING_TIME */
 
     /* Start timer. Set Timeout. This will also start the timer. */
-    ret = osal_CbTimerStart
+    ret = osal_CbTimerStart32
           (
               timer_timeout_handler,
               &new_timer->handle,
@@ -580,12 +796,12 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
     if (SUCCESS != ret)
     {
         EM_TIMER_ERR("*** FAILED to Start timer\n");
-		printf("*** FAILED to Start timer, ret = %d\r\n", ret);
+//		printf("*** FAILED to Start timer, ret = %d\r\n", ret);
         return EM_TIMER_FAILED_SET_TIME_EVENT;
     }
 
     EM_TIMER_TRC("Successfully started Timer [ID: %02X]. Handle: 0x%02X\n",
-    new_timer->timer_id, timer->handle);
+    new_timer->timer_id, timer->handle);   
 
     timer->handle = new_timer->handle;
     timer->timer_id = new_timer->timer_id;

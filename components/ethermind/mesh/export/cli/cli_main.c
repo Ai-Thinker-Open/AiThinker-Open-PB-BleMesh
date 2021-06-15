@@ -16,6 +16,7 @@
 /* ------------------------------- Header File Inclusion */
 #include "cli_main.h"
 #include "nvs.h"
+#include "common.h"
 
 /* ------------------------------- Global Variables */
 #ifndef CLI_NO_MAIN
@@ -97,7 +98,6 @@ extern uint8 llState;
 extern uint8 llSecondaryState;
 extern UCHAR blebrr_state;  
 extern uint32 blebrr_advscan_timeout_count;
-extern uint32 osal_memory_statics(void);
 
 /* Help */
 API_RESULT cli_help(UINT32 argc, UCHAR *argv[])
@@ -221,6 +221,7 @@ void cli_gatt_bearer_iface_event_pl_cb
              * Check if this only when DUT is Unprovisioned Device!
              * also check if this needs to be done.
              */
+            MS_prov_stop_interleave_timer();
             MS_brr_bcast_end(BRR_BCON_TYPE_UNPROV_DEVICE, BRR_BCON_ACTIVE);
             break;
 

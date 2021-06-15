@@ -1,0 +1,10 @@
+fid=fopen('voice_pcmraw_2p5sec_2.txt');
+[inData,n]=fscanf(fid,'%x');
+inData32u=uint32(inData);
+rightMask=uint32(sscanf('0000ffff','%x'));
+leftMask=uint32(sscanf('ffff0000','%x'));
+right16u=uint16(bitand(inData32u,rightMask*ones(n,1,'uint32')));
+left16u=uint16(bitshift(bitand(inData32u,leftMask*ones(n,1,'uint32')),-16));
+rightData=int32(right16u)-int32(int32(right16u)>2^15)*2^16;
+leftData=int32(left16u)-int32(int32(left16u)>2^15)*2^16;
+soundsc(double(rightData))

@@ -43,7 +43,7 @@
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Stack_Size      EQU     0x00000800
+Stack_Size      EQU     0x00000400
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
@@ -54,7 +54,7 @@ __initial_sp
 ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Heap_Size       EQU     0x00000100
+Heap_Size       EQU     0x00000C00
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base
@@ -91,26 +91,26 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     SysTick_Handler           ; SysTick Handler
 
                 ; External Interrupts
-                DCD     0            ;  0:  Watchdog Timer
-                DCD     0            ;  1:  Real Time Clock
-                DCD     0           ;  2:  Timer0 / Timer1
-                DCD     0           ;  3:  Timer2 / Timer3
-                DCD     0           ;  4:  MCIa
-                DCD     0           ;  5:  MCIb
-                DCD     0          ;  6:  UART0 - DUT FPGA
-                DCD     0          ;  7:  UART1 - DUT FPGA
-                DCD     0          ;  8:  UART2 - DUT FPGA
-                DCD     0          ;  9:  UART4 - not connected
-                DCD     0           ; 10: AACI / AC97
-                DCD     0           ; 11: CLCD Combined Interrupt
-                DCD     0           ; 12: Ethernet
-                DCD     0          ; 13: USB Device
-                DCD     0          ; 14: USB Host Controller
-                DCD     0          ; 15: Character LCD
-                DCD     0        ; 16: Flexray
-                DCD     0            ; 17: CAN
-                DCD     0            ; 18: LIN
-                DCD     0            ; 19: I2C ADC/DAC
+                DCD     WDT_IRQHandler            ;  0:  Watchdog Timer
+                DCD     RTC_IRQHandler            ;  1:  Real Time Clock
+                DCD     TIM0_IRQHandler           ;  2:  Timer0 / Timer1
+                DCD     TIM2_IRQHandler           ;  3:  Timer2 / Timer3
+                DCD     MCIA_IRQHandler           ;  4:  MCIa
+                DCD     MCIB_IRQHandler           ;  5:  MCIb
+                DCD     UART0_IRQHandler          ;  6:  UART0 - DUT FPGA
+                DCD     UART1_IRQHandler          ;  7:  UART1 - DUT FPGA
+                DCD     UART2_IRQHandler          ;  8:  UART2 - DUT FPGA
+                DCD     UART4_IRQHandler          ;  9:  UART4 - not connected
+                DCD     AACI_IRQHandler           ; 10: AACI / AC97
+                DCD     CLCD_IRQHandler           ; 11: CLCD Combined Interrupt
+                DCD     ENET_IRQHandler           ; 12: Ethernet
+                DCD     USBDC_IRQHandler          ; 13: USB Device
+                DCD     USBHC_IRQHandler          ; 14: USB Host Controller
+                DCD     CHLCD_IRQHandler          ; 15: Character LCD
+                DCD     FLEXRAY_IRQHandler        ; 16: Flexray
+                DCD     CAN_IRQHandler            ; 17: CAN
+                DCD     LIN_IRQHandler            ; 18: LIN
+                DCD     I2C_IRQHandler            ; 19: I2C ADC/DAC
                 DCD     0                         ; 20: Reserved
                 DCD     0                         ; 21: Reserved
                 DCD     0                         ; 22: Reserved
@@ -119,10 +119,10 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     0                         ; 25: Reserved
                 DCD     0                         ; 26: Reserved
                 DCD     0                         ; 27: Reserved
-                DCD     0       ; 28: Reserved - CPU FPGA CLCD
+                DCD     CPU_CLCD_IRQHandler       ; 28: Reserved - CPU FPGA CLCD
                 DCD     0                         ; 29: Reserved - CPU FPGA
-                DCD     0          ; 30: UART3    - CPU FPGA
-                DCD     0           ; 31: SPI Touchscreen - CPU FPGA
+                DCD     UART3_IRQHandler          ; 30: UART3    - CPU FPGA
+                DCD     SPI_IRQHandler            ; 31: SPI Touchscreen - CPU FPGA
 __Vectors_End
 
 __Vectors_Size  EQU     __Vectors_End - __Vectors

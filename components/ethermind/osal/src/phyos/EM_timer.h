@@ -23,7 +23,7 @@
 
 /* --------------------------------------------------- Global Definitions */
 /* Maximum number of timer entities */
-#define EM_TIMER_MAX_ENTITIES                       10
+#define EM_TIMER_MAX_ENTITIES                       15
 
 /* Mask to indicate millisecond timeout */
 #define EM_TIMEOUT_MILLISEC                         0x80000000
@@ -136,10 +136,16 @@ EM_RESULT EM_start_timer
 EM_RESULT EM_restart_timer
           (
               EM_timer_handle handle,
-              UINT16 new_timeout
+              UINT32 new_timeout
           );
 
 EM_RESULT EM_stop_timer ( EM_timer_handle handle );
+
+UINT32 EM_get_remain_timer
+          (
+              EM_timer_handle handle
+          );
+
 
 EM_RESULT EM_timer_get_remaining_time
           (

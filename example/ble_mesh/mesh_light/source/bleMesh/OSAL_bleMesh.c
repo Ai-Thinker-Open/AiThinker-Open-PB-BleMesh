@@ -65,6 +65,7 @@
 /* GATT */
 #include "gatt.h"
 #include "gattservapp.h"
+#include "EM_os.h"
 
 /* Timer */
 #if defined ( OSAL_CBTIMER_NUM_TASKS )
@@ -77,32 +78,11 @@
 /* Application */
 #include "bleMesh.h"
 
-extern uint16 baseTaskID;
-#define EVENT_ID( timerId )            ( 0x0001 << ( ( timerId ) % NUM_CBTIMERS_PER_TASK ) )
-
-// Find out task id using timer id
-#define TASK_ID( timerId )             ( ( ( timerId ) / NUM_CBTIMERS_PER_TASK ) + baseTaskID )
-
-// Find out bank task id using task id
-#define BANK_TASK_ID( taskId )         ( ( baseTaskID - ( taskId ) ) * NUM_CBTIMERS )
-
-/*********************************************************************
- * CONSTANTS
- */
-// Number of callback timers supported per task (limited by the number of OSAL event timers)
-#define NUM_CBTIMERS_PER_TASK          15
-
-// Total number of callback timers
-#define NUM_CBTIMERS                   ( OSAL_CBTIMER_NUM_TASKS * NUM_CBTIMERS_PER_TASK )
-
-uint16 osal_CbTimerProcessEvent_new( uint8 taskId, uint16 events );
-typedef struct
-{
-  pfnCbTimer_t pfnCbTimer; // callback function to be called when timer expires
-  uint8 *pData;            // data to be passed in to callback function
-} cbTimer_t;
-
-extern cbTimer_t cbTimers[];
+/* Timer */
+#if defined ( EM_USE_EXT_TIMER )
+  #include "cbTimer.h"
+  #include "EXT_cbtimer.h"
+#endif
 
 /*********************************************************************
  * GLOBAL VARIABLES
@@ -114,8 +94,10 @@ const pTaskEventHandlerFn tasksArr[] =
   LL_ProcessEvent,                                                  // task 0
   HCI_ProcessEvent,                                                 // task 1
 #if defined ( OSAL_CBTIMER_NUM_TASKS )
-//  OSAL_CBTIMER_PROCESS_EVENT( osal_CbTimerProcessEvent ),
-    OSAL_CBTIMER_PROCESS_EVENT( osal_CbTimerProcessEvent_new ),
+    OSAL_CBTIMER_PROCESS_EVENT( osal_CbTimerProcessEvent ),
+#endif
+#if defined ( EM_USE_EXT_TIMER )
+    CBTIMER_PROCESS_EVENT( CbTimerProcessEvent ),
 #endif
   L2CAP_ProcessEvent,                                               // task 2
   GAP_ProcessEvent,                                                 // task 3
@@ -162,6 +144,12 @@ void osalInitTasks( void )
   osal_CbTimerInit( taskID );
   taskID += OSAL_CBTIMER_NUM_TASKS;
 #endif
+
+#if defined ( EM_USE_EXT_TIMER )
+    /* Callback Timer Tasks */
+    CbTimerInit( taskID );
+    taskID += CBTIMER_NUM_TASKS;
+#endif
     
   /* L2CAP Task */
   L2CAP_Init( taskID++ );
@@ -183,68 +171,6 @@ void osalInitTasks( void )
 
   /* Application */
   bleMesh_Init( taskID );
-}
-
-/*********************************************************************
- * @fn          osal_CbTimerProcessEvent
- *
- * @brief       Callback Timer task event processing function.
- *
- * @param       taskId - task ID.
- * @param       events - events.
- *
- * @return      events not processed
- */
-uint16 osal_CbTimerProcessEvent_new( uint8 taskId, uint16 events )
-{
-  if ( events & SYS_EVENT_MSG )
-  {
-    // Process OSAL messages
-
-    // return unprocessed events
-    return ( events ^ SYS_EVENT_MSG );
-  }
-
-  if ( events )
-  {
-    uint8 i;
-    uint16 event;
-
-    // Process event timers
-    for ( i = 0; i < NUM_CBTIMERS_PER_TASK; i++ )
-    {
-      if ( ( events >> i ) & 0x0001 )
-      {
-        cbTimer_t *pTimer = &cbTimers[BANK_TASK_ID( taskId )+i];
-
-        // Found the first event
-        event =  0x0001 << i;
-
-          if (NULL == pTimer->pfnCbTimer)     // if the timer has been deleted, the callback function pointer is NULL
-          {
-          }
-          else
-             // Timer expired, call the registered callback function
-             pTimer->pfnCbTimer( pTimer->pData );
-
-        // Mark entry as free
-        pTimer->pfnCbTimer = NULL;
-        
-        // Null out data pointer
-        pTimer->pData = NULL;
-      
-        // We only process one event at a time
-        break;
-      }
-    }
-
-    // return unprocessed events
-    return ( events ^ event );
-  }
-
-  // If reach here, the events are unknown
-  // Discard or make more handlers
-  return 0;
 }
 
 

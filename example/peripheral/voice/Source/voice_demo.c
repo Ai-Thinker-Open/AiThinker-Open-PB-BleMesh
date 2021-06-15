@@ -196,37 +196,37 @@ static void voice_ProcessOSALMsg( osal_event_hdr_t *pMsg )
 {
 }
 
-static void voice_evt_handler(voice_Evt_t *pev)
-{
-  if(pev->type == HAL_VOICE_EVT_DATA){
-		LOG("Type matched\n");
-    if (hal_uart_get_tx_ready() == PPlus_SUCCESS) {
-			LOG("UART ready\n");
-			//if (hal_uart_send_buff((uint8_t *)pev->data, 4*(pev->size)) == PPlus_SUCCESS) {
-				voiceWriteID++;
-				LOG("Voice data transmitted successfully:");
-				LOG("%d\n", voiceWriteID);
-			//}
-		}				
-  }
-//	LOG("Voice data transmitted successfully\n");	
-}
-
-
-static void voice_evt_handler_buf(voice_Evt_t *pev)
-{
-  if(pev->type == HAL_VOICE_EVT_DATA){
+//static void voice_evt_handler(voice_Evt_t *pev)
+//{
+//  if(pev->type == HAL_VOICE_EVT_DATA){
 //		LOG("Type matched\n");
-    int n;
-		for (n = 0; n < pev->size; n++) {
-			voiceBuf[voiceBufIndex] = pev->data[n];
-			voiceBufIndex++;
-		}
-		voiceWriteID++;
-		LOG("Voice data saved successfully:");
-		LOG("%d %d\n", voiceWriteID, pev->data[pev->size-1]);
-	}		
-}
+//    if (hal_uart_get_tx_ready() == PPlus_SUCCESS) {
+//			LOG("UART ready\n");
+//			//if (hal_uart_send_buff((uint8_t *)pev->data, 4*(pev->size)) == PPlus_SUCCESS) {
+//				voiceWriteID++;
+//				LOG("Voice data transmitted successfully:");
+//				LOG("%d\n", voiceWriteID);
+//			//}
+//		}				
+//  }
+////	LOG("Voice data transmitted successfully\n");	
+//}
+
+
+//static void voice_evt_handler_buf(voice_Evt_t *pev)
+//{
+//  if(pev->type == HAL_VOICE_EVT_DATA){
+////		LOG("Type matched\n");
+//    int n;
+//		for (n = 0; n < pev->size; n++) {
+//			voiceBuf[voiceBufIndex] = pev->data[n];
+//			voiceBufIndex++;
+//		}
+//		voiceWriteID++;
+//		LOG("Voice data saved successfully:");
+//		LOG("%d %d\n", voiceWriteID, pev->data[pev->size-1]);
+//	}		
+//}
 
 static void voice_evt_handler_adpcm(voice_Evt_t *pev)
 {

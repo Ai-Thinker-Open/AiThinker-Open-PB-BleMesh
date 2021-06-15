@@ -57,6 +57,7 @@ extern "C"
  * CONSTANTS
  */
 
+extern uint8 bleMesh_TaskID;   // Task ID for internal task/event processing
 
 // BLE Mesh Task Events
 
@@ -71,6 +72,7 @@ extern "C"
 #define BLEMESH_LIGHT_PRCESS_EVT                            0x0020
 #define BLEMESH_KEY_PRESS_EVT                               0x0040
 #define BLEMESH_KEY_LONG_PRESS_EVT                          0x0080
+#define BLEMESH_GAP_TERMINATE                               0x0100
 
 
 /*********************************************************************

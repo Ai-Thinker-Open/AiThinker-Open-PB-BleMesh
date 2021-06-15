@@ -226,11 +226,13 @@ static gapRolesCBs_t heartRatePeripheralCB =
 };
 
 // Bond Manager Callbacks
+#if 0
 static const gapBondCBs_t heartRateBondCB =
 {
   NULL,                   // Passcode callback
   NULL                    // Pairing state callback
 };
+#endif
 
 /*********************************************************************
  * PUBLIC FUNCTIONS
@@ -383,7 +385,7 @@ uint16 HeartRate_ProcessEvent( uint8 task_id, uint16 events )
     VOID GAPRole_StartDevice( &heartRatePeripheralCB );
 
     // Register with bond manager after starting device
-    GAPBondMgr_Register( (gapBondCBs_t *) &heartRateBondCB );
+//    GAPBondMgr_Register( (gapBondCBs_t *) &heartRateBondCB );
     
     return ( events ^ START_DEVICE_EVT );
   }

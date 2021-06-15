@@ -179,7 +179,7 @@ static void response(uint8_t* rsp_data, uint8_t size)
 
 static int set_ota_mode(uint8_t mode)
 {
-  if(mode > OTA_MODE_RESOURCE)
+  if(mode > OTA_MODE_RESOURCE && mode != OTA_MODE_OTA_NADDR)
     return PPlus_ERR_INVALID_PARAM;
   write_reg(OTA_MODE_SELECT_REG, mode);
   return PPlus_SUCCESS;
@@ -404,5 +404,31 @@ bStatus_t ota_app_AddService(void)
 }
 
 
+int ota_vendor_module_StartOTA(uint8_t mode)
+{
+  int ret = 0;
+  uint32_t reg = read_reg(OTA_MODE_SELECT_REG);
+  if(reg == 0)
+    return PPlus_ERR_NOT_REGISTED;
+  ret = set_ota_mode(mode);
+  if(ret == PPlus_SUCCESS){
+    NVIC_SystemReset();
+  }
+  return ret;
+}
+
+int ota_vendor_module_Version(  uint8_t* major, uint8_t* minor, uint8_t* revision, uint8_t *test_build)
+{
+  uint32_t reg = read_reg(OTA_MODE_SELECT_REG);
+  
+  if(reg == 0)
+    return PPlus_ERR_NOT_REGISTED;
+    
+  *major = (uint8_t)((reg >>4) & 0xf);
+  *minor = (uint8_t)((reg >>8) & 0xf);
+  *revision = (uint8_t)((reg >>12) & 0xff);
+  *test_build = (uint8_t)((reg >>20) & 0xf);
+  return PPlus_SUCCESS;
+}
 
 

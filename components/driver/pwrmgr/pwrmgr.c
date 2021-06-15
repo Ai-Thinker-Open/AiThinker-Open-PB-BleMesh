@@ -157,8 +157,6 @@ int hal_pwrmgr_unlock(MODULE_e mod)
   else
     disableSleep();
   HAL_EXIT_CRITICAL_SECTION();
-	
-	//LOG("sleep mode:%d\n", isSleepAllow());
   
   return PPlus_SUCCESS;
 }

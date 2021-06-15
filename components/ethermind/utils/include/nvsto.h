@@ -48,6 +48,20 @@ typedef UINT8   NVSTO_HANDLE;
 #define nvsto_seek_ps(handle, offset) \
     nvsto_seek(NVS_BANK_PERSISTENT, (handle), (offset))
 
+//by hq
+#define nvsto_erase_ps(handle) \
+    nvsto_erase(NVS_BANK_PERSISTENT, (handle))
+
+#define nvsto_write_header_ps(handle,value) \
+    nvsto_write_header(NVS_BANK_PERSISTENT, (handle),(value))
+
+#define nvsto_read_crc16_ps(handle,buffer,length) \
+    nvsto_read_crc16(NVS_BANK_PERSISTENT, (handle), (buffer),(length))
+
+
+
+
+
 /* --------------------------------------------- Internal Functions */
 
 /* --------------------------------------------- API Declarations */
@@ -182,6 +196,30 @@ INT16 nvsto_read
           /* IN */ UINT16   length
       );
 
+  /**
+   *  \fn nvsto_read_crc16
+   *
+   *  \brief
+   *
+   *  \Description
+   *
+   *
+   *  \param storage
+   *  \param handle
+   *  \param buffer
+   *  \param length
+   *
+   *  \return Number of bytes read
+   */
+  INT16 nvsto_read_crc16
+        (
+            /* IN */ UINT8    storage,
+            /* IN */ UINT8    handle,
+            /* IN */ UINT16   * buffer,
+            /* IN */ UINT16   length
+        );
+
+
 /**
  *  \fn nvsto_seek
  *
@@ -202,6 +240,48 @@ INT16 nvsto_seek
           /* IN */ UINT8    handle,
           /* IN */ UINT32   offset
       );
+
+
+//by hq
+/**
+ *  \fn nvsto_write_flash
+ *
+ *  \brief
+ *
+ *  \Description
+ *
+ *
+ *  \param storage
+ *  \param handle
+ *
+ *  \return void
+ */
+
+INT16 nvsto_erase
+      (
+          /* IN */ UINT8    storage,
+          /* IN */ UINT8    handle
+      );
+
+/**
+*  \fn nvsto_erase
+*
+*  \brief
+*
+*  \Description
+*
+*
+*  \param storage
+*  \param handle
+*
+*  \return void
+*/
+INT16 nvsto_write_header
+    (
+        /* IN */ UINT8    storage,
+        /* IN */ UINT8    handle,
+        /* IN */ UINT32    value
+    );
 
 #endif /* _H_NVSTO_ */
 

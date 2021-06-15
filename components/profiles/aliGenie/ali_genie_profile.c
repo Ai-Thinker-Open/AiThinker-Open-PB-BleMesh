@@ -49,8 +49,6 @@
 #include <stdlib.h>
 #include "ali_genie_profile.h"
 
-#include "log.h"
-
 #define ALI_GENIE_PID_LEN               4
 #define ALI_GENIE_SEC_LEN               16
 
@@ -60,17 +58,7 @@
 #define VENDOR_PRODUCT_MAC_ADDR         0x4000
 
 
-#define cry_aes_128_encrypt(k, p, c)   \
-    LL_ENC_AES128_Encrypt((k), (p), (c))
 
-// #define cry_aes_128_decrypt(k, p, c)   \
-//     LL_ENC_AES128_Decrypt((k), (p), (c))
-
-#define cry_aes_128_encrypt_be(k, p, c) \
-    cry_aes_128_encrypt((k), (p), (c))
-
-// #define cry_aes_128_decrypt_be(k, p, c) \
-//     cry_aes_128_decrypt((k), (p), (c))
 
 unsigned char ali_genie_pid[4]  ={0x00};
 unsigned char ali_genie_mac[6] ={0x00};
@@ -108,6 +96,8 @@ void hex2Str( unsigned char* pIn,unsigned char*pOut ,int len ,int reverse)
   
 }
 
+
+
 int gen_aligenie_auth_val(void)
 {
     int i, buflen, ret = 0;
@@ -129,7 +119,7 @@ int gen_aligenie_auth_val(void)
     hex2Str(ali_genie_pid,buf,4,0);
 
 
-    //printf("\n ===  PID  === \n");
+    printf("\n ===  PID  === \n");
     for(i=0;i<4;i++)
         printf("%02X ",ali_genie_pid[i]);
     printf("\n");
@@ -206,88 +196,3 @@ exit:
     return( ret );
 }
 
-int gen_aligenie_auth_key(uint8* rnd, uint8 rsiz, uint8* pid, uint8 psiz, uint8* mac, uint8 msiz, uint8* scr, uint8 ssiz)
-{
-    LOG("[ENT]: %s >>> \r\n", __func__);
-
-    int rslt;
-    uint8 itr0 = 0;
-    uint8 temp[128] = { 0, };
-    uint8 posi = 0;
-
-    /* rand numb */
-    LOG("\n\rRND:>>> ");
-    for ( itr0 = 0; itr0 < rsiz; itr0 ++ ) { LOG("%02x,", rnd[itr0]); }
-    LOG("RND:>>> \n\r");
-    osal_memcpy(temp+posi, rnd, rsiz); posi += rsiz;
-    // hex2Str(rnd, temp+posi, rsiz, 0); posi += rsiz * 2;
-    temp[posi] = ','; posi += 1;
-
-    /* pid in hex str */
-    LOG("\n\rPID:>>> ");
-    for ( itr0 = 0; itr0 < psiz; itr0 ++ ) { LOG("%02x,", pid[itr0]); }
-    LOG("PID:>>> \n\r");
-    hex2Str(pid, temp+posi, psiz, 1); posi += psiz * 2;
-    temp[posi] = ','; posi += 1;
-    
-    /* mac in hex str */
-    hex2Str(mac, temp+posi, msiz, 1); posi += msiz * 2;
-    temp[posi] = ','; posi += 1;
-
-    /* secret */
-    hex2Str(scr, temp+posi, ssiz, 0); posi += ssiz * 2;
-
-    LOG("SHA256 IN:%s@%d \n\r", temp, posi);
-
-    
-    mbedtls_sha256_context ctxt;
-    uint8 sha256sum[32];
-
-    mbedtls_sha256_init(&ctxt);
-    rslt = mbedtls_sha256_starts_ret(&ctxt, 0);
-    if ( rslt == 0 ) {
-        rslt = mbedtls_sha256_update_ret(&ctxt, temp, posi);
-    }
-    if ( rslt == 0 ) {
-        rslt = mbedtls_sha256_finish_ret(&ctxt, sha256sum);
-    }
-    if ( rslt == 0 ) {  // sucess
-        LOG("SHA256 OUT: SUCCESS \n\r");
-
-        for ( itr0 = 0; itr0 < 16; itr0 ++ ) {
-            ali_genie_auth[itr0] = sha256sum[itr0];
-        }
-    }
-
-    return ( rslt );
-}
-
-int cpy_aligenie_auth_key(uint8* dest)
-{
-    return ( osal_memcpy(dest, ali_genie_auth, sizeof(ali_genie_auth)) );
-}
-
-void aligenie_enc_aes128_cbc(uint8* key, uint8* ptxt, uint8* cipr)
-{
-    uint8 itr0 = 0;
-    uint8 iv[] = { 0x31, 0x32, 0x33, 0x61, 0x71, 0x77, 0x65, 0x64, 0x23, 0x2a, 0x24, 0x21, 0x28, 0x34, 0x6a, 0x75, };
-    uint8 data[16];
-    
-    osal_memcpy(data, ptxt, 16);
-    while ( itr0 < 16 ) {
-        data[itr0] ^= iv[itr0]; itr0 += 1;
-    }
-
-    cry_aes_128_encrypt_be(key, data, cipr);
-}
-
-// void aligenie_dec_aes128_cbc(uint8* key, uint8* ptxt, uint8* cipr)
-// {
-//     uint8 itr0 = 0;
-//     uint8 iv[] = { 0x31, 0x32, 0x33, 0x61, 0x71, 0x77, 0x65, 0x64, 0x23, 0x2a, 0x24, 0x21, 0x28, 0x34, 0x6a, 0x75, };
-
-//     cry_aes_128_decrypt_be(key, ptxt, cipr);
-//     while ( itr0 < 16 ) {
-//         ptxt[itr0] ^= iv[itr0]; itr0 += 1;
-//     }
-// }

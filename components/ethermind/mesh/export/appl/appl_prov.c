@@ -575,6 +575,7 @@ printf("consume time of function MS_access_cm_set_prov_data-1: %d RTC tick\r\n",
         case PROV_EVT_PROVISIONING_COMPLETE:
             printf ("Recvd PROV_EVT_PROVISIONING_COMPLETE\n");
             printf ("Status - 0x%04X\n", event_result);
+            printf ("appl_prov_role - 0x%02X\n", appl_prov_role);
 
             if (API_SUCCESS == event_result)
             {			
@@ -671,6 +672,7 @@ printf("consume time of function MS_access_cm_set_prov_data-2: %d RTC tick\r\n",
                                  PROV_BRR_ADV,
                                  PROV_ROLE_DEVICE,
                                  &appl_lprov_device,
+                                 APPL_PROV_SETUP_TIMEOUT_SECS,
                                  APPL_PROV_SETUP_TIMEOUT_SECS
                              );
                     printf ("Retval - 0x%04X\n", retval);
@@ -748,6 +750,7 @@ void main_prov_operations (void)
                          brr,
                          PROV_ROLE_DEVICE,
                          &appl_lprov_device,
+                         APPL_PROV_SETUP_TIMEOUT_SECS,
                          APPL_PROV_SETUP_TIMEOUT_SECS
                      );
             printf ("Retval - 0x%04X\n", retval);
@@ -967,6 +970,7 @@ void appl_prov_register(void)
     API_RESULT retval;
     MS_PROV_DEV_ENTRY prov_dev_list[MS_MAX_DEV_KEYS];
     UINT16            num_entries;
+    UINT16            pointer_entries;
 
     if (MS_TRUE == appl_prov_ready)
     {
@@ -984,7 +988,8 @@ void appl_prov_register(void)
     retval = MS_access_cm_get_prov_devices_list
              (
                  &prov_dev_list[0],
-                 &num_entries
+                 &num_entries,
+                 &pointer_entries
              );
     if ((API_SUCCESS == retval) &&
         (0 != num_entries))
@@ -1017,6 +1022,7 @@ void appl_prov_setup(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      &appl_lprov_device,
+                     APPL_PROV_SETUP_TIMEOUT_SECS,
                      APPL_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -1030,6 +1036,7 @@ void appl_prov_setup(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      NULL,
+                     APPL_PROV_SETUP_TIMEOUT_SECS,
                      APPL_PROV_SETUP_TIMEOUT_SECS
                  );
 

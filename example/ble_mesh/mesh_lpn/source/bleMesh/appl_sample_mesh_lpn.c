@@ -62,6 +62,7 @@
 
 #include "pwrmgr.h"
 #include "led_light.h"
+#include "EXT_cbtimer.h"
 
 #define USE_HSL                 // enable Light HSL server model
 #undef USE_LIGHTNESS            // enable Light Lightness server model
@@ -1494,6 +1495,7 @@ void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      &UI_lprov_device,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -1507,6 +1509,7 @@ void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      NULL,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -1976,6 +1979,11 @@ void appl_mesh_sample (void)
     /* Initialize Timer Module */
     EM_timer_init();
     timer_em_init();
+
+#if defined ( EM_USE_EXT_TIMER )
+    EXT_cbtimer_init();
+    ext_cbtimer_em_init();
+#endif    
 
     /* Initialize utilities */
     nvsto_init();

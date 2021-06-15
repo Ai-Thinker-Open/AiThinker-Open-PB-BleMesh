@@ -44,6 +44,9 @@
 /* EtherMind-Init: Platform Handler */
 void ms_init_pl(void);
 
+UINT8  MS_common_reset(void);
+
+
 /* Mesh Shutdown: Platform Handler */
 void ms_shutdown_pl(void);
 

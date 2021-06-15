@@ -77,6 +77,8 @@ extern uint8 bleMesh_TaskID;   // Task ID for internal task/event processing
 #define BLEMESH_HAL_KEY_MATRIX_EVT                          0x0100
 #define BLEMESH_PDU_TX_OVERRUN                              0x0200
 
+#define BLEMESH_PROV_COMP_EVT                          0x0400
+#define BLEMESH_APPL_IDLE_EVT                          0x0800
 
 /*********************************************************************
  * FUNCTIONS

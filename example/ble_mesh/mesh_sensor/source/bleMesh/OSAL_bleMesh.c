@@ -65,6 +65,7 @@
 /* GATT */
 #include "gatt.h"
 #include "gattservapp.h"
+#include "EM_os.h"
 
 /* Timer */
 #if defined ( OSAL_CBTIMER_NUM_TASKS )
@@ -73,6 +74,12 @@
 
 /* Application */
 #include "bleMesh.h"
+/* Timer */
+#if defined ( EM_USE_EXT_TIMER )
+  #include "cbTimer.h"
+  #include "EXT_cbtimer.h"
+#endif
+#include "sensorMonitor_task.h"
 
 /*********************************************************************
  * GLOBAL VARIABLES
@@ -86,13 +93,16 @@ const pTaskEventHandlerFn tasksArr[] =
 #if defined ( OSAL_CBTIMER_NUM_TASKS )
   OSAL_CBTIMER_PROCESS_EVENT( osal_CbTimerProcessEvent ),
 #endif
-    L2CAP_ProcessEvent,                                               // task 2
+#if defined ( EM_USE_EXT_TIMER )
+    CBTIMER_PROCESS_EVENT( CbTimerProcessEvent ),
+#endif
+  L2CAP_ProcessEvent,                                               // task 2
   GAP_ProcessEvent,                                                 // task 3
   SM_ProcessEvent,                                                  // task 4
   GATT_ProcessEvent,                                                // task 5
   GATTServApp_ProcessEvent,                                         // task 6
 
-
+  SensorMonitor_task_ProcessEvent,
 
   bleMesh_ProcessEvent                                              // task 8
 
@@ -132,6 +142,12 @@ void osalInitTasks( void )
   osal_CbTimerInit( taskID );
   taskID += OSAL_CBTIMER_NUM_TASKS;
 #endif
+
+#if defined ( EM_USE_EXT_TIMER )
+    /* Callback Timer Tasks */
+    CbTimerInit( taskID );
+    taskID += CBTIMER_NUM_TASKS;
+#endif
     
   /* L2CAP Task */
   L2CAP_Init( taskID++ );
@@ -148,7 +164,7 @@ void osalInitTasks( void )
   /* Profiles */
   GATTServApp_Init( taskID++ );
 
-
+  SensorMonitor_task_Init( taskID++ );
 
   /* Application */
   bleMesh_Init( taskID );

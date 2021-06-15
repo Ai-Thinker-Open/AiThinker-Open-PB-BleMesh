@@ -14,8 +14,15 @@
 /* ------------------------------- Header File Inclusion */
 #include "MS_brr_api.h"
 #include "MS_prov_api.h"
+#include "MS_access_api.h"
 #include "blebrr.h"
 #include "ll.h"
+#include "MS_trn_api.h"
+#include "pwrmgr.h"
+#include "ll_sleep.h"
+#include "led_light.h"
+
+
 
 /* --------------------------------------------- External Global Variables */
 
@@ -24,27 +31,18 @@
 #define BLEBRR_MAX_ADV_DATA_SIZE            31
 
 #define BLEBRR_BCON_ELEMENTS                2
-#define BLEBRR_QUEUE_SIZE                   64
 #define BLEBRR_ACTIVEADV_TIMEOUT            1 /* Second */
-#define BLEBRR_ADV_TIMEOUT                  (EM_TIMEOUT_MILLISEC | 6) /* Millisecond */
-#define BLEBRR_SCAN_TIMEOUT                 (EM_TIMEOUT_MILLISEC | 100) /* Millisecond */
+#define BLEBRR_ADV_TIMEOUT                  6 /* Millisecond */
+#define BLEBRR_SCAN_TIMEOUT                 (EM_TIMEOUT_MILLISEC | 30) /* Millisecond */
 #define BLEBRR_NCON_ADVTYPE_OFFSET          2
-#define BLEBRR_ADVREPEAT_COUNT              5
-#define BLEBRR_SCAN_ADJ_STEP                60
-#define BLEBRR_SCAN_ADJ_THD_MAX             60//90
-#define BLEBRR_SCAN_ADJ_THD_MIN             60//90   
+#define BLEBRR_ADVREPEAT_PRO_COUNT          2
+#define BLEBRR_ADVREPEAT_NET_COUNT          2
+#define BLEBRR_SCAN_ADJ_STEP                30
+#define BLEBRR_SCAN_ADJ_THD_MAX             45//90
+#define BLEBRR_SCAN_ADJ_THD_MIN             15//90   
 #define BLEBRR_TURNOFF_RELAY_THD            32
 #define BLEBRR_SKIP_BEACON_QUEUE_DEPTH      0
-#define BLEBRR_BCON_READY_TIME              12
-
-/** Bearer state defines */
-#define BLEBRR_STATE_IDLE                   0x00
-#define BLEBRR_STATE_IN_SCAN_ENABLE         0x01
-#define BLEBRR_STATE_IN_SCAN_DISABLE        0x02
-#define BLEBRR_STATE_SCAN_ENABLED           0x04
-#define BLEBRR_STATE_IN_ADV_ENABLE          0x10
-#define BLEBRR_STATE_IN_ADV_DISABLE         0x20
-#define BLEBRR_STATE_ADV_ENABLED            0x40
+#define BLEBRR_BCON_READY_TIME              10
 
 /** Bearer Queue defines */
 #define BLEBRR_QTYPE_DATA                   0x00
@@ -69,6 +67,17 @@
 /** Advertising data sets MAX */
 #define BLEBRR_GAP_MAX_ADVDATA_SETS         2
 
+#ifdef BLEBRR_LP_SUPPORT
+UCHAR blebrr_lp_flag = MS_FALSE;
+#define BLEBRR_LP_UNPROVISION_TIMEOUT             10*60   //unprovison timeout 10min
+#define BLEBRR_LP_PROVISIONED_TIMEOUT             1200   //
+#define BLEBRR_LP_PROVISIONED_WKP_TIMEOUT         60      //
+#define BLEBRR_LP_PROVISIONED_SLP_TIMEOUT         (BLEBRR_LP_PROVISIONED_TIMEOUT-BLEBRR_LP_PROVISIONED_WKP_TIMEOUT)
+#endif
+
+
+
+
 /* --------------------------------------------- Macros */
 #define BLEBRR_MUTEX_INIT()                 MS_MUTEX_INIT(blebrr_mutex, BRR);
 #define BLEBRR_MUTEX_INIT_VOID()            MS_MUTEX_INIT_VOID(blebrr_mutex, BRR);
@@ -76,9 +85,6 @@
 #define BLEBRR_LOCK_VOID()                  MS_MUTEX_LOCK_VOID(blebrr_mutex, BRR);
 #define BLEBRR_UNLOCK()                     MS_MUTEX_UNLOCK(blebrr_mutex, BRR);
 #define BLEBRR_UNLOCK_VOID()                MS_MUTEX_UNLOCK_VOID(blebrr_mutex, BRR);
-
-#define BLEBRR_SET_STATE(x)                 blebrr_state = (x)
-#define BLEBRR_GET_STATE()                  blebrr_state
 
 /* --------------------------------------------- Structures/Data Types */
 /** BLEBRR Data Queue Element */
@@ -125,26 +131,38 @@ typedef struct _BLEBRR_GAP_ADV_DATA
 
 
 /* --------------------------------------------- Global Variables */
+#ifdef BLEBRR_LP_SUPPORT
+EM_timer_handle blebrr_lp_thandle;
+
+#endif
 #ifdef BLEBRR_FILTER_DUPLICATE_PACKETS
 DECL_STATIC UCHAR blebrr_adv_list[BLEBRR_MAX_ADV_FILTER_LIST_COUNT][BLEBRR_MAX_ADV_DATA_SIZE];
 DECL_STATIC UCHAR blebrr_adv_list_inser_index = 0;
 #endif /* BLEBRR_FILTER_DUPLICATE_PACKETS */
 
- BRR_BEARER_INFO blebrr_adv;  //HZF
-//DECL_STATIC BRR_BEARER_INFO blebrr_adv;
+BRR_BEARER_INFO blebrr_adv;  //HZF
 
 DECL_STATIC BRR_HANDLE blebrr_advhandle;
 
 DECL_STATIC UCHAR blebrr_bconidx;
+#ifdef  BLEBRR_LP_SUPPORT 
 DECL_STATIC UCHAR blebrr_beacon;
-DECL_STATIC UCHAR blebrr_update_advcount = 0;
+#endif
+DECL_STATIC UCHAR blebrr_update_advcount = BLEBRR_BCON_READY_TIME;
 DECL_STATIC BLEBRR_Q_ELEMENT blebrr_bcon[BRR_BCON_COUNT];
 DECL_STATIC BLEBRR_Q blebrr_queue;
-/* DECL_STATIC UCHAR blebrr_adv_bcon_type; */
+
 MS_DEFINE_MUTEX_TYPE(static, blebrr_mutex)
 DECL_STATIC EM_timer_handle blebrr_timer_handle;
- UCHAR blebrr_state;    // HZF
+
+UCHAR blebrr_state;    // HZF
 //DECL_STATIC UCHAR blebrr_state;
+
+/* Set provision started */
+UCHAR blebrr_prov_started;
+
+UCHAR blebrr_adv_restart;
+
 
 UINT32 blebrr_scanTimeOut = 100;
 
@@ -231,14 +249,19 @@ BLEBRR_GAP_ADV_DATA blebrr_gap_adv_data[BLEBRR_GAP_MAX_ADVDATA_SETS] =
 };
 
 DECL_STATIC UCHAR pl_advdata_offset;
-DECL_STATIC UCHAR blebrr_sleep;
+UCHAR blebrr_sleep;
 
 
 // ------------ add by HZF
 uint32 blebrr_advscan_timeout_count = 0;
+extern uint32_t osal_sys_tick;
+
 
 /* ------------------------------- Functions */
 void blebrr_handle_evt_adv_complete (UINT8 enable);
+DECL_STATIC void blebrr_timer_start (UINT32 timeout);
+DECL_STATIC void blebrr_timer_stop (void);
+
 
 API_RESULT blebrr_queue_depth_check(void);
 
@@ -315,19 +338,43 @@ DECL_STATIC BLEBRR_Q_ELEMENT * blebrr_enqueue_alloc (void)
         elt = (elt + ei);
 
         /* Update the data availability */
-        blebrr_datacount++;
+//        blebrr_datacount++;
 
         /* EM_debug_trace (0, "[BLEBRR] Enqueue at Q Index: %d\n", ei); */
-        printf ("[BLEBRR] Enqueue at Q Index: %d\r\n", ei);		
 
         /* Update queue end */
-        ei++;
-        ei &= (BLEBRR_QUEUE_SIZE - 1);
+        if(ei == BLEBRR_QUEUE_SIZE - 1)
+            ei = 0;
+        else
+            ei++;
+//        ei++;
+//        ei &= (BLEBRR_QUEUE_SIZE - 1);
         blebrr_queue.end = ei;
     }
 
     return elt;
 }
+
+DECL_STATIC void blebrr_dequeue_manual (void)
+{
+    UINT16 ei;
+
+    ei = blebrr_queue.end;
+
+    /* Update the data availability */
+//    blebrr_datacount--;
+
+    /* EM_debug_trace (0, "[BLEBRR] Enqueue at Q Index: %d\n", ei); */
+//    printf ("[BLEBRR] Dequeue at Q Index: __%d\n", ei);
+
+    /* Update queue end */
+    if(ei == 0)
+        ei = BLEBRR_QUEUE_SIZE - 1;
+    else
+        ei--;
+    blebrr_queue.end = ei;
+}
+
 
 /**
  *  \brief
@@ -360,7 +407,6 @@ DECL_STATIC BLEBRR_Q_ELEMENT * blebrr_dequeue (void)
         elt = (elt + si);
 
         /* EM_debug_trace (0, "[BLEBRR] Dequeue at Q Index: %d\n", si); */
-        printf ("[BLEBRR] DeQ Index = %d\r\n", si);
 
         /* Is Adv data type in element? */
         if (BRR_BCON_COUNT == elt->type)
@@ -369,9 +415,16 @@ DECL_STATIC BLEBRR_Q_ELEMENT * blebrr_dequeue (void)
             blebrr_datacount--;
         }
 
+        /* Update the data availability */
+//        blebrr_datacount--;
+
         /* Update queue start */
-        si++;
-        si &= (BLEBRR_QUEUE_SIZE - 1);
+        if(si == BLEBRR_QUEUE_SIZE - 1)
+            si = 0;
+        else
+            si++;
+//        si++;
+//        si &= (BLEBRR_QUEUE_SIZE - 1);
         blebrr_queue.start = si;
     }
 
@@ -472,12 +525,16 @@ DECL_STATIC API_RESULT blebrr_update_advdata(void)
     BLEBRR_Q_ELEMENT * elt;
     UCHAR type;
     elt = NULL;
+    UCHAR   is_proxy_beacon;
+
+    is_proxy_beacon = 1;
 
     //ZQY skip bcon adv when queue is not empty
-    //printf("blebrr_get_queue_depth:%d\n",blebrr_get_queue_depth());    
-    if(blebrr_update_advcount != BLEBRR_BCON_READY_TIME)
+//    printf("blebrr_get_queue_depth:%d\n",blebrr_get_queue_depth());  
+
+    if(blebrr_update_advcount < BLEBRR_BCON_READY_TIME)
     {
-        blebrr_beacon = 0;
+        is_proxy_beacon = 0;
         blebrr_update_advcount++;
     }
     else
@@ -486,11 +543,12 @@ DECL_STATIC API_RESULT blebrr_update_advdata(void)
     }
     if(blebrr_get_queue_depth()>BLEBRR_SKIP_BEACON_QUEUE_DEPTH)
     {
-        blebrr_beacon=0;
+        is_proxy_beacon = 0;
     }
 
-    if (blebrr_beacon)
+    if (is_proxy_beacon)
     {
+        
         UCHAR bconidx;
 
         bconidx = blebrr_bconidx;
@@ -500,21 +558,20 @@ DECL_STATIC API_RESULT blebrr_update_advdata(void)
             if (0 != blebrr_bcon[blebrr_bconidx].pdatalen)
             {
                 elt = &blebrr_bcon[blebrr_bconidx];
+                is_proxy_beacon = 0;
             }
 
             if (BRR_BCON_COUNT == ++blebrr_bconidx)
             {
                 blebrr_bconidx = 0;
             }
-        } while ((blebrr_bconidx != bconidx) && (NULL == elt));
-
-        blebrr_beacon = 0;
+        } while ((blebrr_bconidx != bconidx) && (NULL == elt));        
     }
 
-    if (!blebrr_beacon && NULL == elt)
+    if (!is_proxy_beacon && NULL == elt)
     {
         elt = blebrr_dequeue();
-        blebrr_beacon = 1;
+        is_proxy_beacon = 1;
     }
 
     if (NULL == elt)
@@ -525,25 +582,33 @@ DECL_STATIC API_RESULT blebrr_update_advdata(void)
     /* Set the type */
     type = (BRR_BCON_COUNT == elt->type) ? BRR_BCON_PASSIVE : elt->type;
 
-    /* Update global adv bcon type */
-    /* blebrr_adv_bcon_type = type; */
-
     /* Set the advertising data */
     blebrr_advrepeat_count = 1;
-    blebrr_advertise_data_pl(type, elt->pdata, elt->pdatalen);
-    /* BLEBRR_LOG("\n ### [ADV-Tx]: blebrr adv send of type 0x%02X:\n", type);
-    appl_dump_bytes(elt->pdata, elt->pdatalen); */
+    blebrr_advertise_data_pl(type, elt->pdata, elt->pdatalen); 
 
     /* Is Adv data type in element? */
     if (BRR_BCON_COUNT == elt->type)
     {
+#ifdef  BLEBRR_LP_SUPPORT
+        blebrr_beacon = 0;
+#endif
         /* Yes, Free the element */
         EM_free_mem(elt->pdata);
         elt->pdatalen = 0;
     }
+#ifdef  BLEBRR_LP_SUPPORT    
+    else
+    {
+        blebrr_beacon = 1;
+    }
+#endif    
 
     return API_SUCCESS;
 }
+
+#if 0
+DECL_STATIC void blebrr_timer_restart (UINT32 timeout);
+#endif
 
 
 /**
@@ -559,7 +624,7 @@ DECL_STATIC API_RESULT blebrr_update_advdata(void)
  *
  *  \return void
  */
-DECL_STATIC void blebrr_send
+DECL_STATIC API_RESULT blebrr_send
                  (
                      UCHAR type,
                      void * pdata,
@@ -587,8 +652,8 @@ DECL_STATIC void blebrr_send
     elt->pdata = EM_alloc_mem(packet_len);
     if (NULL == elt->pdata)
     {
-        BLEBRR_LOG("Failed to allocate memory!\n");
-        return;
+//        BLEBRR_LOG("Failed to allocate memory!\n");
+        return API_FAILURE;
     }
 
     if (offset >= 1)
@@ -610,6 +675,14 @@ DECL_STATIC void blebrr_send
     if (EM_TIMER_HANDLE_INIT_VAL != blebrr_timer_handle)
     {
         /* Yes. Do nothing */
+        if (BLEBRR_STATE_SCAN_ENABLED == BLEBRR_GET_STATE())
+        {
+            retval = EM_stop_timer(blebrr_timer_handle);
+            blebrr_timer_handle = EM_TIMER_HANDLE_INIT_VAL;
+            
+            if(retval == EM_SUCCESS)
+                blebrr_scan_pl (MS_FALSE);          
+        }
     }
     else
     {
@@ -619,11 +692,22 @@ DECL_STATIC void blebrr_send
          */
         if (BLEBRR_STATE_SCAN_ENABLED == BLEBRR_GET_STATE())
         {
-            /* printf ("Trigger Tx...\r\n"); */
+//            printf ("Trigger Tx...\r\n"); 
             blebrr_scan_pl (MS_FALSE);
 
             /* Update state */
             BLEBRR_SET_STATE(BLEBRR_STATE_IN_SCAN_DISABLE);
+        }
+        else if (BLEBRR_STATE_ADV_ENABLED == BLEBRR_GET_STATE())
+        {
+            blebrr_adv_restart = MS_TRUE;
+            blebrr_timer_stop();
+                
+            /* Disable Advertising */
+            blebrr_advertise_pl(MS_FALSE);
+
+            /* Update state */
+            BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_DISABLE);
         }
         else if (BLEBRR_STATE_IDLE == BLEBRR_GET_STATE())
         {
@@ -646,7 +730,7 @@ DECL_STATIC void blebrr_send
         }
     }
 
-    return;
+    return API_SUCCESS;
 }
 
 
@@ -760,6 +844,11 @@ DECL_STATIC API_RESULT blebrr_bcon_send(BRR_HANDLE * handle, void * pdata, UINT1
                     info->bcon_data    = blebrr_gap_adv_data[abs_index].data + pl_advdata_offset;
                     info->bcon_datalen = blebrr_gap_adv_data[abs_index].datalen - pl_advdata_offset;
                 }
+                else
+                {
+                    /* Enable Interleaving */
+                    blebrr_scan_interleave = MS_TRUE;
+                }
 
                 /* Check if beacon element is free */
                 if (0 != blebrr_bcon[bconidx].pdatalen)
@@ -777,6 +866,7 @@ DECL_STATIC API_RESULT blebrr_bcon_send(BRR_HANDLE * handle, void * pdata, UINT1
 
                 /* Update element type */
                 elt->type = type;
+
 
                 /* Schedule to send */
                 blebrr_send
@@ -841,6 +931,7 @@ DECL_STATIC API_RESULT blebrr_bcon_send(BRR_HANDLE * handle, void * pdata, UINT1
 */
 DECL_STATIC API_RESULT blebrr_adv_send(BRR_HANDLE * handle, UCHAR type, void * pdata, UINT16 datalen)
 {
+    API_RESULT retval;
     BLEBRR_Q_ELEMENT * elt;
 
     /* Validate handle */
@@ -857,6 +948,7 @@ DECL_STATIC API_RESULT blebrr_adv_send(BRR_HANDLE * handle, UCHAR type, void * p
 
     /* Enable interleaving */
     blebrr_scan_interleave = MS_TRUE;
+    blebrr_update_advcount = BLEBRR_BCON_READY_TIME;    //send beacon immediately
 
     /* If beacon type, pass to the handler */
     if (MESH_AD_TYPE_BCON == type)
@@ -900,7 +992,7 @@ DECL_STATIC API_RESULT blebrr_adv_send(BRR_HANDLE * handle, UCHAR type, void * p
     elt->type = BRR_BCON_COUNT;
 
     /* Schedule to send */
-    blebrr_send
+    retval = blebrr_send
     (
         type,
         pdata,
@@ -908,6 +1000,11 @@ DECL_STATIC API_RESULT blebrr_adv_send(BRR_HANDLE * handle, UCHAR type, void * p
         elt
     );
 
+    if(retval == API_FAILURE)
+        blebrr_dequeue_manual();
+    else
+        blebrr_datacount++;
+    
     /* Unlock */
     BLEBRR_UNLOCK();
 
@@ -922,13 +1019,23 @@ DECL_STATIC void blebrr_adv_sleep(BRR_HANDLE * handle)
     /* Set bearer sleep state */
     blebrr_sleep = MS_TRUE;
 
-    if (BLEBRR_STATE_SCAN_ENABLED == BLEBRR_GET_STATE())
+    MS_prov_stop_interleave_timer();
+
+    MS_proxy_server_stop_timer();
+
+    if (BLEBRR_STATE_SCAN_ENABLED == BLEBRR_GET_STATE() ||
+        BLEBRR_STATE_IDLE == BLEBRR_GET_STATE())
     {
         /* Disable Scan */
         blebrr_scan_pl(MS_FALSE);
 
         /* Update state */
-        BLEBRR_SET_STATE(BLEBRR_STATE_IN_SCAN_DISABLE);
+        BLEBRR_SET_STATE(BLEBRR_STATE_IDLE);
+    }
+    else if(BLEBRR_STATE_ADV_ENABLED == BLEBRR_GET_STATE())
+    {
+        /* Disable Advertising */
+        blebrr_advertise_pl(MS_FALSE);
     }
 
     /* Enter platform sleep */
@@ -944,15 +1051,28 @@ DECL_STATIC void blebrr_adv_wakeup(BRR_HANDLE * handle, UINT8 mode)
     /* Exit platform sleep */
     EM_exit_sleep_pl();
 
-    if (BRR_RX & mode)
-    {
-        /* Reset bearer sleep state */
-        blebrr_sleep = MS_FALSE;
+    /* Reset bearer sleep state */
+    blebrr_sleep = MS_FALSE;
 
-    if (BLEBRR_STATE_IDLE == BLEBRR_GET_STATE())
+    if (BRR_TX & mode)
     {
-        /* Enable Scan */
-        blebrr_scan_pl(MS_TRUE);
+        if (BLEBRR_STATE_IDLE == BLEBRR_GET_STATE())
+        {
+            blebrr_update_advcount = BLEBRR_BCON_READY_TIME; //send beacon immediately
+            /* Enable Advertise */
+            blebrr_lp_flag = MS_TRUE;
+            blebrr_update_advdata();
+
+            /* Update state */
+            BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_ENABLE);
+        }
+    }
+    else if (BRR_RX & mode)
+    {
+        if (BLEBRR_STATE_IDLE == BLEBRR_GET_STATE())
+        {
+            /* Enable Scan */
+            blebrr_scan_pl(MS_TRUE);
 
             /* Update state */
             BLEBRR_SET_STATE(BLEBRR_STATE_IN_SCAN_ENABLE);
@@ -961,6 +1081,149 @@ DECL_STATIC void blebrr_adv_wakeup(BRR_HANDLE * handle, UINT8 mode)
 
     BLEBRR_UNLOCK_VOID();
 }
+
+API_RESULT blebrr_sleep_handler(void)
+{
+    API_RESULT retval;
+    retval=MS_brr_sleep();
+    return retval;
+}
+
+API_RESULT blebrr_wakeup_handler(void)
+{
+    API_RESULT retval;
+    UCHAR state;
+
+    /* Fetch PROXY feature state */
+    MS_access_cm_get_features_field(&state, MS_FEATURE_PROXY);
+
+    if(state == MS_TRUE)
+    {
+        retval = MS_brr_wakeup(BRR_TX|BRR_RX);
+    }
+    else
+    {
+        retval = MS_brr_wakeup(BRR_RX);
+    }
+    
+    return retval;
+}
+
+static void enter_lp_sleep_mode (void)
+{
+    light_timeout_handle();
+    hal_pwrmgr_unlock(MOD_USR1);        
+    blebrr_sleep_handler();
+    printf("sleep mode:%d\n", isSleepAllow());
+}
+
+
+void blebrr_lp_mode (void * args, UINT16 size)
+{
+    UCHAR       mode;
+    UCHAR       glp_mode;
+    blebrr_lp_thandle = EM_TIMER_HANDLE_INIT_VAL;
+
+    UCHAR state;
+
+    /* Fetch PROXY feature state */
+    MS_access_cm_get_features_field(&state, MS_FEATURE_PROXY);
+
+    MS_IGNORE_UNUSED_PARAM(size);
+
+    mode = (*((UCHAR *)args));
+    if(mode == BLEBRR_LP_OFF)
+    {
+        pwroff_cfg_t pwr_wkp_cfg[]={{P14,NEGEDGE}};
+        hal_pwrmgr_poweroff( pwr_wkp_cfg, sizeof(pwr_wkp_cfg)/sizeof(pwr_wkp_cfg[0]) );
+    }
+    else if(mode == BLEBRR_LP_SLEEP)
+    {
+        blebrr_wakeup_handler();
+        if(state != MS_TRUE)
+        {
+            glp_mode = BLEBRR_LP_WKP;
+            EM_start_timer 
+            (
+                &blebrr_lp_thandle, 
+                EM_TIMEOUT_MILLISEC | BLEBRR_LP_PROVISIONED_WKP_TIMEOUT, 
+                blebrr_lp_mode, 
+                (void *)&glp_mode, 
+                sizeof(glp_mode)
+            );
+        }
+        
+    }
+    else
+    {
+        glp_mode = BLEBRR_LP_SLEEP;
+        EM_start_timer 
+        (
+            &blebrr_lp_thandle, 
+            EM_TIMEOUT_MILLISEC | BLEBRR_LP_PROVISIONED_SLP_TIMEOUT, 
+            blebrr_lp_mode, 
+            (void *)&glp_mode, 
+            sizeof(glp_mode)
+        );
+        enter_lp_sleep_mode();
+    }
+}
+
+
+API_RESULT blebrr_lp_start(UCHAR mode)
+{
+    API_RESULT retval;
+    UCHAR state;
+    UINT32 timeout;
+
+    /* Fetch PROXY feature state */
+    MS_access_cm_get_features_field(&state, MS_FEATURE_PROXY);
+
+    switch(mode)
+    {
+        case BLEBRR_LP_OFF:
+        {
+            timeout = BLEBRR_LP_UNPROVISION_TIMEOUT;
+        }
+        break;
+        case BLEBRR_LP_SLEEP:
+        {
+            timeout = EM_TIMEOUT_MILLISEC | BLEBRR_LP_PROVISIONED_SLP_TIMEOUT;
+        }
+        break;
+        case BLEBRR_LP_WKP:
+        {
+            timeout = EM_TIMEOUT_MILLISEC | BLEBRR_LP_PROVISIONED_WKP_TIMEOUT;
+        }
+        break;
+        default:
+        break;
+        
+    }
+
+    retval = EM_start_timer 
+            (
+                &blebrr_lp_thandle, 
+                timeout, 
+                blebrr_lp_mode, 
+                (void *)&mode, 
+                sizeof(mode)
+            );
+
+    if(mode == BLEBRR_LP_SLEEP)
+        enter_lp_sleep_mode();
+
+    return retval;
+    
+}
+
+void blebrr_lp_stop(void)
+{
+    EM_stop_timer (blebrr_lp_thandle);
+    blebrr_lp_thandle = EM_TIMER_HANDLE_INIT_VAL;
+}
+
+
 #endif /* BLEBRR_LP_SUPPORT */
 
 /**
@@ -994,8 +1257,6 @@ DECL_STATIC void blebrr_advscan_timeout_handler (void * args, UINT16 size)
             if (!blebrr_advertise_pl (MS_FALSE))        // HZF
                 /* Update state */
                 BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_DISABLE);
-//			else                                        // HZF
-//				blebrr_handle_evt_adv_complete(0);
             break;
 
         case BLEBRR_STATE_SCAN_ENABLED:
@@ -1008,7 +1269,7 @@ DECL_STATIC void blebrr_advscan_timeout_handler (void * args, UINT16 size)
 
         default:
             /* Should not reach here */
-		BLEBRR_LOG("=======blebrr_advscan_timeout_handler error: state = %2X, state will not change\r\n", BLEBRR_GET_STATE());
+		//BLEBRR_LOG("=======blebrr_advscan_timeout_handler error: state = %2X, state will not change\r\n", BLEBRR_GET_STATE());
             break;
     }
 
@@ -1029,7 +1290,7 @@ DECL_STATIC void blebrr_advscan_timeout_handler (void * args, UINT16 size)
 DECL_STATIC void blebrr_timer_start (UINT32 timeout)
 {
     EM_RESULT retval;
-//printf("<T>");
+    blebrr_timer_handle = EM_TIMER_HANDLE_INIT_VAL;
     retval = EM_start_timer
              (
                  &blebrr_timer_handle,
@@ -1044,6 +1305,46 @@ DECL_STATIC void blebrr_timer_start (UINT32 timeout)
         /* TODO: Log */
     }
 }
+
+
+DECL_STATIC void blebrr_timer_stop (void)
+{    
+    
+    EM_stop_timer(blebrr_timer_handle);
+    blebrr_timer_handle = EM_TIMER_HANDLE_INIT_VAL;
+}
+
+
+
+#if 0
+/**
+ *  \brief
+ *
+ *  \par Description
+ *
+ *
+ *  \param timeout
+ *
+ *  \return void
+ */
+DECL_STATIC void blebrr_timer_restart (UINT32 timeout)
+{
+    EM_RESULT retval;
+//    printf("before blebrr_timer_handle:%d\n",blebrr_timer_handle);
+    retval = EM_restart_timer
+             (
+                 blebrr_timer_handle,
+                 timeout
+             );
+//    printf("after blebrr_timer_handle:%d\n",blebrr_timer_handle);
+
+    if (EM_SUCCESS != retval)
+    {
+        /* TODO: Log */
+    }
+}
+#endif
+
 
 
 /**
@@ -1074,32 +1375,13 @@ void blebrr_pl_scan_setup (UCHAR enable)
         /* Is data available in queue to be sent? */
         if (0 != blebrr_datacount)
         {
-            /* printf ("DATA: %d\n", blebrr_datacount); */
             UCHAR depth=blebrr_get_queue_depth();
-
-          
-//            if(depth>8)
-//            {
-//                blebrr_scanTimeOut -= BLEBRR_SCAN_ADJ_STEP;
-//
-//            }
-//            else if(depth<3)
-//            {
-//                blebrr_scanTimeOut += BLEBRR_SCAN_ADJ_STEP; 
-//            }
 
             if(depth>0)
                 blebrr_scanTimeOut = BLEBRR_SCAN_ADJ_THD_MIN;
             else
                 blebrr_scanTimeOut = BLEBRR_SCAN_ADJ_THD_MAX;
-
-            if(blebrr_scanTimeOut > BLEBRR_SCAN_ADJ_THD_MAX)
-                blebrr_scanTimeOut = BLEBRR_SCAN_ADJ_THD_MAX;
-
-            if(blebrr_scanTimeOut < BLEBRR_SCAN_ADJ_THD_MIN)
-                blebrr_scanTimeOut = BLEBRR_SCAN_ADJ_THD_MIN;    
-
-
+  
              /* Yes, Start bearer timer for Scan Timeout */
             blebrr_timer_start ((EM_TIMEOUT_MILLISEC | blebrr_scanTimeOut));
         }
@@ -1149,6 +1431,8 @@ void blebrr_pl_scan_setup (UCHAR enable)
 void blebrr_pl_advertise_setup (UCHAR enable)
 {
     BLEBRR_LOCK_VOID();
+    UCHAR adv_repeat_count;
+    API_RESULT retval;
 
 #ifdef BLEBRR_ENABLE_ADV_TRACE
     BLEBRR_LOG ("Adv Setup - %d", enable);
@@ -1163,35 +1447,74 @@ void blebrr_pl_advertise_setup (UCHAR enable)
         /* Start bearer timer for Adv Timeout */
         if (blebrr_scan_interleave == MS_TRUE)
         {
-            blebrr_timer_start (BLEBRR_ADV_TIMEOUT);
+            blebrr_timer_start (EM_TIMEOUT_MILLISEC | BLEBRR_ADV_TIMEOUT);
         }
+        
     }
     else
     {
-        if (BLEBRR_ADVREPEAT_COUNT > blebrr_advrepeat_count)
+        if (MS_TRUE == blebrr_sleep)
         {
-            blebrr_advrepeat_count++;
-            blebrr_advertise_pl(MS_TRUE);
-
             /* Update state */
-            BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_ENABLE);
+            blebrr_adv_restart = MS_FALSE;
+            BLEBRR_SET_STATE(BLEBRR_STATE_IDLE);
+            return;
         }
-        else
+        
+        if(blebrr_adv_restart == MS_TRUE)
         {
-        	if (MS_TRUE != blebrr_sleep)
+            blebrr_adv_restart = MS_FALSE;
+            blebrr_update_advcount = BLEBRR_BCON_READY_TIME;
+            retval = blebrr_update_advdata();
+
+            if (API_SUCCESS != retval)
             {
-                /* No, Enable Scanning */
+                /* Enale Scan */
                 blebrr_scan_pl(MS_TRUE);
 
                 /* Update state */
                 BLEBRR_SET_STATE(BLEBRR_STATE_IN_SCAN_ENABLE);
             }
-        	else
-        	{
+            else
+            {
                 /* Update state */
-                BLEBRR_SET_STATE(BLEBRR_STATE_IDLE);
-        	}
+                BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_ENABLE);
+            }
+            
         }
+        else
+        {       
+            adv_repeat_count = (blebrr_prov_started == MS_TRUE)?BLEBRR_ADVREPEAT_PRO_COUNT:BLEBRR_ADVREPEAT_NET_COUNT;
+            if (/*blebrr_beacon && */(adv_repeat_count > blebrr_advrepeat_count))
+            {
+                blebrr_advrepeat_count++;
+                blebrr_advertise_pl(MS_TRUE);
+
+                /* Update state */
+                BLEBRR_SET_STATE(BLEBRR_STATE_IN_ADV_ENABLE);
+            }
+            else
+            {
+        	    /* No, Enable Scanning */
+                blebrr_scan_pl(MS_TRUE);
+
+#ifdef  BLEBRR_LP_SUPPORT 
+                
+                UCHAR glp_mode;
+                if((blebrr_lp_flag == MS_TRUE) &&(blebrr_beacon == 1))
+                {
+                    blebrr_beacon =0;
+                    blebrr_lp_flag = MS_FALSE;
+                    glp_mode = BLEBRR_LP_WKP;
+                    blebrr_lp_start(glp_mode);
+                }
+#endif
+
+                /* Update state */
+                BLEBRR_SET_STATE(BLEBRR_STATE_IN_SCAN_ENABLE);
+            }
+        }
+        
     }
 
     BLEBRR_UNLOCK_VOID();
@@ -1379,6 +1702,7 @@ void blebrr_register(void)
 #ifdef BLEBRR_LP_SUPPORT
     blebrr_adv.bearer_sleep = blebrr_adv_sleep;
     blebrr_adv.bearer_wakeup = blebrr_adv_wakeup;
+    blebrr_lp_thandle = EM_TIMER_HANDLE_INIT_VAL;
 #endif /* BLEBRR_LP_SUPPORT */
 
     MS_brr_add_bearer(BRR_TYPE_ADV, &blebrr_adv, &blebrr_advhandle);

@@ -1,4 +1,4 @@
-
+﻿
 /**
  *  \file blebrr_gatt.c
  *
@@ -127,10 +127,10 @@ DECL_STATIC API_RESULT blebrr_gatt_send
                  datalen
              );
 
-    if (API_SUCCESS != retval)
-    {
-        BLEBRR_LOG("Error - 0x%04X\n", retval);
-    }
+//    if (API_SUCCESS != retval)
+//    {
+//        BLEBRR_LOG("Error - 0x%04X\n", retval);
+//    }
 
     return retval;
 }

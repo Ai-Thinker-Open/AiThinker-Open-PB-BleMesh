@@ -59,7 +59,6 @@
 
 
 
-
 /*******************************************************************************
  * Global Var
  */
@@ -75,9 +74,6 @@
  */
 
 int gen_aligenie_auth_val( void );
-int gen_aligenie_auth_key(uint8* rand, uint8 rsiz, uint8* pid, uint8 psiz, uint8* mac, uint8 msiz, uint8* secr, uint8 ssiz);
-int cpy_aligenie_auth_key(uint8* dest);
-void aligenie_enc_aes128_cbc(uint8* key, uint8* ptxt, uint8* cipr);
-void aligenie_dec_aes128_cbc(uint8* key, uint8* ptxt, uint8* cipr);
+
 
 #endif

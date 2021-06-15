@@ -14,10 +14,14 @@
 #ifndef _H_MS_TRN_API_
 #define _H_MS_TRN_API_
 
-
 /* --------------------------------------------- Header File Inclusion */
 /* Lower Transport Layer */
 #include "MS_ltrn_api.h"
+
+extern uint8   cfg_retry_flag;
+extern void blebrr_scan_pl (UCHAR enable);
+
+
 
 /* --------------------------------------------- Global Definitions */
 
@@ -202,6 +206,20 @@
 /** \} */
 
 /** \} */
+
+typedef API_RESULT (*TRN_HEARTBEAT_RCV_CB)
+        (
+            MS_NET_ADDR addr,
+            MS_SUBNET_HANDLE subnet_handle,
+            UINT8   countlog
+        ) DECL_REENTRANT;
+
+typedef API_RESULT (*TRN_HEARTBEAT_RCV_TIMEOUT_CB)
+        (
+            void
+        ) DECL_REENTRANT;
+
+
 
 /**
  *  \defgroup trn_cb Application Callback
@@ -568,6 +586,13 @@ API_RESULT MS_trn_register
                /* IN */ TRN_NTF_CB        trn_cb,
                /* IN */ MS_TRN_MSG_TYPE   msg_type
            );
+
+API_RESULT MS_trn_heartbeat_register
+           (
+               /* IN */ TRN_HEARTBEAT_RCV_CB rcv_cb,
+               /* IN */ TRN_HEARTBEAT_RCV_TIMEOUT_CB rcv_to_cb
+           );
+
 
 
 /**
@@ -985,6 +1010,15 @@ API_RESULT MS_trn_get_heartbeat_subscription
  *  \return API_SUCCESS or an error code indicating reason for failure
  */
 API_RESULT MS_trn_trigger_heartbeat (/* IN */ UINT8 change_in_feature_bit);
+
+void trn_stop_heartbeat_pub_timer(void);
+
+void trn_start_heartbeat_sub_timer(/* IN */ UINT32 timeout);
+
+void trn_stop_heartbeat_sub_timer(void);
+
+void trn_heartbeat_timer_restart(void);
+
 
 #ifdef __cplusplus
 };

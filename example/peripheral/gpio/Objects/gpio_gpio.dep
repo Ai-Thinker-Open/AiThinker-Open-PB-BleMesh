@@ -1,333 +1,0 @@
-Dependencies for Project 'gpio', Target 'gpio': (DO NOT MODIFY !)
-F (.\Source\main.c)(0x5C9300A8)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (..\..\..\components\inc\rf_phy_driver.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_hw_drv.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_debug.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\adc\adc.h)(0x5D6CC5F8)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-F (..\..\..\misc\jump_table.c)(0x5C8F00C6)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\jump_table.o --omf_browse .\objects\jump_table.crf --depend .\objects\jump_table.d)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\rf_phy_driver.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_hw_drv.h)(0x5C8F00C6)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\adc\adc.h)(0x5D6CC5F8)
-I (..\..\..\components\driver\i2c\i2c_s.h)(0x5CD9339F)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-I (..\..\..\lib\rflib.h)(0x5C8F00C6)
-I (..\..\..\components\driver\spi\spi.h)(0x5CC02098)
-I (..\..\..\components\driver\watchdog\watchdog.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\timer\ap_timer.h)(0x5D0C3E34)
-F (.\Source\gpio_demo.c)(0x5D366FD0)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\gpio_demo.o --omf_browse .\objects\gpio_demo.crf --depend .\objects\gpio_demo.d)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (Source\gpio_demo.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\key\key.h)(0x5D2C4CBD)
-F (.\Source\gpio_Main.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\gpio_main.o --omf_browse .\objects\gpio_main.crf --depend .\objects\gpio_main.d)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-F (.\Source\OSAL_gpio.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\osal_gpio.o --omf_browse .\objects\osal_gpio.crf --depend .\objects\osal_gpio.d)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (Source\gpio_demo.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\gpio\gpio.c)(0x5CC2B03B)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\gpio.o --omf_browse .\objects\gpio.crf --depend .\objects\gpio.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\log\my_printf.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\my_printf.o --omf_browse .\objects\my_printf.crf --depend .\objects\my_printf.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\driver\uart\uart.c)(0x5D367D49)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-F (..\..\..\components\driver\pwrmgr\pwrmgr.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\pwrmgr.o --omf_browse .\objects\pwrmgr.crf --depend .\objects\pwrmgr.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\clock\clock.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\clock.o --omf_browse .\objects\clock.crf --depend .\objects\clock.d)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-F (..\..\..\components\driver\adc\adc.c)(0x5D6CC5F8)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\adc\adc.h)(0x5D6CC5F8)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\common\common.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\common.o --omf_browse .\objects\common.crf --depend .\objects\common.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\driver\key\key.c)(0x5D2C4CBD)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\key.o --omf_browse .\objects\key.crf --depend .\objects\key.d)
-I (..\..\..\components\driver\key\key.h)(0x5D2C4CBD)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-F (..\..\..\lib\rf.lib)(0x5D75F560)()
-F (RTE\Device\ARMCM0\startup_ARMCM0.s)(0x5C99D255)(--cpu Cortex-M0 --li -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1" --pd "ARMCM0 SETA 1"--list .\listings\startup_armcm0.lst --xref -o .\objects\startup_armcm0.o --depend .\objects\startup_armcm0.d)
-F (RTE\Device\ARMCM0\system_ARMCM0.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O0 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\common -I..\..\..\components\osal\include -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\ble\controller\include -I..\..\..\components\profiles\DevInfo -I..\..\..\components\profiles\GATT -I..\..\..\components\profiles\SimpleProfile -I..\..\..\components\profiles\Roles -I..\..\..\components\profiles\hrs -I..\..\..\components\driver\common -I..\..\..\components\driver\log -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\uart -I..\..\..\components\driver\adc -I..\..\..\components\driver\clock -I..\..\..\components\driver\spi -I..\..\..\components\driver\key -I..\..\..\components\driver\i2c -I..\..\..\components\driver\watchdog -I..\..\..\components\driver\timer -I..\..\..\components\driver\kscan -I..\..\..\lib -I.\Source -DADV_NCONN_CFG=0x01   -DADV_CONN_CFG=0x02   -DSCAN_CFG=0x04    -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02   -DPERIPHERAL_CFG=0x04   -DCENTRAL_CFG=0x08   -DHOST_CONFIG=0x4  -I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\peripheral\gpio\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DCFG_QFN32 -DCFG_SLEEP_MODE="PWR_MODE_NO_SLEEP" -DDEBUG_INFO="3"-o .\objects\system_armcm0.o --omf_browse .\objects\system_armcm0.crf --depend .\objects\system_armcm0.d)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)

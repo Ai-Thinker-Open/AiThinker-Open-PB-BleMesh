@@ -300,7 +300,7 @@ void Hal_IIC_Write_TXFIFO(AP_I2C_TypeDef *Ins,uint8_t data)
 void __attribute__((used)) Hal_I2C0_IRQHandler(void)
 {
 	I2C_Evt_t irq_s;
-	irq_s.type= (AP_I2C0->IC_INTR_STAT);
+	irq_s.type= (I2C_EVT)(AP_I2C0->IC_INTR_STAT);
 	(*I2C0_IRQ_Handle)(&irq_s);
 }
 
@@ -311,6 +311,6 @@ void __attribute__((used)) Hal_I2C0_IRQHandler(void)
 void __attribute__((used)) Hal_I2C1_IRQHandler(void)
 {
 	I2C_Evt_t irq_s;
-	irq_s.type= AP_I2C1->IC_INTR_STAT;
+	irq_s.type= (I2C_EVT)(AP_I2C1->IC_INTR_STAT);
 	(*I2C1_IRQ_Handle)(&irq_s);
 }

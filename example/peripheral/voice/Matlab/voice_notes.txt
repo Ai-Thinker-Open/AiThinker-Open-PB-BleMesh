@@ -1,0 +1,306 @@
+1. Voice data structures
+
+// Voice encode mode
+// Due to a hardware bug, the actual configuration is the following
+// VOICE_ENCODE_PCMA = 0: invalid
+// VOICE_ENCODE_PCMU = 1: CVSD
+// VOICE_ENCODE_CVSD = 2: PCM-u
+// VOICE_ENCODE_BYP = 3: not compressed raw data
+// It will be fixed in A2 revision back to the its originally intended configuration
+typedef enum {
+	VOICE_ENCODE_PCMA = 0,
+	VOICE_ENCODE_PCMU = 1,
+	VOICE_ENCODE_CVSD = 2,
+	VOICE_ENCODE_BYP = 3
+}VOICE_ENCODE_t;
+
+// Voice sample rate
+typedef enum {
+	VOICE_RATE_64K = 0,
+	VOICE_RATE_32K = 1,
+	VOICE_RATE_16K = 2,
+	VOICE_RATE_8K = 3
+}VOICE_RATE_t;
+
+// Voice notch filter configuration
+typedef enum {
+	VOICE_NOTCH_BYP = 0,
+	VOICE_NOTCH_1	= 1,
+	VOICE_NOTCH_2	= 2,
+	VOICE_NOTCH_3	= 3
+}VOICE_NOTCH_t;
+
+// Voice polarity selection
+typedef enum {
+	VOICE_POLARITY_POS = 0,
+	VOICE_POLARITY_NEG = 1
+}VOICE_POLARITY_t;
+
+enum{
+  HAL_VOICE_EVT_DATA = 1,
+  HAL_VOICE_EVT_FAIL = 0xff
+};
+
+// Voice configuration structure
+typedef struct _voice_Cfg_t{
+	bool						voiceSelAmicDmic;
+	GPIO_Pin_e 			dmicDataPin;
+	GPIO_Pin_e 			dmicClkPin;
+	uint8_t					amicGain;
+	uint8_t					voiceGain;
+	VOICE_ENCODE_t	voiceEncodeMode;
+	VOICE_RATE_t 		voiceRate;
+	bool						voiceAutoMuteOnOff;
+}voice_Cfg_t;
+
+// Voice event structure
+typedef struct _voice_Evt_t{
+  int       type;
+  uint32_t* data;
+  uint32_t  size;
+}voice_Evt_t;
+
+typedef void (*voice_Hdl_t)(voice_Evt_t* pev);
+
+// Voice context structure
+typedef struct _voice_Contex_t{
+  bool      		enable;
+	voice_Cfg_t		cfg;
+  voice_Hdl_t		evt_handler;
+}voice_Ctx_t;
+
+
+2. Voice API functions
+
+// Enable voice core
+void hal_voice_enable(void);
+
+// Disable voice core
+void hal_voice_disable(void);
+
+// Select DMIC
+void hal_voice_dmic_mode(void);
+
+// Select AMIC
+void hal_voice_amic_mode(void);
+
+// Open a GPIO pin for DMIC
+void hal_voice_dmic_open(GPIO_Pin_e dmicDataPin, GPIO_Pin_e dmicClkPin);
+
+// Set PGA gain for AMIC
+void hal_voice_amic_gain(uint8_t amicGain);
+
+// Set voice process gain
+void hal_voice_gain(uint8_t voiceGain);
+
+// Set voice encoding mode
+void hal_voice_encode(VOICE_ENCODE_t voiceEncodeMode);
+
+// Set voice data rate
+void hal_voice_rate(VOICE_RATE_t voiceRate);
+
+// Enable voice auto-mute
+void hal_voice_amute_on(void);
+
+// Disable voice auto-mute
+void hal_voice_amute_off(void);
+
+
+// Voice interrupt handler
+void __attribute__((weak)) hal_ADC_IRQHandler(void);
+
+
+// Allocate memory and power manager for voice
+void hal_voice_init(void);
+
+// Configure voice capture
+int hal_voice_config(voice_Cfg_t cfg, voice_Hdl_t evt_handler);
+
+// Start voice capture
+int hal_voice_start(void);
+
+// Stop voice capture
+int hal_voice_stop(void);
+
+// Clear memory and power manager for voice
+int hal_voice_clear(void);
+
+
+3. Voice capture application examples:
+
+3.1. Variables for voice capture with voice buffer
+
+#define    MAX_VOICE_BUF_SIZE		24576
+
+static uint8 voiceDemo_TaskID;   // Task ID for internal task/event processing
+
+static int voiceWriteID;
+
+static uint32_t voiceBuf[MAX_VOICE_BUF_SIZE];
+
+static int voiceBufIndex;
+
+
+3.2. Voice event handler with voice buffer, read voice data and write to voice buffer
+
+static void voice_evt_handler_buf(voice_Evt_t *pev)
+{
+  if(pev->type == HAL_VOICE_EVT_DATA){
+//		LOG("Type matched\n");
+    int n;
+		for (n = 0; n < pev->size; n++) {
+			voiceBuf[voiceBufIndex] = pev->data[n];
+			voiceBufIndex++;
+		}
+		voiceWriteID++;
+		LOG("Voice data saved successfully:");
+		LOG("%d %d\n", voiceWriteID, pev->data[pev->size-1]);
+	}		
+}
+
+
+3.3. Configure and start voice capture task 
+static void voiceCaptureTask( void )
+{		
+  voice_Cfg_t cfg;
+	cfg.voiceSelAmicDmic = 1;
+	cfg.dmicDataPin = P4;
+	cfg.dmicClkPin = P5;
+	cfg.amicGain = 0;
+	cfg.voiceGain = 40;
+	cfg.voiceEncodeMode = VOICE_ENCODE_CVSD;
+	cfg.voiceRate = VOICE_RATE_8K;
+	cfg.voiceAutoMuteOnOff = 1;
+	
+  volatile int voiceConfigStatus = hal_voice_config(cfg, voice_evt_handler_buf);
+  if(voiceConfigStatus) {
+		LOG("Voice configuration failed\n");
+    return;
+	}
+	else {
+		LOG("Voice configuration succeeded\n");
+	}
+
+	
+	LOG("Voice capture started\n");
+	
+	
+ // Restart timer
+ osal_start_timerEx( voiceDemo_TaskID, voiceStopTask_EVT, 5000 );
+ 
+ hal_voice_start();
+}
+
+
+3.4. Stop voice capture task
+
+static void voiceStopTask( void )
+{      
+  hal_voice_stop();
+	
+	LOG("Voice capture stopped\n");
+	LOG("Voice data word saved:");
+	LOG("%d\n", voiceBufIndex);
+	
+	if (hal_uart_get_tx_ready() == PPlus_SUCCESS) {
+		int voiceTxmitIndex;
+		voiceTxmitIndex = 0;
+		while (voiceTxmitIndex < voiceBufIndex) {
+			LOG("%x\n",voiceBuf[voiceTxmitIndex]);
+			voiceTxmitIndex++;		
+		}
+		LOG("Voice data byte transmitted:");
+		LOG("%d\n", voiceTxmitIndex);
+		
+		LOG("Voice data buffer transmitted successfully");
+	}
+		
+}
+
+
+3.5. Initialize voice buffer pointers and start voice capture 
+
+void voice_Init( uint8 task_id )
+{
+  voiceDemo_TaskID = task_id;
+	
+  voiceWriteID = 0;
+	
+  voiceBufIndex = 0;
+	
+  voiceCaptureTask();
+	 
+}
+
+3.6. Voice event process
+
+uint16 voice_ProcessEvent( uint8 task_id, uint16 events )
+{
+  
+  VOID task_id; // OSAL required parameter that isn't used in this function
+  LOG("voice_ProcessEvent: 0x%x\n",events);
+  
+  if ( events & SYS_EVENT_MSG )
+  {
+    uint8 *pMsg;
+
+    if ( (pMsg = osal_msg_receive( voiceDemo_TaskID )) != NULL )
+    {
+      voice_ProcessOSALMsg( (osal_event_hdr_t *)pMsg );
+
+      // Release the OSAL message
+      VOID osal_msg_deallocate( pMsg );
+    }
+
+    // return unprocessed events
+    return (events ^ SYS_EVENT_MSG);
+  }
+ 
+  if ( events == voiceCaptureTask_EVT )
+  {
+    LOG("voiceCaptureTask_EVT\n");
+    voiceCaptureTask();
+    
+    return (events ^ voiceCaptureTask_EVT);
+  }  
+	
+	if ( events == voiceStopTask_EVT )
+  {
+    // Perform periodic heart rate task
+    LOG("voiceStopTask_EVT\n");
+    voiceStopTask();
+    
+    return (events ^ voiceStopTask_EVT);
+  }  
+  
+  // Discard unknown events
+  return 0;
+}
+
+3.7. OSAL initialization for voice applications
+
+const pTaskEventHandlerFn tasksArr[] =
+{
+  LL_ProcessEvent,
+  voice_ProcessEvent
+};
+
+void osalInitTasks( void )
+{
+  uint8 taskID = 0;
+
+  tasksEvents = (uint16 *)osal_mem_alloc( sizeof( uint16 ) * tasksCnt);
+  osal_memset( tasksEvents, 0, (sizeof( uint16 ) * tasksCnt));
+
+  LL_Init( taskID++ );
+  /* Application */
+  voice_Init( taskID );
+}
+
+4. Matlab scripts for captured voice data processing and playback
+
+
+Process and playback raw voice data: pcmraw.m
+Process and playback PCM-u coded voice data: pcmu.m
+Process and playback PCM-A coded voice data: pcma.m
+Process and playback CVSD coded voice data: cvsd.m

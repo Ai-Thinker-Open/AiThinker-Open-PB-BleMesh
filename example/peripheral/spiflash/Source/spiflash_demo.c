@@ -53,7 +53,7 @@
 #include "error.h"
 #include "spiflash.h"
 #include "pwrmgr.h"
-#include  "lcd_ST7789VW.h"
+//#include  "lcd_ST7789VW.h"
 
 static uint8 spi_TaskID; 
 
@@ -68,7 +68,7 @@ static uint8 spi_TaskID;
  */
 void spi_demo_Init( uint8 task_id ){
 	spi_TaskID = task_id;
-	osal_start_reload_timer( spi_TaskID, TIMER_10MS_CYCLE , 10);
+	osal_start_reload_timer( spi_TaskID, TIMER_1000MS_CYCLE , 1000);
 }
 
 /*********************************************************************
@@ -89,7 +89,7 @@ hal_spi_t spi ={
 	.spi_index = SPI0,
 };
 
-spi_Cfg_t cfg = {
+spi_Cfg_t spi_cfg = {
 	.sclk_pin = GPIO_P34,
 	.ssn_pin = GPIO_P31,
 	.MOSI = GPIO_P32,
@@ -320,7 +320,7 @@ void spi_gd25q16_write_enable(void)
 	spiflash_write_enable();
 }
 
-void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
+int spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 {
 	uint16_t transmit_len;
 	
@@ -330,7 +330,7 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 			//LOG("\n\nmode=polling,cs_force=true\n");
 			hal_spi_set_force_cs(&spi,true);
 			hal_spi_set_int_mode(&spi,false);
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = (4+len);
 				spi_gd25q16_write_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
@@ -347,7 +347,7 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 			hal_spi_set_force_cs(&spi,false);
 			hal_spi_set_int_mode(&spi,false);
 		
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = ((len/4)*8 + (len%4==0?0:4) + len%4);
 				spi_gd25q16_write_test_set_buffer(false,addr,tx_buf,rx_buf,transmit_len);
@@ -361,7 +361,7 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 			//LOG("\n\nmode=int,cs_force=true\n");	
 			hal_spi_set_force_cs(&spi,true);
 			hal_spi_set_int_mode(&spi,false);
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = (4+len);
 				spi_gd25q16_write_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
@@ -369,13 +369,12 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 				
 				hal_spi_set_force_cs(&spi,true);
 				hal_spi_set_int_mode(&spi,true);
-				hal_spi_int_set_tx_buf(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
+				hal_spi_set_tx_buffer(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
 				hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
 				SPI_INIT_TOUT(to);
-				while(hal_spi_get_transmit_bus_state(&spi) == false)
-				{
-					if(true == SPI_CHECK_TOUT(to,1000000))
-						LOG("timeout");
+				while(hal_spi_get_transmit_bus_state(&spi) == true)
+				{                   
+                    SPI_CHECK_TOUT(to,1000000,"timeout\n")
 				}
 			}
 			break;
@@ -386,23 +385,21 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 			hal_spi_set_force_cs(&spi,false);
 			hal_spi_set_int_mode(&spi,false);
 		
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = ((len/4)*8 + (len%4==0?0:4) + len%4);
 				spi_gd25q16_write_test_set_buffer(false,addr,tx_buf,rx_buf,transmit_len);
 				spi_gd25q16_write_enable();
 				
 				hal_spi_set_force_cs(&spi,false);
-				hal_spi_set_int_mode(&spi,true);
-				
-				hal_spi_int_set_tx_buf(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
+				hal_spi_set_int_mode(&spi,true);				
+				hal_spi_set_tx_buffer(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
 				hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
 
 				SPI_INIT_TOUT(to);
-				while(hal_spi_get_transmit_bus_state(&spi) == false)
+				while(hal_spi_get_transmit_bus_state(&spi) == true)
 				{
-					if(true == SPI_CHECK_TOUT(to,1000000))
-						LOG("timeout");
+                    SPI_CHECK_TOUT(to,1000000,"timeout\n")
 				}
 			}
 			break;
@@ -410,9 +407,70 @@ void spi_gd25q16_write_test(uint16_t addr,uint16_t len,uint16_t testCase)
 			default:
 				break;
 	}
+    return PPlus_SUCCESS;
 }
 
-void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
+/*
+int flash_test(void)
+{
+	uint16_t i,transmit_len = 260;
+	uint32_t addr = 0x800;
+	
+	LOG("\nmode=polling,cs_force=true len=%d ",(transmit_len-4));
+	hal_spi_set_force_cs(&spi,true);
+	hal_spi_set_int_mode(&spi,false);
+	if(hal_spi_get_transmit_bus_state(&spi) == false)
+	{
+		spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
+		hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);		
+		for(i=4;i<260;i++)
+		{
+			LOG("%x ",*(rx_buf+i));
+			if((i>4)&&((i-4)%16==0))
+			{
+				LOG("\n");
+			}
+		}
+	}
+	return PPlus_SUCCESS;
+}
+
+
+int flash_test(void)
+{
+	uint16_t i,transmit_len = 260;
+	uint32_t addr = 0x800;
+	
+	LOG("\nmode=int,cs_force=true len=%d ",(transmit_len-4));
+	hal_spi_set_force_cs(&spi,true);
+	hal_spi_set_int_mode(&spi,true);	
+	if(hal_spi_get_transmit_bus_state(&spi) == false)
+	{
+		spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
+
+		hal_spi_set_tx_buffer(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
+		hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
+
+		SPI_INIT_TOUT(to);
+		while(hal_spi_get_transmit_bus_state(&spi) == true)
+		{
+			SPI_CHECK_TOUT(to,1000000,"timeout\n")		
+		}
+		
+		for(i=4;i<260;i++)
+		{
+			LOG("%x ",*(rx_buf+i));
+			if((i>4)&&((i-4)%16==0))
+			{
+				LOG("\n");
+			}
+		}	
+	}
+	return PPlus_SUCCESS;
+}
+*/
+
+int spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 {
 	uint16_t testCase = 0,transmit_len;
 	
@@ -426,7 +484,7 @@ void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 				//LOG("\nmode=polling,cs_force=true len=%d ",len);
 				hal_spi_set_force_cs(&spi,true);
 				hal_spi_set_int_mode(&spi,false);
-				if(hal_spi_get_transmit_bus_state(&spi) == true)
+				if(hal_spi_get_transmit_bus_state(&spi) == false)
 				{
 					transmit_len = (4+len);
 					spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
@@ -441,7 +499,7 @@ void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 			hal_spi_set_force_cs(&spi,false);
 			hal_spi_set_int_mode(&spi,false);
 			
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = ((len/4)*8 + (len%4==0?0:4) + len%4);
 				spi_gd25q16_read_test_set_buffer(false,addr,tx_buf,rx_buf,transmit_len);
@@ -455,19 +513,18 @@ void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 				//LOG("\nmode=int,cs_force=true len=%d ",len);
 				hal_spi_set_force_cs(&spi,true);
 				hal_spi_set_int_mode(&spi,true);
-				if(hal_spi_get_transmit_bus_state(&spi) == true)
+				if(hal_spi_get_transmit_bus_state(&spi) == false)
 				{
 					transmit_len = (4+len);
 					spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
 
-					hal_spi_int_set_tx_buf(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
+					hal_spi_set_tx_buffer(&spi,spi_tx_buf,512);//care when use int mode,please give spi a tx buf
 					hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
 					
 					SPI_INIT_TOUT(to);
-					while(hal_spi_get_transmit_bus_state(&spi) == false)
+					while(hal_spi_get_transmit_bus_state(&spi) == true)
 					{
-						if(true == SPI_CHECK_TOUT(to,1000000))
-							LOG("timeout");
+                        SPI_CHECK_TOUT(to,1000000,"timeout\n")
 					}
 				
 					spi_gd25q16_print_buffer(tx_buf,rx_buf,transmit_len,3);
@@ -478,19 +535,18 @@ void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 			//LOG("\nmode=int,cs_force=false len=%d ",len);
 			hal_spi_set_force_cs(&spi,false);
 			hal_spi_set_int_mode(&spi,true);
-			if(hal_spi_get_transmit_bus_state(&spi) == true)
+			if(hal_spi_get_transmit_bus_state(&spi) == false)
 			{
 				transmit_len = ((len/4)*8 + (len%4==0?0:4) + len%4);
 				spi_gd25q16_read_test_set_buffer_2(false,addr,tx_buf,rx_buf,transmit_len);
 				
-				hal_spi_int_set_tx_buf(&spi,spi_tx_buf,512);
+				hal_spi_set_tx_buffer(&spi,spi_tx_buf,512);
 				hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
 				
 				SPI_INIT_TOUT(to);
-				while(hal_spi_get_transmit_bus_state(&spi) == false)
+				while(hal_spi_get_transmit_bus_state(&spi) == true)
 				{
-					if(true == SPI_CHECK_TOUT(to,1000000))
-						LOG("timeout");
+                    SPI_CHECK_TOUT(to,1000000,"timeout\n")
 				}
 				
 				spi_gd25q16_print_buffer(tx_buf,rx_buf,transmit_len,4);
@@ -504,6 +560,7 @@ void spi_gd25q16_read_test(uint16_t addr,uint16_t len)
 		if(testCase >= 3)
 			break;
 	}
+    return PPlus_SUCCESS;    
 }
 
 void spi_spi_gd25q16_read_chip(bool check,uint16_t addr_para)
@@ -517,7 +574,7 @@ void spi_spi_gd25q16_read_chip(bool check,uint16_t addr_para)
 		hal_spi_set_force_cs(&spi,true);
 		hal_spi_set_int_mode(&spi,false);
 		
-		if(hal_spi_get_transmit_bus_state(&spi) == true)
+		if(hal_spi_get_transmit_bus_state(&spi) == false)
 		{
 			transmit_len = (4+len);
 			spi_gd25q16_read_test_set_buffer(true,addr_para,tx_buf,rx_buf,transmit_len);
@@ -533,7 +590,7 @@ void spi_spi_gd25q16_read_chip(bool check,uint16_t addr_para)
 		//LOG("\naddr:%x\n",addr);
 		hal_spi_set_force_cs(&spi,true);
 		hal_spi_set_int_mode(&spi,false);
-		if(hal_spi_get_transmit_bus_state(&spi) == true)
+		if(hal_spi_get_transmit_bus_state(&spi) == false)
 		{
 			transmit_len = (4+len);
 			spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
@@ -556,7 +613,7 @@ void spi_spi_gd25q16_read_check(uint32_t addr,uint16_t t_len,uint8_t check_case)
 	
 	hal_spi_set_force_cs(&spi,true);
 	hal_spi_set_int_mode(&spi,false);
-	if(hal_spi_get_transmit_bus_state(&spi) == true)
+	if(hal_spi_get_transmit_bus_state(&spi) == false)
 	{
 		spi_gd25q16_read_test_set_buffer(true,addr,tx_buf,rx_buf,transmit_len);
 		hal_spi_transmit(&spi,tx_buf,rx_buf,transmit_len);
@@ -658,15 +715,17 @@ void spi_test_on_gd25q16(void)
 	static uint16_t testCase = 0;
 	uint16_t len = 256;
 	uint32_t addr = 0;
-	
+//	uint32_t ret;
 	//LOG("test spi on gd25q16b,there may be some differences between differenct slaves\n");
 	//LOG("when use int mode to transmit data,please assign buffer first\n");
 	
-	if(hal_spi_bus_init(&spi,cfg) != PPlus_SUCCESS)
+	if(hal_spi_bus_init(&spi,spi_cfg) != PPlus_SUCCESS)
 	{
 		LOG("spi init err!please check it!\n");
 		while(1);
 	}
+		
+	//ret = flash_test();
 	
 	while(testCase < 5)
 	{
@@ -715,13 +774,13 @@ void spi_test_on_gd25q16(void)
 		
 		testCase++;
 	}
-		
-	if((testCase>=5) && (testCase<100))
+	if((testCase>=5) && (testCase<10))
 	{
 		LOG("testCase:%d\n",testCase);//read a page which data is 00~ff
 		addr = 0x100*8;
 		for(len=1;len<256;len++)
-		spi_gd25q16_read_test(addr,len);
+		spi_gd25q16_read_test(addr,len);		
+		//ret = flash_test();
 		testCase++;
 	}
 	else
@@ -729,17 +788,16 @@ void spi_test_on_gd25q16(void)
 		LOG("test end,no problem\n");
 		while(1);;
 	}
-
 	hal_spi_bus_deinit(&spi);
 }
 
 uint16 spi_demo_ProcessEvent( uint8 task_id, uint16 events )
 {
-	if (events & TIMER_10MS_CYCLE )
+	if (events & TIMER_1000MS_CYCLE )
 	{
 		LOG("\n2s:recycle mode\n");
 		spi_test_on_gd25q16();
-		return (events ^ TIMER_10MS_CYCLE);
+		return (events ^ TIMER_1000MS_CYCLE);
 	}  
 
 	return 0;

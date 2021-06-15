@@ -36,7 +36,7 @@
 
 #include "types.h"
 
-#define OTAF_PARTITION_NUM_MAX  4
+#define OTAF_PARTITION_NUM_MAX  16
 
 enum{
   OTAF_SINGLE_BANK = 0,

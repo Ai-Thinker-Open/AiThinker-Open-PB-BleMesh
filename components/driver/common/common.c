@@ -32,7 +32,7 @@
 
 /*******************************************************************************
 * @file		common.c
-* @brief	Contains all functions support for common function driver£¬such as string function,you can use this driver for spi,adc,uart and so on
+* @brief	Contains all functions support for common function driver,such as string function,you can use this driver for spi,adc,uart and so on
 * @version	0.0
 * @date		18. Oct. 2017
 * @author	qing.han
@@ -45,9 +45,12 @@
 #include "types.h"
 #include "common.h"
 #include "ap_cp.h"
+#include "OSAL_Memory.h"
+#include "hal_mcu.h"
 
 //#include "uart.h"
 extern uint32_t hclk,pclk;
+extern uint8       g_largeHeap[];
 
 
 /**************************************************************************************
@@ -669,7 +672,8 @@ void subWriteReg(uint32_t addr,uint8_t hOff,uint8_t lOff,uint32_t value){
  * @return      None.
  **************************************************************************************/
 void hal_system_init(uint8_t h_system_clk_sel){
-    uint16_t delay=300;
+	uint16_t delay=300;
+	
 	if(h_system_clk_sel == SYS_CLK_RC_32M){
 		hclk = 32000000;
 	}else if(h_system_clk_sel == SYS_CLK_XTAL_16M){
@@ -695,7 +699,6 @@ void hal_system_init(uint8_t h_system_clk_sel){
 		}else{
 			hclk = 96000000;
 		}
-		
 	}
 
 	while (delay > 0)
@@ -770,6 +773,59 @@ void hal_system_soft_reset(void)
 {
     *(volatile uint32_t *) 0x40000010 = 0x00;
 }
+
+
+/**************************************************************************************
+ * @fn          osal_memory_statics
+ *
+ * @brief       This function process for osal memory analize
+ *
+ * input parameters
+ *
+ * @param       None.
+ *
+ * output parameters
+ *
+ * @param       None.
+ *
+ * @return      Memmory free size.
+ **************************************************************************************/
+uint32_t  osal_memory_statics(void)    
+{
+    osalMemHdr_t *header, *current;
+    void *ptr;
+    uint32_t  sum_alloc = 0;
+    uint32_t  sum_free = 0;    
+
+    ptr = (void *)g_largeHeap;
+
+    header = (osalMemHdr_t *)ptr;
+    current = (osalMemHdr_t *)ptr;
+    
+    HAL_ENTER_CRITICAL_SECTION();
+
+    do
+    {     
+        if ((uint32)ptr > (uint32)header + 4096)
+            break;      
+
+        // seek to the last block, return
+        if ( current->val == 0 )       /// val = 0, so len = 0
+            break;
+        
+        if (current->hdr.inUse)
+            sum_alloc += current->hdr.len;
+        else
+            sum_free += current->hdr.len;
+    
+        current = (osalMemHdr_t *)((uint8 *)current + current->hdr.len);    
+    } while (1);
+
+    HAL_EXIT_CRITICAL_SECTION();
+  
+    return sum_free;
+}
+
 
 
 

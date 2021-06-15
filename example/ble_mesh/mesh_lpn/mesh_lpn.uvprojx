@@ -335,7 +335,7 @@
               <MiscControls>-DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c</MiscControls>
               <Define>CFG_CP, OSAL_CBTIMER_NUM_TASKS=1, OSALMEM_METRICS=0 DEBUG_INFO=0 CFG_SLEEP_MODE = PWR_MODE_SLEEP</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\components\inc;..\..\..\components\ble\controller\include;..\..\..\components\osal\include;..\..\..\components\common;..\..\..\components\ble\include;..\..\..\components\ble\hci;..\..\..\components\ble\host;..\..\..\components\Profiles\DevInfo;..\..\..\components\Profiles\SimpleProfile;..\..\..\components\Profiles\Roles;..\..\..\components\driver\common;..\..\..\components\driver\clock;..\..\..\components\driver\gpio;..\..\..\components\driver\pwrmgr;..\..\..\components\driver\log;..\..\..\components\driver\uart;..\..\..\components\driver\flash;..\..\..\components\driver\pwm;.\source;.\source\bleMesh;..\..\..\components\ethermind\external\crypto\aes;..\..\..\components\ethermind\mesh\export\include;..\..\..\components\ethermind\mesh\export\bearer;..\..\..\components\ethermind\mesh\export\platforms\ext;..\..\..\components\ethermind\osal\src\phyos;..\..\..\components\ethermind\platforms\phy6200;..\..\..\components\ethermind\platforms\phy6200\mesh;..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto;..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs;..\..\..\components\ethermind\utils\include;..\..\..\components\ethermind\mesh\export\cli;..\..\..\components\ethermind\mesh\export\cli\model\client;..\..\..\components\ethermind\mesh\export\appl;..\..\..\components\driver\pwrmgr;..\..\..\components\osal\snv;..\..\..\components\ethermind\external\crypto\asm_ecdh_p256;..\..\..\components\ethermind\lib</IncludePath>
+              <IncludePath>..\..\..\components\inc;..\..\..\components\ble\controller\include;..\..\..\components\osal\include;..\..\..\components\common;..\..\..\components\ble\include;..\..\..\components\ble\hci;..\..\..\components\ble\host;..\..\..\components\Profiles\DevInfo;..\..\..\components\Profiles\SimpleProfile;..\..\..\components\Profiles\Roles;..\..\..\components\driver\common;..\..\..\components\driver\clock;..\..\..\components\driver\gpio;..\..\..\components\driver\pwrmgr;..\..\..\components\driver\log;..\..\..\components\driver\uart;..\..\..\components\driver\flash;..\..\..\components\driver\pwm;.\source;.\source\bleMesh;..\..\..\components\ethermind\external\crypto\aes;..\..\..\components\ethermind\mesh\export\include;..\..\..\components\ethermind\mesh\export\bearer;..\..\..\components\ethermind\mesh\export\platforms\ext;..\..\..\components\ethermind\osal\src\phyos;..\..\..\components\ethermind\platforms\phy6200;..\..\..\components\ethermind\platforms\phy6200\mesh;..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto;..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs;..\..\..\components\ethermind\utils\include;..\..\..\components\ethermind\mesh\export\cli;..\..\..\components\ethermind\mesh\export\cli\model\client;..\..\..\components\ethermind\mesh\export\appl;..\..\..\components\driver\pwrmgr;..\..\..\components\osal\snv;..\..\..\components\ethermind\external\crypto\asm_ecdh_p256;..\..\..\components\ethermind\lib;..\..\..\components\ethermind\mesh\export\cbtimer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -580,11 +580,6 @@
               <FilePath>..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto\cry.c</FilePath>
             </File>
             <File>
-              <FileName>nvs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.c</FilePath>
-            </File>
-            <File>
               <FileName>blebrr.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\ethermind\mesh\export\bearer\blebrr.c</FilePath>
@@ -623,6 +618,11 @@
               <FileName>mesh_clients.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_clients.c</FilePath>
+            </File>
+            <File>
+              <FileName>EXT_cbtimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\ethermind\mesh\export\cbtimer\EXT_cbtimer.c</FilePath>
             </File>
           </Files>
         </Group>

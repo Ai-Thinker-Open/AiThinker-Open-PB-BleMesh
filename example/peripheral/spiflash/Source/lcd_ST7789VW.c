@@ -238,9 +238,9 @@ int lcd_setscn_img(int index)
 		//cs=true,int mode
 		lcd_spi_handle.force_cs = true;
 		lcd_spi_handle.polling_int = SPI_INT_MODE;
-		if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true)
+		if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false)
 		hal_spi_transmit(&lcd_spi_handle,(uint8_t*)s_framebuf,NULL,size_buf);
-		while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false);
+		while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true);
   }
   return 0;
 }
@@ -272,7 +272,7 @@ int lcd_setscn_img_use_double_spi(int index)
 			
 				spi.force_cs = true;
 				spi.polling_int = SPI_POLLING_MODE;
-				if(hal_spi_get_transmit_bus_state(&spi) == true)
+				if(hal_spi_get_transmit_bus_state(&spi) == false)
 				{
 					transmit_len = (4+12);
 					spi_gd25q16_read_test_set_buffer(spi.force_cs,addr_to_flash,tx_buf,rx_buf,transmit_len);
@@ -286,10 +286,10 @@ int lcd_setscn_img_use_double_spi(int index)
 				select_lcd();
 				lcd_spi_handle.force_cs = true;
 				lcd_spi_handle.polling_int = SPI_INT_MODE;
-				if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true)
+				if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false)
 				//hal_spi_transmit(&lcd_spi_handle,(uint8_t*)rx_buf,NULL,size_buf);
 				hal_spi_transmit(&lcd_spi_handle,(uint8_t*)(rx_buf+4),NULL,size_buf);
-				while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false);
+				while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true);
 			
 				addr_to_flash += 8;
 			}
@@ -327,15 +327,15 @@ int lcd_setscn_TFT(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color)
 //			hal_spi_tx_frames_ignore_rx_polling(&lcd_spi_handle, (uint8_t*)s_framebuf, size_buf);
 //			lcd_spi_handle.force_cs = true;
 //			lcd_spi_handle.polling_int = SPI_POLLING_MODE;
-//			if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true)
+//			if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false)
 //			hal_spi_transmit(&lcd_spi_handle,(uint8_t*)s_framebuf,NULL,size_buf);
 		
 			//cs=true,int mode
 			lcd_spi_handle.force_cs = true;
 			lcd_spi_handle.polling_int = SPI_INT_MODE;
-			if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true)
+			if(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false)
 			hal_spi_transmit(&lcd_spi_handle,(uint8_t*)s_framebuf,NULL,size_buf);
-			while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == false);
+			while(hal_spi_get_transmit_bus_state(&lcd_spi_handle) == true);
   }
   
 /*  

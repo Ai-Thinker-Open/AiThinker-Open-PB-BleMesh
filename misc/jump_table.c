@@ -68,14 +68,17 @@
 static void hard_fault(void)
 {
 	unsigned int cur_sp = __current_sp();
-  LOG("Hard Fault SP is %x\n",cur_sp);
+  AT_LOG("Hard Fault SP is %x\n",cur_sp);
 	for(int i = 0; i< 0x10; i++){
-	 LOG("0x%x,", ((uint32_t*)cur_sp)[i]);
+	 AT_LOG("0x%x,", ((uint32_t*)cur_sp)[i]);
 	}
 	while(1){
     ;
 	}
 }
+
+void PendSV_Handler( void ) __attribute__((weak));
+void SysTick_Handler( void ) __attribute__((weak));
 
 /*******************************************************************************
  * CONSTANTS
@@ -125,7 +128,7 @@ const uint32_t* const jump_table_base[256] __attribute__((section("jump_table_me
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     // 190 -199, reserved by phyplus
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     // 200 - 209, reserved by phyplus
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     // 210 - 219, reserved by phyplus
-    (const uint32_t*)hard_fault, 0, 0, 0, 0, 0, 0, 0,           // 220 - 227
+    (const uint32_t*)hard_fault, 0, (const uint32_t *)PendSV_Handler, (const uint32_t *)SysTick_Handler, 0, 0, 0, 0,           // 220 - 227
     0, 
 		(const uint32_t*)hal_KSCAN_IRQHandler,       // 228 - 229
     0, 0, 0, (const uint32_t*)AP_TIMER_IRQHandler, 0,  // 230 - 234       

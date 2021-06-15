@@ -74,6 +74,8 @@ extern void LOG_PATCH_DATA_TIME(void);       // check lib version
 
  extern volatile uint8_t g_system_clk;
  extern volatile uint8_t g_rfPhyClkSel;
+
+ extern volatile uint8_t   g_dtmManualConfig;
 /*******************************************************************************
  * MACRO
  */
@@ -121,6 +123,9 @@ extern void LOG_PATCH_DATA_TIME(void);       // check lib version
 #define RF_PHY_DTM_MODE_READ_MAX_RX_OCTETS          42
 #define RF_PHY_DTM_MODE_READ_MAX_RX_TIME            44
 
+#define RF_PHY_DTM_MODE_SET_RXXTAL_TAB              108
+#define RF_PHY_DTM_MODE_LOAD_RXXTAL                 110
+#define RF_PHY_DTM_MODE_SET_RXXTAL_CAL              112
 #define RF_PHY_DTM_MODE_SET_ACCCODE_0               114
 #define RF_PHY_DTM_MODE_SET_ACCCODE_1               116
 #define RF_PHY_DTM_MODE_SET_ACCCODE_2               118
@@ -205,6 +210,15 @@ extern void LOG_PATCH_DATA_TIME(void);       // check lib version
 #define RF_PHY_CLK_SEL_16M_XTAL                      0x01
 #define RF_PHY_CLK_SEL_32M_DBL                       0x02
 
+
+
+#define RF_PHY_DTM_MANUL_NULL                        0x00
+#define RF_PHY_DTM_MANUL_FOFF                        0x01
+#define RF_PHY_DTM_MANUL_TXPOWER                     0x02
+#define RF_PHY_DTM_MANUL_XTAL_CAP                    0x04
+#define RF_PHY_DTM_MANUL_MAX_GAIN                    0x08
+
+#define RF_PHY_DTM_MANUL_ALL                         0xFF
 
 
 /*******************************************************************************

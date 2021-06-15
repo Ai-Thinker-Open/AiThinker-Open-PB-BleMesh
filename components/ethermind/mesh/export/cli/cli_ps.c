@@ -148,9 +148,10 @@ API_RESULT cli_ps_get_net_key(UINT32 argc, UCHAR *argv[])
     }
 
     handle = (MS_SUBNET_HANDLE)CLI_strtoi(argv[0], (UINT16)CLI_strlen(argv[0]), 16);
-    retval = MS_access_cm_get_netkey
+    retval = MS_access_cm_get_netkey_at_offset
              (
                  handle,
+                 0,
                  key
              );
 

@@ -29,6 +29,8 @@
 #define EM_SUCCESS                  0x0000
 #define EM_FAILURE                  0xFFFF
 
+#define EM_USE_EXT_TIMER
+
 /* -------------------------------------------- Structures/Data Types */
 /* 'signed' datatype of size '1 octet' */
 typedef char CHAR;
@@ -174,7 +176,7 @@ INT32 EM_thread_cond_init
           /* IN */  EM_thread_cond_attr_type *    cond_attr
       );
 
-INT32 EM_thread_cond_wait
+void EM_thread_cond_wait
       (
           /* INOUT */ EM_thread_cond_type *     cond,
           /* INOUT */ EM_thread_mutex_type *    cond_mutex
@@ -192,7 +194,7 @@ void EM_free_mem (/* IN */ void * ptr);
 /* Task/Thread Delay Primitives */
 void EM_sleep ( /* IN */ UINT32 tm );
 void EM_usleep ( /* IN */ UINT32 tm );
-void EM_get_current_time (/* OUT */ EM_time_type * curtime);
+void EM_get_current_time (/* OUT */ UINT32 * curtime);
 void EM_get_local_time( /* OUT */ UCHAR *buf, /* IN */ UINT16 buf_len);
 
 #ifdef __cplusplus

@@ -371,13 +371,16 @@ void spiflash_read(uint32_t addr,uint8_t* rx_buf,uint16_t rx_len)
 int GD25_init(void)
 {
 	//if(hal_spi_bus_init(&spi,cfg) == PPlus_SUCCESS)//config and init spi first
-	//	LOG("spi init success!\n");
-	
-	if(0xC84015 != spiflash_read_identification()){
-		//LOG("read flash id error\n");
+	//LOG("spi init success!\n");
+	uint32_t flash_id = spiflash_read_identification();
+	if((flash_id == 0x00)||flash_id == 0xffffff){
+		LOG("flash id error\n");
 		return false;
 	}
-	return true;
+	else{
+		LOG("flash id:%x\n",flash_id);
+		return true;
+	}
 }
 
 int GD25_read(uint32_t addr,uint8_t *data,uint8_t len)

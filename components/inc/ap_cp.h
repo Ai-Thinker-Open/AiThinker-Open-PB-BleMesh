@@ -367,8 +367,7 @@ typedef struct
 	__IO uint32_t     DMARDLR;       //0x54
 	__IO uint32_t     IDR;           //0x5c
 	__IO uint32_t     SSI_COM_VER;   //0x5c
-	__IO uint16_t     DataReg[72];
-	__IO uint8_t      RX_SAMPLE_DLY;
+	__IO uint32_t     DataReg;
  
 } AP_SSI_TypeDef;
 

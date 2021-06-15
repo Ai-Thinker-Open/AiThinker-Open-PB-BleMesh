@@ -191,7 +191,7 @@ void kscan_evt_hand_hook(kscan_Evt_t* evt)
             {
                 //it's not combine key,so direct post event or ignore event
 
-                if(user_normalKey[key].status==KEY_RELEASED&&user_normalKey[key].ProcessFlag==INIT_ACTIVE&&key_hold_num==0)
+                if(user_normalKey[key].status==KEY_RELEASED&&user_normalKey[key].ProcessFlag==INIT_ACTIVE/*&&key_hold_num==0*/)
                 {
                     user_normalKey[key].StartTick=osal_GetSystemClock();
                     user_normalKey[key].ProcessFlag=PRESS_ACTIVED;

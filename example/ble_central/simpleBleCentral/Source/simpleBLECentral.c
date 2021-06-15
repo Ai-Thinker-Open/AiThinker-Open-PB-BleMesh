@@ -299,14 +299,14 @@ static const uint8 simpleBLEDeviceName[GAP_DEVICE_NAME_LEN] = "Simple BLE Centra
 
 // Number of scan results and scan result index
 static uint8 simpleBLEScanRes;
-static uint8 simpleBLEScanIdx;
+volatile static uint8 simpleBLEScanIdx;
 
 
 // Scanning state
-static uint8 simpleBLEScanning = FALSE;
+volatile static uint8 simpleBLEScanning = FALSE;
 
 // RSSI polling state
-static uint8 simpleBLERssi = FALSE;
+volatile static uint8 simpleBLERssi = FALSE;
 
 // Connection handle of current connection 
 static uint16 simpleBLEConnHandle = GAP_CONNHANDLE_INIT;
@@ -325,7 +325,7 @@ static uint8 simpleBLEDiscState = BLE_DISC_STATE_IDLE;
 //static uint16 simpleBLECharHdl = 0;
 
 // Value to write
-static uint8 simpleBLECharVal = 0;
+volatile static uint8 simpleBLECharVal = 0;
 
 //// Value read/write toggle
 //static bool simpleBLEDoWrite = FALSE;
@@ -339,7 +339,7 @@ static uint8_t advDataFilterCnt;
 static uint16 connIntv = 30;
 static uint16 connLatency = 4;
 static uint16 connTimeOut = 500;
-static uint32 connEventCnt = 0;
+volatile static uint32 connEventCnt = 0;
 
 static uint16 dleTxOctets=251;
 static uint16 dleTxTime=2120;
@@ -347,7 +347,7 @@ static uint16 dleTxTime=2120;
 static uint8 phyModeCtrl=0x01;
 
 static uint16 dleTxOctetsSlave=251;
-static uint16 dleTxTimeSlave=2120;
+volatile static uint16 dleTxTimeSlave=2120;
 
 static uint8 phyModeCtrlSlave=0x01;
     
@@ -586,14 +586,14 @@ static void simpleBLECentralEventCB( gapCentralRoleEvent_t *pEvent );
 static void simpleBLECentralPasscodeCB( uint8 *deviceAddr, uint16 connectionHandle,
                                         uint8 uiInputs, uint8 uiOutputs );
 static void simpleBLECentralPairStateCB( uint16 connHandle, uint8 state, uint8 status );
-static void simpleBLECentral_HandleKeys( uint8 shift, uint8 keys );
+//static void simpleBLECentral_HandleKeys( uint8 shift, uint8 keys );
 static void simpleBLECentral_ProcessOSALMsg( osal_event_hdr_t *pMsg );
 static void simpleBLEGATTDiscoveryEvent( gattMsgEvent_t *pMsg );
 static void simpleBLECentralStartDiscoveryService( void );
-static bool simpleBLEFindSvcUuid( uint16 uuid, uint8 *pData, uint8 dataLen );
+//static bool simpleBLEFindSvcUuid( uint16 uuid, uint8 *pData, uint8 dataLen );
 static void simpleBLEAddDeviceInfo( gapCentralRoleEvent_t *pEvent );
 char *bdAddr2Str ( uint8 *pAddr );
-static uint8_t simpleBLECentral_AdvDataFilterCBack(void);
+//static uint8_t simpleBLECentral_AdvDataFilterCBack(void);
 
 // add by zhufei.zhang 
 static void simpleBLEAnalysisADVDATA(uint8 Index,gapDeviceInfoEvent_t *pData);
@@ -667,6 +667,10 @@ void SimpleBLECentral_Init( uint8 task_id )
     uint8 mitm = DEFAULT_MITM_MODE;
     uint8 ioCap = DEFAULT_IO_CAPABILITIES;
     uint8 bonding = DEFAULT_BONDING_MODE;
+		uint8 oob_enable = TRUE;
+		uint8 oob_data[16]={1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,0x10,0x11};
+		GAPBondMgr_SetParameter( GAPBOND_OOB_ENABLED,sizeof ( uint8 ), &oob_enable);
+		GAPBondMgr_SetParameter( GAPBOND_OOB_DATA,16, oob_data);
     GAPBondMgr_SetParameter( GAPBOND_DEFAULT_PASSCODE, sizeof( uint32 ), &passkey );
     GAPBondMgr_SetParameter( GAPBOND_PAIRING_MODE, sizeof( uint8 ), &pairMode );
     GAPBondMgr_SetParameter( GAPBOND_MITM_PROTECTION, sizeof( uint8 ), &mitm );
@@ -1129,9 +1133,7 @@ uint16 SimpleBLECentral_ProcessEvent( uint8 task_id, uint16 events )
             osal_stop_timerEx(simpleBLETaskId, SBC_PERIODIC_EVT);
         }
         
-        uint32 uOS_size,uOS_cnt;
-//        osal_memory_statics(NULL, &uOS_cnt,&uOS_size);
-//        AT_LOG("%d %d [%04x %04x] \n",mstWtCnt, ntfTest.cnt,uOS_cnt,uOS_size);
+
         
         return ( events ^ SBC_PERIODIC_EVT );
     }
@@ -1710,8 +1712,8 @@ static void simpleBLECentralStartDiscoveryService( void )
 	// before start discovery , memset the variable
 	osal_memset(&SimpleClientInfo,0,sizeof(SimpleGattScanServer));
 	
-  uint8 uuid[ATT_BT_UUID_SIZE] = { LO_UINT16(SIMPLEPROFILE_SERV_UUID),
-                                   HI_UINT16(SIMPLEPROFILE_SERV_UUID) };
+//   uint8 uuid[ATT_BT_UUID_SIZE] = { LO_UINT16(SIMPLEPROFILE_SERV_UUID),
+//                                    HI_UINT16(SIMPLEPROFILE_SERV_UUID) };
 
   simpleBLEDiscState = BLE_DISC_STATE_SVC;
   
@@ -1728,7 +1730,7 @@ static void simpleBLECentralStartDiscoveryService( void )
  */
 static void simpleBLEGATTDiscoveryEvent( gattMsgEvent_t *pMsg )
 {
-	attReadByTypeReq_t req;
+	//attReadByTypeReq_t req;
     if ( simpleBLEDiscState == BLE_DISC_STATE_SVC )
     {
     	// add by zhufei.zhang 2018/10/24
@@ -1978,7 +1980,7 @@ static void simpleBLECentral_CharacteristicTest(void)
 		osal_start_timerEx( simpleBLETaskId, START_CHAR_DATA_TEST,100 );
 	}
 }
-
+#if 0 
 /*********************************************************************
  * @fn      simpleBLEFindSvcUuid
  *
@@ -2047,7 +2049,7 @@ static bool simpleBLEFindSvcUuid( uint16 uuid, uint8 *pData, uint8 dataLen )
   // Match not found
   return FALSE;
 }
-
+#endif
 /*********************************************************************
  * @fn      simpleBLEAddDeviceInfo
  *

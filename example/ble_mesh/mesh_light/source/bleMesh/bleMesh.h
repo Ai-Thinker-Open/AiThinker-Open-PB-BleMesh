@@ -72,6 +72,7 @@ extern uint8 bleMesh_TaskID;   // Task ID for internal task/event processing
 #define BLEMESH_GAP_SCANENABLED                             0x0004
 #define BLEMESH_LIGHT_PRCESS_EVT                            0x0008
 #define BLEMESH_GAP_TERMINATE                               0x0010
+#define BLEMESH_GAP_MSG_EVT                                 0x0400
 
 
 /*********************************************************************

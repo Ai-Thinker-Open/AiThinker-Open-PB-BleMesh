@@ -1,0 +1,132 @@
+---
+#format
+# prj name:
+# -'prj path'
+# -'{MACRO_DEF:'xxx'}'
+# -'[output hex path]'
+
+rfslave: 
+- 'lib\generate_lib\rf.uvprojx'
+- [Objects\rf.lib, ..\rf.lib]
+
+multi_rf: 
+- 'lib\generate_multiConn_lib\generate_lib\rf.uvprojx'
+- [Objects\multi_rf.lib, ..\..\multi_rf.lib]
+
+multi_stack: 
+- 'lib\generate_multiConn_lib\generate_stack_lib\stack_lib.uvprojx'
+- [Objects\multi_stack_lib.lib, ..\..\multi_stack_lib.lib]
+
+sbp:
+- example\ble_peripheral\simpleBlePeripheral\simpleBlePeripheral.uvprojx
+
+sbc:
+- example\ble_central\simpleBleCentral\simpleBleCentral.uvprojx
+
+sbm:
+- example\ble_multi\simpleBleMultiConnection\simpleBleMulti.uvprojx
+
+ancs:
+- example\ble_peripheral\ancs\ancs.uvprojx
+
+bleuart:
+- example\ble_peripheral\bleUart-RawPass\ble_uart.uvprojx
+
+fstest:
+- example\peripheral\fs\fs.uvprojx
+
+hidkbd:
+- example\ble_peripheral\HIDKeyboard\HRDKbd.uvprojx
+
+pwmlight:
+- example\ble_peripheral\pwmLight\pwmLight.uvprojx
+
+XIP_demo:
+- example\ble_peripheral\XIPDemo\pwmLightXIP.uvprojx
+
+wrist_tft:
+- example\ble_peripheral\wrist\wrist.uvprojx
+- {'CFG_DISP':'DISP_TFT'}
+- ['bin\wrist.hex','bin\wrist_tft.hex']
+
+wrist:
+- example\ble_peripheral\wrist\wrist.uvprojx
+
+hidremote:
+- example\ble_peripheral\HIDAdvRemote\HIDAdvRemote.uvprojx
+
+ota_dual_fct:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_DUAL_BANK','USE_FCT':'1'}
+- ['bin\ota.hex','bin\ota_dualbank_hasFCT.hex']
+
+ota_dual_nfct:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_DUAL_BANK','USE_FCT':'0'}
+- ['bin\ota.hex','bin\ota_dualbank_noFCT.hex']
+
+ota_single_fct:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_SINGLE_BANK','USE_FCT':'1'}
+- ['bin\ota.hex','bin\ota_singlebank_hasFCT.hex']
+
+ota_single_nfct:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_SINGLE_BANK','USE_FCT':'0'}
+- ['bin\ota.hex','bin\ota_singlebank_noFCT.hex']
+
+ota_upgrade:
+- example\OTA\OTA_upgrade_2ndboot\ota_upgrade.uvprojx
+
+uart_ext_flash:
+- example\OTA\uart_ext_flash\uart_ext_flash.uvprojx
+
+adc:
+- example\peripheral\adc\adc.uvprojx
+
+ap_timer:
+- example\peripheral\ap_timer\ap_timer.uvprojx
+
+gpio:
+- example\peripheral\gpio\gpio.uvprojx
+
+kscan:
+- example\peripheral\kscan\kscan.uvprojx
+
+pwm:
+- example\peripheral\pwm\pwm.uvprojx
+
+spiflash:
+- example\peripheral\spiflash\spiflash.uvprojx
+
+voice:
+- example\peripheral\voice\voice.uvprojx
+
+watchdog:
+- example\peripheral\watchdog\watchdog.uvprojx
+
+otam:
+- example\OTA\OTA_master\otam.uvprojx
+
+mesh_ali_light:
+- example\ble_mesh\aliGenie_mesh_light\aliGenie_mesh_light.uvprojx
+
+mesh_ali_multi:
+- example\ble_mesh\aliGenie_mesh_multi\aliGenie_mesh_multi.uvprojx
+
+mesh_switch:
+- example\ble_mesh\mesh_switch\mesh_switch.uvprojx
+
+mesh_light:
+- example\ble_mesh\mesh_light\mesh_light.uvprojx
+- {'DEBUG_INFO':'4','CFG_HEARTBEAT_MODE':'0'}
+
+mesh_gateway:
+- example\ble_mesh\mesh_gateway\mesh_gateway.uvprojx
+- {'CFG_HEARTBEAT_MODE':'0'}
+
+mesh_lpn:
+- example\ble_mesh\mesh_lpn\mesh_lpn.uvprojx
+
+mesh_sensor:
+- example\ble_mesh\mesh_sensor\mesh_sensor.uvprojx

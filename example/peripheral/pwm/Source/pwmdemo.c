@@ -175,11 +175,13 @@ static gapRolesCBs_t PWMPeripheralCB =
 };
 
 // Bond Manager Callbacks
+#if 0
 static const gapBondCBs_t PWMBondCB =
 {
   NULL,                   // Passcode callback
   NULL                    // Pairing state callback
 };
+#endif
 
 
 static void PWMCtrlCB(uint8 ctrl)
@@ -297,7 +299,7 @@ uint16 PWM_ProcessEvent( uint8 task_id, uint16 events )
     VOID GAPRole_StartDevice( &PWMPeripheralCB );
 
     // Register with bond manager after starting device
-    GAPBondMgr_Register( (gapBondCBs_t *) &PWMBondCB );
+//    GAPBondMgr_Register( (gapBondCBs_t *) &PWMBondCB );
     
     return ( events ^ START_DEVICE_EVT );
   }

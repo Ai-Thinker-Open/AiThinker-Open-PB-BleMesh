@@ -1,4 +1,4 @@
-/**************************************************************************************************
+﻿/**************************************************************************************************
  
   Phyplus Microelectronics Limited confidential and proprietary. 
   All rights reserved.
@@ -174,7 +174,7 @@ typedef struct
 /*********************************************************************
  * LOCAL VARIABLES
  */
-static uint8 gapBondMgr_TaskID;   // Task ID for internal task/event processing
+static uint8 gapBondMgr_TaskID = INVALID_TASK_ID;   // Task ID for internal task/event processing
 
 // GAPBonding Parameters
 static uint8 gapBond_PairingMode = GAPBOND_PAIRING_MODE_WAIT_FOR_REQ;
@@ -854,11 +854,14 @@ void GAPBondMgr_Register( gapBondCBs_t *pCB )
 {
   pGapBondCB = pCB;
 
-  // Take over the processing of Authentication messages
-  VOID GAP_SetParamValue( TGAP_AUTH_TASK_ID, gapBondMgr_TaskID );
+  if(gapBondMgr_TaskID != INVALID_TASK_ID)
+  {
+      // Take over the processing of Authentication messages
+      VOID GAP_SetParamValue( TGAP_AUTH_TASK_ID, gapBondMgr_TaskID );
 
-  // Register with GATT Server App for event messages
-  GATTServApp_RegisterForMsg( gapBondMgr_TaskID );
+      // Register with GATT Server App for event messages
+      GATTServApp_RegisterForMsg( gapBondMgr_TaskID );
+  }
 }
 
 /*********************************************************************

@@ -64,25 +64,31 @@
 #include "led_light.h"
 #include "bleMesh.h"
 /* For Persistent Storage */
-#include "access_internal.h"
+#include "access_extern.h"
+#include "bleMesh.h"
+#include "phymodel_server.h"
+#include "EXT_cbtimer.h"
+
 
 
 #define USE_HSL                 // enable Light HSL server model
 #undef USE_LIGHTNESS            // enable Light Lightness server model
 #undef  USE_CTL                 // disable Light CTL server model
-#define USE_SCENE               // enable Light Scene server model
+#undef USE_SCENE               // enable Light Scene server model
 #define USE_VENDORMODEL         // enable Light vendormodel server model
 
-
+#ifdef USE_VENDORMODEL
 #define  EASY_BOUNDING
-
-
+#endif
 
 /* Console Input/Output */
 #define CONSOLE_OUT(...)    printf(__VA_ARGS__)
 #define CONSOLE_IN(...)     scanf(__VA_ARGS__)
+extern uint32_t osal_sys_tick;
 
 #define VENDOR_PRODUCT_MAC_ADDR         0x4000
+#define PROCFG_COMPLETE_TIMEOUT         20
+
 
 
 void appl_dump_bytes(UCHAR *buffer, UINT16 length);
@@ -117,37 +123,25 @@ void UI_gatt_iface_event_pl_cb
 API_RESULT UI_sample_check_app_key(void);
 API_RESULT UI_sample_get_device_key(void );
 API_RESULT UI_set_brr_scan_rsp_data (void);
+void timeout_cb (void * args, UINT16 size);
 
 /* --------------------------------------------- Global Definitions */
-//vendor model server/client
-#define MS_MODEL_ID_VENDOR_EXAMPLE_SERVER                         0x00000504
-
-
-//vendor model opcode
-#define MS_ACCESS_VENDOR_EXAMPLE_GET_OPCODE                         0x00D00405
-#define MS_ACCESS_VENDOR_EXAMPLE_SET_OPCODE                         0x00D10405
-#define MS_ACCESS_VENDOR_EXAMPLE_SET_UNACKNOWLEDGED_OPCODE          0x00D20405
-#define MS_ACCESS_VENDOR_EXAMPLE_STATUS_OPCODE                      0x00D30405
-#define MS_ACCESS_VENDOR_EXAMPLE_WRITECMD_OPCODE                    0x00D40405
-#define MS_ACCESS_VENDOR_EXAMPLE_INDICATION_OPCODE                  0x00D50405
-#define MS_ACCESS_VENDOR_EXAMPLE_CONFIRMATION_OPCODE                0x00D60405
-#define MS_ACCESS_VENDOR_EXAMPLE_NOTIFY_OPCODE                      0x00D70405
-
-//vendor model att
-#define MS_STATE_VENDOR_HSL_T                                   0x0123
-#define MS_STATE_VENDOR_ONOFF_T                                 0x0100
-#define MS_STATE_VENDOR_LIGHTNESS_T                             0x0121
-#define MS_STATE_VENDOR_CTL_T                                   0x0122
-#define MS_STATE_VENDOR_MAINLIGHTONOFF_T                        0x0534
-#define MS_STATE_VENDOR_BACKLIGHTONOFF_T                        0x0533
-#define MS_STATE_VENDOR_MODENUMBER_T                            0xF004
-#define MS_STATE_VENDOR_EVENT_INDICATE_T                        0xF009
 
 
 EM_timer_handle thandle;
 EM_timer_handle proxy_dly_thandle;
+#if (CFG_HEARTBEAT_MODE)
+EM_timer_handle heartbeat_reply_dly_thandle;
+#endif
+
+
 void proxy_dly_generic_onoff (void * args, UINT16 size);
-void proxy_dly_generic_hsl (void * args, UINT16 size);
+//void proxy_dly_generic_hsl (void * args, UINT16 size);
+extern UCHAR blebrr_prov_started;
+
+/* Provsion timeout handle */
+EM_timer_handle procfg_timer_handle;
+
 /* --------------------------------------------- Global Definitions */
 
 typedef struct UI_state_scene_struct
@@ -157,39 +151,31 @@ typedef struct UI_state_scene_struct
     MS_STATE_GENERIC_ONOFF_STRUCT   onoff_state;
 } UI_STATE_SCENE_STRUCT;
 
-/** Vendor Model specific state parameters in a request or response message */
-typedef struct _MS_access_vendor_model_state_params
+typedef struct MS_state_vendor_model_hsl_struct
 {
-    /** State Type */
-    UINT16 state_type;
+    /** The perceived lightness of a light emitted by the element */
+    UINT16 hsl_lightness;
 
-    /** State pointer */
-    void * state;
+    /** The 16-bit value representing the hue */
+    UINT16 hsl_hue;
 
-}MS_ACCESS_VENDOR_MODEL_STATE_PARAMS;
+    /** The saturation of a color light */
+    UINT16 hsl_saturation;
+} MS_STATE_VENDOR_MODEL_HSL_STRUCT;
 
 
-/**
- * Vendor Example Server application Asynchronous Notification Callback.
- *
- * Vendor Example Server calls the registered callback to indicate events occurred to the
- * application.
- *
- * \param [in] ctx           Context of the message received for a specific model instance.
- * \param [in] msg_raw       Uninterpreted/raw received message.
- * \param [in] req_type      Requested message type.
- * \param [in] state_params  Model specific state parameters.
- * \param [in] ext_params    Additional parameters.
- */
-typedef API_RESULT (* MS_VENDOR_EXAMPLE_SERVER_CB)
-        (
-            MS_ACCESS_MODEL_REQ_MSG_CONTEXT     * ctx,
-            MS_ACCESS_MODEL_REQ_MSG_RAW         * msg_raw,
-            MS_ACCESS_MODEL_REQ_MSG_T           * req_type,
-            MS_ACCESS_VENDOR_MODEL_STATE_PARAMS * state_params,
-            MS_ACCESS_MODEL_EXT_PARAMS          * ext_params
+#if (CFG_HEARTBEAT_MODE)
+/** Vendor Model specific state parameters in a request or response message */
+typedef struct _Heartbeat_rcv_params
+{
+    MS_NET_ADDR         heartbeat_addr;
+    MS_NET_ADDR         heartbeat_sddr;
+    MS_SUBNET_HANDLE    heartbeat_subnet_index;
+    UINT8               heartbeat_countlog;
 
-        ) DECL_REENTRANT;
+}HEARTBEAT_RCV_PARAMS;
+#endif
+
 typedef struct MS_state_vendor_example_struct
 {
     UCHAR  value;
@@ -206,19 +192,6 @@ static MS_STATE_VENDOR_EXAMPLE_STRUCT UI_vendor_example;
 
 
 /* ----------------------------------------- Static Global Variables */
-static DECL_CONST UINT32 vendor_example_server_opcode_list[] =
-{
-    MS_ACCESS_VENDOR_EXAMPLE_GET_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_SET_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_SET_UNACKNOWLEDGED_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_STATUS_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_WRITECMD_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_INDICATION_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_CONFIRMATION_OPCODE,
-    MS_ACCESS_VENDOR_EXAMPLE_NOTIFY_OPCODE
-};
-
-static MS_VENDOR_EXAMPLE_SERVER_CB       vendor_example_server_UI_cb;
 
 MS_ACCESS_MODEL_HANDLE   UI_vendor_defined_server_model_handle;
 MS_ACCESS_MODEL_HANDLE   UI_generic_onoff_server_model_handle;
@@ -349,6 +322,13 @@ static API_RESULT UI_health_server_cb
     return retval;
 }
 
+UCHAR UI_proxy_state_get(void)
+{
+    UCHAR  proxy_state;
+    MS_proxy_fetch_state(&proxy_state);
+    return proxy_state;
+}                  
+
 
 
 // ===========================  Generic OnOff Server Model Functions =============
@@ -411,7 +391,7 @@ static API_RESULT UI_generic_onoff_model_state_set(UINT16 state_t, UINT16 state_
             CONSOLE_OUT("[state] target: 0x%02X\n", UI_generic_onoff.target_onoff);
             CONSOLE_OUT("[state] remaining_time: 0x%02X\n", UI_generic_onoff.transition_time);
 
-            MS_proxy_fetch_state(&proxy_state);
+            proxy_state = UI_proxy_state_get();
             if(proxy_state==MS_PROXY_CONNECTED)
             {
                 EM_start_timer (&proxy_dly_thandle,    (EM_TIMEOUT_MILLISEC | 100), proxy_dly_generic_onoff, NULL, 0);
@@ -613,10 +593,10 @@ API_RESULT UI_light_hsl_model_state_set(UINT16 state_t, UINT16 state_inst, void 
             CONSOLE_OUT("[state] target Saturation: 0x%04X\n", UI_light_hsl.target_hsl_saturation);
             CONSOLE_OUT("[state] target Lightness: 0x%04X\n", UI_light_hsl.target_hsl_lightness);
             CONSOLE_OUT("[state] remaining_time: 0x%02X\n", UI_light_hsl.transition_time);
-            MS_proxy_fetch_state(&proxy_state);
+            proxy_state = UI_proxy_state_get();
             if(proxy_state==MS_PROXY_CONNECTED)
             {
-                EM_start_timer (&proxy_dly_thandle,    (EM_TIMEOUT_MILLISEC | 350), proxy_dly_generic_hsl, NULL, 0);
+                UI_light_hsl_set_actual(0,UI_light_hsl.hsl_lightness,UI_light_hsl.hsl_hue,UI_light_hsl.hsl_saturation,0);
             }
             else
             {
@@ -1000,12 +980,31 @@ void UI_vendor_defined_model_states_initialization(void)
            
 /* Vendor Defined Model Get Handler */
 void UI_vendor_example_model_state_get(UINT16 state_t, UINT16 state_inst, void * param, UINT8 direction)
-{
+{   
     switch(state_t)
-    {           
+    {
+        case MS_STATE_PHY_MODEL_ONOFF_T:
+        {
+            UINT8   onoff_status;
+            MS_ACCESS_PHY_MODEL_STATE_PARAMS * param_p;
+
+            
+            param_p = (MS_ACCESS_PHY_MODEL_STATE_PARAMS *)param;
+
+            /* Ignoring Instance and direction right now */
+            param_p->phy_mode_type = MS_STATE_PHY_MODEL_ONOFF_T;
+            onoff_status = UI_generic_onoff.onoff;
+            param_p->phy_mode_param = &onoff_status;
+            
+        }
+        break;
+
         default:
         break;
     }
+
+//    param = param_p;
+
 }
 void UI_vendor_model_set_red(void)
 {
@@ -1051,29 +1050,28 @@ void UI_vendor_example_model_state_set(UINT16 state_t, UINT16 state_inst, void *
 {
     switch(state_t)
     {  
-        case MS_STATE_VENDOR_HSL_T:
+        case MS_STATE_PHY_MODEL_ONOFF_T:
         {
-            MS_STATE_VENDOR_EXAMPLE_STRUCT * param_p;
+            UINT8   * param_p;
+            param_p = (UCHAR*)param;
 
-            param_p = (MS_STATE_VENDOR_EXAMPLE_STRUCT *)param;
+            generic_onoff_set_pl(*param_p);         
+        }    
+        break;
+        case MS_STATE_PHY_MODEL_HSL_T:
+        {
+            MS_STATE_VENDOR_MODEL_HSL_STRUCT * param_p;
+
+            param_p = (MS_STATE_VENDOR_MODEL_HSL_STRUCT *)param;
          
-            switch(param_p->value)
-            {
-                case 0x00:
-                    UI_vendor_model_set_red();
-                    break;
-                case 0x01:
-                    UI_vendor_model_set_green();
-                    break;
-                case 0x02:
-                    UI_vendor_model_set_blue();
-                    break;
-                case 0x03:
-                    generic_onoff_set_pl(0x00);
-                    break;
-                default:
-                    break;
-            }
+            UI_light_hsl.hsl_lightness = param_p->hsl_lightness;
+            UI_light_hsl.hsl_hue = param_p->hsl_hue;
+            UI_light_hsl.hsl_saturation = param_p->hsl_saturation;
+            UI_light_hsl_set_actual(0,UI_light_hsl.hsl_lightness,UI_light_hsl.hsl_hue,UI_light_hsl.hsl_saturation,0);
+            //*param_p = UI_light_hsl;
+            CONSOLE_OUT("[state] current Hue: 0x%04X\n", UI_light_hsl.hsl_hue);
+            CONSOLE_OUT("[state] current Saturation: 0x%04X\n", UI_light_hsl.hsl_saturation);
+            CONSOLE_OUT("[state] current Lightness: 0x%04X\n", UI_light_hsl.hsl_lightness);
         }
         break;
         default:
@@ -1081,342 +1079,6 @@ void UI_vendor_example_model_state_set(UINT16 state_t, UINT16 state_inst, void *
     }
 }
 
-/* ----------------------------------------- Functions */
-/**
- *  \brief API to send reply or to update state change
- *
- *  \par Description
- *  This is to send reply for a request or to inform change in state.
- *
- * \param [in] ctx                     Context of the message.
- * \param [in] current_state_params    Model specific current state parameters.
- * \param [in] target_state_params     Model specific target state parameters (NULL: to be ignored).
- * \param [in] remaining_time          Time from current state to target state (0: to be ignored).
- * \param [in] ext_params              Additional parameters (NULL: to be ignored).
- *
- *  \return API_SUCCESS or an error code indicating reason for failure
- */
-API_RESULT MS_vendor_example_server_state_update
-           (
-               /* IN */ MS_ACCESS_MODEL_REQ_MSG_CONTEXT    * ctx,
-               /* IN */ MS_ACCESS_VENDOR_MODEL_STATE_PARAMS       * current_state_params,
-               /* IN */ MS_ACCESS_MODEL_STATE_PARAMS       * target_state_params,
-               /* IN */ UINT16                               remaining_time,
-               /* IN */ MS_ACCESS_MODEL_EXT_PARAMS         * ext_params
-           )
-{
-    API_RESULT retval;
-
-    /* TODO: Check what should be maximum length */
-    UCHAR      buffer[32];
-    UCHAR    * pdu_ptr;
-    UINT16     marker;
-    UINT32     opcode;
-
-    retval = API_FAILURE;
-    marker = 0;
-
-    CONSOLE_OUT(
-    "[VENDOR_EXAMPLE_SERVER] State Update.\n");
-
-    switch (current_state_params->state_type)
-    {
-    }
-
-    /* Publish - reliable */
-    if (0 == marker)
-    {
-        pdu_ptr = NULL;
-    }
-    else
-    {
-        pdu_ptr = buffer;
-    }
-
-    retval = MS_access_reply
-             (
-                 &ctx->handle,
-                 ctx->daddr,
-                 ctx->saddr,
-                 ctx->subnet_handle,
-                 ctx->appkey_handle,
-                 ACCESS_INVALID_DEFAULT_TTL,
-                 opcode,
-                 pdu_ptr,
-                 marker
-             );
-
-    return retval;
-}
-
-
-/**
- * \brief Access Layer Application Asynchronous Notification Callback.
- *
- * \par Description
- * Access Layer calls the registered callback to indicate events occurred to the application.
- *
- * \param [in] handle        Model Handle.
- * \param [in] saddr         16 bit Source Address.
- * \param [in] daddr         16 bit Destination Address.
- * \param [in] appkey_handle AppKey Handle.
- * \param [in] subnet_handle Subnet Handle.
- * \param [in] opcode        Opcode.
- * \param [in] data_param    Data associated with the event if any or NULL.
- * \param [in] data_len      Size of the event data. 0 if event data is NULL.
- */
-API_RESULT vendor_example_server_cb
-           (
-                /* IN */ MS_ACCESS_MODEL_HANDLE * handle,
-                /* IN */ MS_NET_ADDR              saddr,
-                /* IN */ MS_NET_ADDR              daddr,
-                /* IN */ MS_SUBNET_HANDLE         subnet_handle,
-                /* IN */ MS_APPKEY_HANDLE         appkey_handle,
-                /* IN */ UINT32                   opcode,
-                /* IN */ UCHAR                  * data_param,
-                /* IN */ UINT16                   data_len
-           )
-{
-    MS_ACCESS_MODEL_REQ_MSG_CONTEXT         req_context;
-    MS_ACCESS_MODEL_REQ_MSG_RAW             req_raw;
-    MS_ACCESS_MODEL_REQ_MSG_T               req_type;
-
-    MS_ACCESS_MODEL_EXT_PARAMS              * ext_params_p;
-
-    MS_ACCESS_VENDOR_MODEL_STATE_PARAMS     state_params;
-    uint16  marker = 0;
-
-//    UINT16        marker;
-    API_RESULT    retval;
-
-    retval = API_SUCCESS;
-    ext_params_p = NULL;
-
-    /* Request Context */
-    req_context.handle = *handle;
-    req_context.saddr  = saddr;
-    req_context.daddr  = daddr;
-    req_context.subnet_handle = subnet_handle;
-    req_context.appkey_handle = appkey_handle;
-
-    /* Request Raw */
-    req_raw.opcode = opcode;
-    req_raw.data_param = data_param;
-    req_raw.data_len = data_len;
-
-    CONSOLE_OUT(
-    "[VENDOR_EXAMPLE_SERVER] Callback. Opcode 0x%06X\n", opcode);
-
-    appl_dump_bytes(data_param, data_len);
-
-    switch(opcode)
-    {
-        case MS_ACCESS_VENDOR_EXAMPLE_GET_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_GET_OPCODE\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_get_handler);
-
-            /* Get Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_GET;
-            req_type.to_be_acked = 0x01;
-
-            /* Assign reqeusted state type to the application */
-            //state_params.state_type = MS_STATE_VENDOR_EXAMPLE_T;
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_SET_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_SET_OPCODE\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_set_handler);
-
-            state_params.state_type = *data_param|(*(data_param+1)<<8);
-            state_params.state = data_param+2;
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_SET;
-            req_type.to_be_acked = 0x00;
-
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_SET_UNACKNOWLEDGED_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_SET_UNACKNOWLEDGED_OPCODE\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_set_unacknowledged_handler);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_SET;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_STATUS_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_STATUS\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_status_handler);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_OTHERS;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_WRITECMD_OPCODE:
-        {
-            uint16  message_index;
-            uint32  osal_tick;
-            uint16  src_addr;
-//            CONSOLE_OUT(
-//            "MS_ACCESS_VENDOR_EXAMPLE_INDICATION_WRITECMD\n");
-
-            MS_UNPACK_LE_2_BYTE(&message_index, data_param+marker);
-            marker += 2;
-            MS_UNPACK_LE_4_BYTE(&osal_tick, data_param+marker);
-            marker += 4;
-            MS_UNPACK_LE_2_BYTE(&src_addr, data_param+marker);
-            marker += 2;
-
-            
-            CONSOLE_OUT("[PDU_Rx] Pkt. INDEX:0x%04X, TICK:0x%08X, SRC:0x%04X\r\n",
-                message_index,(unsigned int)osal_tick,src_addr);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_OTHERS;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_INDICATION_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_INDICATION\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_indication_handler);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_OTHERS;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-        
-        case MS_ACCESS_VENDOR_EXAMPLE_CONFIRMATION_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_CONFIRMATION\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_confirmation_handler);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_OTHERS;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-
-        case MS_ACCESS_VENDOR_EXAMPLE_NOTIFY_OPCODE:
-        {
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_TRANSPARENT_MSG\n");
-
-            MODEL_OPCODE_HANDLER_CALL(vendor_example_transparent_msg_handler);
-
-            /* Set Request Type */
-            req_type.type = MS_ACCESS_MODEL_REQ_MSG_T_OTHERS;
-            req_type.to_be_acked = 0x00;
-        }
-        break;
-
-        default:
-            CONSOLE_OUT(
-            "MS_ACCESS_VENDOR_EXAMPLE_NONE_OPCODE\n");
-            break;
-
-
-    }
-
-    /* Application callback */
-    if (NULL != vendor_example_server_UI_cb)
-    {
-        vendor_example_server_UI_cb(&req_context, &req_raw, &req_type, &state_params, ext_params_p);
-    }
-
-    return retval;
-}
-
-
-
-/**
- *  \brief API to initialize Vendor_Example_1 Server model
- *
- *  \par Description
- *  This is to initialize Vendor_Example_1 Server model and to register with Acess layer.
- *
- *  \param [in] element_handle
- *              Element identifier to be associated with the model instance.
- *
- *  \param [in, out] model_handle
- *                   Model identifier associated with the model instance on successful initialization.
- *                   After power cycle of an already provisioned node, the model handle will have
- *                   valid value and the same will be reused for registration.
- *
- *  \param [in] UI_cb    Application Callback to be used by the Vendor_Example_1 Server.
- *
- *  \return API_SUCCESS or an error code indicating reason for failure
- */
-API_RESULT MS_vendor_example_server_init
-        (
-            /* IN */    MS_ACCESS_ELEMENT_HANDLE    element_handle,
-            /* INOUT */ MS_ACCESS_MODEL_HANDLE    * model_handle,
-            /* IN */    MS_VENDOR_EXAMPLE_SERVER_CB UI_cb
-        )
- {
-    API_RESULT retval;
-    MS_ACCESS_NODE_ID        node_id;
-    MS_ACCESS_MODEL          model;
-           
-    /* TBD: Initialize MUTEX and other data structures */
-           
-    /* Using default node ID */
-    node_id = MS_ACCESS_DEFAULT_NODE_ID;
-           
-    CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] Registered Element Handle 0x%02X\n", element_handle);
-           
-    /* Configure Model */
-    model.model_id.id = MS_MODEL_ID_VENDOR_EXAMPLE_SERVER;
-    model.model_id.type = MS_ACCESS_MODEL_TYPE_VENDOR;
-    model.elem_handle = element_handle;
-           
-    /* Register Callback */
-    model.cb = vendor_example_server_cb;
-           
-    /* List of Opcodes */
-    model.opcodes = vendor_example_server_opcode_list;
-    model.num_opcodes = sizeof(vendor_example_server_opcode_list) / sizeof(UINT32);
-           
-    retval = MS_access_register_model
-            (
-                node_id,
-                &model,
-                model_handle
-            );
-           
-    /* Save Application Callback */
-    vendor_example_server_UI_cb = UI_cb;
-           
-    //    /* TODO: Remove */
-    //    vendor_example_server_model_handle = *model_handle;
-           
-    return retval;
-}
 
 /* Vendor Defined Model Server */
 /**
@@ -1431,58 +1093,146 @@ API_RESULT MS_vendor_example_server_init
  * \param [in] state_params  Model specific state parameters.
  * \param [in] ext_params    Additional parameters.
  */
-API_RESULT UI_vendor_example_server_cb
+API_RESULT UI_phy_model_server_cb
 (
-    /* IN */ MS_ACCESS_MODEL_REQ_MSG_CONTEXT         * ctx,
-    /* IN */ MS_ACCESS_MODEL_REQ_MSG_RAW             * msg_raw,
-    /* IN */ MS_ACCESS_MODEL_REQ_MSG_T               * req_type,
-    /* IN */ MS_ACCESS_VENDOR_MODEL_STATE_PARAMS     * state_params,
-    /* IN */ MS_ACCESS_MODEL_EXT_PARAMS              * ext_params
+    /* IN */ MS_ACCESS_MODEL_REQ_MSG_CONTEXT        * ctx,
+    /* IN */ MS_ACCESS_MODEL_REQ_MSG_RAW            * msg_raw,
+    /* IN */ MS_ACCESS_MODEL_REQ_MSG_T              * req_type,
+    /* IN */ MS_ACCESS_PHY_MODEL_STATE_PARAMS       * state_params,
+    /* IN */ MS_ACCESS_MODEL_EXT_PARAMS             * ext_params
 )
 {
-    MS_STATE_VENDOR_EXAMPLE_STRUCT param;
-    MS_ACCESS_VENDOR_MODEL_STATE_PARAMS                    current_state_params;
+    MS_ACCESS_PHY_MODEL_STATE_PARAMS                    current_state_params;
+    UINT32  opcode;
+    UINT16  marker = 0;
+    UINT8   *data_param;
         
     API_RESULT retval;
         
     retval = API_SUCCESS;
-    CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] %04x (d%04x s%04x).\n",ctx->handle,ctx->daddr,ctx->saddr);
+
+    opcode = msg_raw->opcode;
+
+    switch(opcode)
+    {       
+        case MS_ACCESS_PHY_MODEL_WRITECMD_OPCODE:
+        {
+            CONSOLE_OUT(
+            "MS_ACCESS_PHY_MODEL_WRITECMD_OPCODE\n");
+            switch(state_params->phy_mode_type)
+            {
+                case MS_STATE_PHY_MODEL_RESET_T:
+                {
+                    printf("rcv MS_STATE_PHY_MODEL_RESET_T\n");
+                    MS_common_reset();
+                    EM_start_timer (&thandle, 1, timeout_cb, NULL, 0);
+                }
+                break;
+            }
+        }
+        break;
+        
+        case MS_ACCESS_PHY_MODEL_NOTIFY_OPCODE:
+        {
+            uint16      message_index;
+            uint32      osal_tick;
+            UINT8       ack;
+            UINT8       ttl;
+            UINT8       len;
+
+            ACCESS_CM_GET_RX_TTL(ttl);
+
+            data_param = state_params->phy_mode_param;
+            
+            MS_UNPACK_LE_1_BYTE(&ack, data_param+marker); 
+            marker += 1;
+
+            MS_UNPACK_LE_2_BYTE(&message_index, data_param+marker);
+            marker += 2;
+            MS_UNPACK_LE_2_BYTE(&osal_tick, data_param+marker);
+            marker += 3;
+            MS_UNPACK_LE_1_BYTE(&len, data_param+marker); 
+            marker += 1;
+            marker = 0;
+            if(ack)
+            {
+                MS_PACK_LE_1_BYTE_VAL(data_param+marker,++vendor_tid);
+                marker++;
+                
+                MS_PACK_LE_1_BYTE_VAL(data_param+marker,0);
+                marker++;
+
+                MS_PACK_LE_2_BYTE_VAL(data_param+marker,message_index);
+                marker += 2;
+
+                MS_PACK_LE_2_BYTE_VAL(data_param+marker,osal_tick);
+                marker += 2;
+
+                MS_PACK_LE_1_BYTE_VAL(data_param+marker,ttl&0xff);
+                marker++;
+
+                MS_PACK_LE_1_BYTE_VAL(data_param+marker,len&0xff);
+                marker++;
+
+                if(len)
+                {
+                    
+                    EM_mem_set(data_param+marker, 0, len);
+                    marker += len;
+                }
+
+                state_params->phy_mode_param = data_param;
+                                
+                req_type->to_be_acked = 0x01;
+            }
+//            printf("[PDU_Rx] Pkt.INDEX:0x%04X\n",message_index);
+        }
+        break;
+           
+        default:
+        break;
+    }
+              
     /* Check message type */
     if (MS_ACCESS_MODEL_REQ_MSG_T_GET == req_type->type)
     {
-        CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] GET Request.\n");
+//        CONSOLE_OUT(
+//        "[VENDOR_EXAMPLE] GET Request.\n");
         
-        UI_vendor_example_model_state_get(state_params->state_type, 0, &param, 0);
-        
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = &param;
+        UI_vendor_example_model_state_get(state_params->phy_mode_type, 0, &current_state_params, 0);
+
     }
     else if (MS_ACCESS_MODEL_REQ_MSG_T_SET == req_type->type)
     {
-        CONSOLE_OUT(
-            "[VENDOR_EXAMPLE] SET Request.\n");
+//        CONSOLE_OUT(
+//            "[VENDOR_EXAMPLE] SET Request.\n");
         
-        UI_vendor_example_model_state_set(state_params->state_type, 0, (MS_STATE_VENDOR_EXAMPLE_STRUCT *)state_params->state, 0);
+        UI_vendor_example_model_state_set(state_params->phy_mode_type, 0, state_params->phy_mode_param, 0);
         
-        current_state_params.state_type = state_params->state_type;
-        current_state_params.state = (MS_STATE_VENDOR_EXAMPLE_STRUCT *)state_params->state;
-        //vm_vendor_mode_indication(current_state_params);
+        current_state_params.phy_mode_type = state_params->phy_mode_type;
+        current_state_params.phy_mode_param = state_params->phy_mode_param;
+    }
+    else
+    {
+//        CONSOLE_OUT(
+//            "[VENDOR_EXAMPLE] Other Request.\n");
+        current_state_params.phy_mode_type = state_params->phy_mode_type;
+        current_state_params.phy_mode_param = state_params->phy_mode_param;
     }
         
     /* See if to be acknowledged */
     if (0x01 == req_type->to_be_acked)
     {
-        CONSOLE_OUT(
-            "[VENDOR_EXAMPLE] Sending Response.\n");
+//        CONSOLE_OUT(
+//            "[VENDOR_EXAMPLE] Sending Response.\n");
         
         /* Parameters: Request Context, Current State, Target State (NULL: to be ignored), Remaining Time (0: to be ignored), Additional Parameters (NULL: to be ignored) */
-        retval = MS_vendor_example_server_state_update(ctx, &current_state_params, NULL, 0, NULL);
+        retval = MS_phy_model_server_state_update(ctx, &current_state_params, NULL, 0, NULL,marker);
     }
         
-            return retval;
+    return retval;
 }
+
 
 
 
@@ -1495,11 +1245,11 @@ API_RESULT UI_register_vendor_defined_model_server
            
     API_RESULT retval;
            
-    retval = MS_vendor_example_server_init
+    retval = MS_phy_model_server_init
             (
                 element_handle,
                 &UI_vendor_defined_server_model_handle,
-                UI_vendor_example_server_cb
+                UI_phy_model_server_cb
             );
            
     if (API_SUCCESS == retval)
@@ -1794,8 +1544,123 @@ PROV_DEVICE_S UI_lprov_device =
 /** Current role of application - Provisioner/Device */
 DECL_STATIC UCHAR UI_prov_role;
 
-/** Provisioning Handle */
-DECL_STATIC PROV_HANDLE UI_prov_handle;
+/** Current brr of provision - Provisioner/Device */
+DECL_STATIC UCHAR UI_prov_brr_handle;
+
+
+void UI_provcfg_complete_timeout_handler(void * args, UINT16 size)
+{
+    procfg_timer_handle = EM_TIMER_HANDLE_INIT_VAL;
+    MS_common_reset();
+    EM_start_timer (&thandle, 1, timeout_cb, NULL, 0);
+    printf("Provisining and config Complete Timeout\n");
+}
+
+#if (CFG_HEARTBEAT_MODE)
+static void heartbeat_reply_delay_handler(void * args, UINT16 size)
+{
+    HEARTBEAT_RCV_PARAMS call_receive_para;
+
+    MS_IGNORE_UNUSED_PARAM(size);
+    
+//    printf("__rcv 0x%04X 0x%04X 0x%02X\n",call_receive_para.heartbeat_addr,call_receive_para.heartbeat_subnet_index,call_receive_para.heartbeat_countlog);
+    UCHAR      buffer[8];
+
+    UCHAR       * pdu_ptr;
+    UINT16      marker;
+    UINT32      opcode;
+    UINT16      appkey_handle;
+
+    call_receive_para = (*((HEARTBEAT_RCV_PARAMS *)args));
+    
+    marker = 0;
+
+    appkey_handle = 0x0000/* + MS_CONFIG_LIMITS(MS_MAX_APPS)*/;
+
+    buffer[marker++] = ++vendor_tid;
+
+    MS_PACK_LE_2_BYTE_VAL(&buffer[marker], MS_STATE_PHY_MODEL_HB_CALLBACK_T);
+    marker += 2;
+
+    buffer[marker] = call_receive_para.heartbeat_countlog&0xff;
+    marker++;
+
+//    for(UINT8 i=0;i<marker;i++)
+//    {
+//        printf("%02X\n",buffer[i]);
+//    }
+
+    opcode = MS_ACCESS_PHY_MODEL_WRITECMD_OPCODE;
+
+
+    /* Publish - reliable */
+    pdu_ptr = buffer;
+
+    if(cfg_retry_flag == 0)
+    {
+        cfg_retry_flag = 1;
+    }
+
+    MS_access_reply
+    (
+        &UI_vendor_defined_server_model_handle,
+        call_receive_para.heartbeat_sddr,
+        call_receive_para.heartbeat_addr,
+        call_receive_para.heartbeat_subnet_index,
+        appkey_handle,
+        ACCESS_INVALID_DEFAULT_TTL,
+        opcode,
+        pdu_ptr,
+        marker
+    ); 
+}
+
+static API_RESULT UI_heartbeat_rcv_callback
+                    (
+                        MS_NET_ADDR         addr,
+                        MS_SUBNET_HANDLE    subnet_index,
+                        UINT8               countlog
+                    )
+{
+    API_RESULT retval;
+
+    HEARTBEAT_RCV_PARAMS receive_para;
+    MS_NET_ADDR saddr;
+
+    receive_para.heartbeat_addr = addr;
+    receive_para.heartbeat_countlog = countlog;
+    receive_para.heartbeat_subnet_index = subnet_index;
+//    printf("rcv 0x%04X 0x%04X 0x%02X\n",addr,subnet_index,countlog);
+
+
+    MS_access_cm_get_primary_unicast_address(&saddr);
+
+    receive_para.heartbeat_sddr = saddr;
+
+    heartbeat_reply_dly_thandle = EM_TIMER_HANDLE_INIT_VAL;
+
+    retval = EM_start_timer
+                 (
+                     &heartbeat_reply_dly_thandle,
+                     (EM_TIMEOUT_MILLISEC | (50 * (saddr&0xff))),
+                     heartbeat_reply_delay_handler,
+                     (void *)&receive_para,
+                     sizeof(receive_para)
+                 );
+
+    return retval;   
+}
+
+static API_RESULT UI_heartbeat_rcv_timeout_callback(void)
+{
+    printf("heartbeat_timeout_callback\n");
+    MS_common_reset();
+    EM_start_timer (&thandle, 1, timeout_cb, NULL, 0);
+//    printf("heartbeat_timeout_callback\n");
+    return API_SUCCESS;
+    
+}
+#endif
 
 static API_RESULT UI_prov_callback
                   (
@@ -1822,7 +1687,6 @@ static API_RESULT UI_prov_callback
 
     switch (event_type)
     {
-
        case PROV_EVT_PROVISIONING_SETUP:
             CONSOLE_OUT("Recvd PROV_EVT_PROVISIONING_SETUP\n");
             CONSOLE_OUT("Status - 0x%04X\n", event_result);
@@ -1831,6 +1695,7 @@ static API_RESULT UI_prov_callback
             CONSOLE_OUT("Attention TImeout - %d\n", *((UCHAR *)event_data));
 
             LIGHT_ONLY_BLUE_ON;
+            blebrr_prov_started = MS_TRUE;
             
             break;
 
@@ -1906,7 +1771,7 @@ static API_RESULT UI_prov_callback
 
             /* Call to input the oob */
             CONSOLE_OUT("Setting the Authval...\n");
-            retval = MS_prov_set_authval(&UI_prov_handle, pauth, authsize);
+            retval = MS_prov_set_authval(&UI_prov_brr_handle, pauth, authsize);
             CONSOLE_OUT("Retval - 0x%04X\n", retval);
             break;
 
@@ -1961,11 +1826,29 @@ static API_RESULT UI_prov_callback
                 mesh_model_device_provisioned_ind_pl();
                 light_blink_set(LIGHT_GREEN, LIGHT_BLINK_SLOW,3);
                 UI_sample_get_device_key();
-                osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_TERMINATE, 3000); //add gap terminate evt by hq
+                if(*phandle == PROV_BRR_GATT)
+                {
+                    osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_TERMINATE, 3000); //add gap terminate evt by hq
+                }
+
+                procfg_timer_handle = EM_TIMER_HANDLE_INIT_VAL;
+
+                CONSOLE_OUT("Start timer\n");
+                
+                retval = EM_start_timer
+                     (
+                         &procfg_timer_handle,
+                         PROCFG_COMPLETE_TIMEOUT,
+                         UI_provcfg_complete_timeout_handler,
+                         NULL,
+                         0
+                     );
             }
             else
             {
                 light_blink_set(LIGHT_RED, LIGHT_BLINK_SLOW,3);
+                MS_common_reset(); 
+                EM_start_timer (&thandle, 1, timeout_cb, NULL, 0);
             }
             break;
 
@@ -1985,12 +1868,35 @@ static void UI_register_prov(void)
     CONSOLE_OUT("Retval - 0x%04X\n", retval);
 }
 
+#if (CFG_HEARTBEAT_MODE)
+static void UI_register_heartbeat(void)
+{
+    API_RESULT retval;
+
+    CONSOLE_OUT("Registering with heartbeat callback...\n");
+    retval = MS_trn_heartbeat_register(UI_heartbeat_rcv_callback,UI_heartbeat_rcv_timeout_callback);
+    CONSOLE_OUT("Retval - 0x%04X\n", retval);
+}
+#endif
+
+static void UI_prov_bind(UCHAR brr, UCHAR index)
+{
+    API_RESULT retval;
+
+    /* Call to bind with the selected device */
+    CONSOLE_OUT("Binding with the selected device...\n");
+    retval = MS_prov_bind(brr, &UI_lprov_device, UI_PROV_DEVICE_ATTENTION_TIMEOUT, &UI_prov_brr_handle);
+
+    CONSOLE_OUT("Retval - 0x%04X\n", retval);
+}
+
+
 
 static void UI_setup_prov(UCHAR role, UCHAR brr)
 {
     API_RESULT retval;
     
-    if (PROV_BRR_GATT == brr)
+    if (PROV_BRR_GATT & brr)
     {
         blebrr_gatt_mode_set(BLEBRR_GATT_PROV_MODE);
     }
@@ -2004,6 +1910,7 @@ static void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      &UI_lprov_device,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -2017,25 +1924,23 @@ static void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      NULL,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
         UI_prov_role = PROV_ROLE_PROVISIONER;
     }
 
-    CONSOLE_OUT("Retval - 0x%04X\n", retval);
-}
-
-static void UI_prov_bind(UCHAR brr, UCHAR index)
-{
-    API_RESULT retval;
-
-    /* Call to bind with the selected device */
-    CONSOLE_OUT("Binding with the selected device...\n");
-    retval = MS_prov_bind(brr, &UI_lprov_device, UI_PROV_DEVICE_ATTENTION_TIMEOUT, &UI_prov_handle);
+    if (PROV_BRR_GATT != brr)
+    {
+        UI_prov_brr_handle = PROV_BRR_ADV;
+        UI_prov_bind(brr & PROV_BRR_ADV, 0x00);
+    }
 
     CONSOLE_OUT("Retval - 0x%04X\n", retval);
 }
+
+
 
 
 void UI_proxy_start_adv(MS_SUBNET_HANDLE subnet_handle, UCHAR proxy_adv_mode)
@@ -2159,15 +2064,14 @@ void timeout_cb (void * args, UINT16 size)
 
 void proxy_dly_generic_onoff (void * args, UINT16 size)
 {
-    proxy_dly_thandle = EM_TIMER_HANDLE_INIT_VAL;
     generic_onoff_set_pl(UI_generic_onoff.onoff);
 }
 
-void proxy_dly_generic_hsl (void * args, UINT16 size)
-{
-    proxy_dly_thandle = EM_TIMER_HANDLE_INIT_VAL;
-    UI_light_hsl_set_actual(0,UI_light_hsl.hsl_lightness,UI_light_hsl.hsl_hue,UI_light_hsl.hsl_saturation,0);
-}
+//void proxy_dly_generic_hsl (void * args, UINT16 size)
+//{
+//    proxy_dly_thandle = EM_TIMER_HANDLE_INIT_VAL;
+//    UI_light_hsl_set_actual(0,UI_light_hsl.hsl_lightness,UI_light_hsl.hsl_hue,UI_light_hsl.hsl_saturation,0);
+//}
 
 
 void UI_gatt_iface_event_pl_cb
@@ -2206,6 +2110,7 @@ void UI_gatt_iface_event_pl_cb
                 if (BLEBRR_GATT_PROV_MODE == ev_param)
                 {
                     /* Call to bind with the selected device */
+                    UI_prov_brr_handle = PROV_BRR_GATT;
                     UI_prov_bind(PROV_BRR_GATT, 0);
                 }
             }
@@ -2260,7 +2165,7 @@ API_RESULT UI_sample_binding_app_key(void)
         {
             /* Found a Valid App Key */
             /* Keeping the retval as API_SUCCESS */
-            retval=MS_access_bind_model_app(UI_generic_onoff_server_model_handle, handle);
+            ms_ps_store_disable_flag = 1; 
                  
 #ifdef  USE_LIGHTNESS
             retval=MS_access_bind_model_app(UI_light_lightness_server_model_handle, handle);
@@ -2286,8 +2191,16 @@ API_RESULT UI_sample_binding_app_key(void)
             retval=MS_access_bind_model_app(UI_vendor_defined_server_model_handle, handle);
             CONSOLE_OUT("BINDING App Key %04x (%04x %04x)\n",retval,UI_vendor_defined_server_model_handle,handle);         
 #endif
+            ms_ps_store_disable_flag = 0; 
+            retval=MS_access_bind_model_app(UI_generic_onoff_server_model_handle, handle);
         }
     }
+
+    //Provision ok,stop provision/config timeout handler  by hq
+    CONSOLE_OUT("Stop timer\n");
+    EM_stop_timer(procfg_timer_handle);
+    
+    blebrr_prov_started = MS_FALSE;
      
     return retval;
 }
@@ -2295,14 +2208,41 @@ API_RESULT UI_sample_binding_app_key(void)
 //---------------------------------------------------------------------------------
 void vm_subscriptiong_binding_cb (void)
 {
+//    UCHAR   proxy_state;
+    UINT8 relay;
+    ms_ps_store_disable_flag = 1;
     CONSOLE_OUT("vm_subscriptiong_binding_cb\n");
     thandle = EM_TIMER_HANDLE_INIT_VAL;
     UI_sample_binding_app_key(); 
-    MS_ENABLE_RELAY_FEATURE();
+    MS_DISABLE_RELAY_FEATURE();
     MS_ENABLE_PROXY_FEATURE();
-    MS_ENABLE_FRIEND_FEATURE();
-    MS_access_cm_set_transmit_state(MS_RELAY_TX_STATE, (8<<3)|1);
-    MS_access_cm_set_transmit_state(MS_NETWORK_TX_STATE, (8<<3)|3);
+    MS_DISABLE_FRIEND_FEATURE();
+    relay = MS_access_cm_get_features_field(&relay, MS_FEATURE_RELAY);
+    if(relay == MS_TRUE)
+    {
+        MS_ENABLE_SNB_FEATURE();
+        MS_net_start_snb_timer(0);
+    }
+    else
+    {
+        MS_DISABLE_SNB_FEATURE();
+        MS_net_stop_snb_timer(0);
+    }
+    MS_access_cm_set_transmit_state(MS_RELAY_TX_STATE, (0<<3)|1);
+    ms_ps_store_disable_flag = 0;
+    MS_access_cm_set_transmit_state(MS_NETWORK_TX_STATE, (0<<3)|0);    
+//    if(UI_prov_brr_handle == PROV_BRR_ADV)
+//    {
+//        EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+//    }
+//    else if(UI_prov_brr_handle == PROV_BRR_GATT)
+//    {
+//        MS_proxy_fetch_state(&proxy_state);
+//        if(proxy_state == MS_PROXY_CONNECTED)
+//        {
+//            blebrr_disconnect_pl();
+//        }
+//    }
 }
 
 void vm_subscriptiong_add (MS_NET_ADDR addr)
@@ -2312,7 +2252,7 @@ void vm_subscriptiong_add (MS_NET_ADDR addr)
     sub_addr.use_label=0;
     sub_addr.addr=addr;
 
-    MS_access_cm_add_model_subscription(UI_generic_onoff_server_model_handle,&sub_addr);
+    ms_ps_store_disable_flag = 1;
     
 #ifdef  USE_LIGHTNESS
     MS_access_cm_add_model_subscription(UI_light_lightness_server_model_handle,&sub_addr);
@@ -2332,10 +2272,8 @@ void vm_subscriptiong_add (MS_NET_ADDR addr)
     MS_access_cm_add_model_subscription(UI_scene_server_model_handle,&sub_addr);
     MS_access_cm_add_model_subscription(UI_scene_setup_server_model_handle,&sub_addr);
 #endif
-
-//#ifdef  USE_VENDORMODEL
-//    MS_access_cm_add_model_subscription(UI_vendor_defined_server_model_handle,&sub_addr);
-//#endif
+    ms_ps_store_disable_flag = 0;
+    MS_access_cm_add_model_subscription(UI_generic_onoff_server_model_handle,&sub_addr);
 
 }
 
@@ -2345,7 +2283,7 @@ void vm_subscriptiong_delete (MS_NET_ADDR addr)
     sub_addr.use_label=0;
     sub_addr.addr=addr;
 
-    MS_access_cm_delete_model_subscription(UI_generic_onoff_server_model_handle,&sub_addr);
+    ms_ps_store_disable_flag = 1;    
     
 #ifdef  USE_LIGHTNESS
     MS_access_cm_delete_model_subscription(UI_light_lightness_server_model_handle,&sub_addr);
@@ -2365,13 +2303,29 @@ void vm_subscriptiong_delete (MS_NET_ADDR addr)
     MS_access_cm_delete_model_subscription(UI_scene_server_model_handle,&sub_addr);
     MS_access_cm_delete_model_subscription(UI_scene_setup_server_model_handle,&sub_addr);
 #endif
-
-//#ifdef  USE_VENDORMODEL
-//    MS_access_cm_delete_model_subscription(UI_vendor_defined_server_model_handle,&sub_addr);
-//#endif
-
+    ms_ps_store_disable_flag = 0; 
+    MS_access_cm_delete_model_subscription(UI_generic_onoff_server_model_handle,&sub_addr);
 }
 
+#if (CFG_HEARTBEAT_MODE)
+API_RESULT UI_trn_set_heartbeat_subscription(MS_NET_ADDR saddr)
+{
+    API_RESULT retval;
+    
+    MS_TRN_HEARTBEAT_SUBSCRIPTION_INFO hb_sub_info;
+    
+    hb_sub_info.saddr = saddr;
+    hb_sub_info.count_log = 0;
+    hb_sub_info.daddr = 0xCFFF;
+    hb_sub_info.max_hops = 0;
+    hb_sub_info.min_hops = 0;
+    hb_sub_info.period_log = 0x06;
+
+    retval = MS_trn_set_heartbeat_subscription(&hb_sub_info);
+    
+    return retval;
+}
+#endif
 
 
 API_RESULT UI_app_config_server_callback (         
@@ -2390,6 +2344,7 @@ API_RESULT UI_app_config_server_callback (
 {
 
     uint8_t tx_state;
+    UCHAR  proxy_state;
 #ifdef EASY_BOUNDING
     MS_ACCESS_ADDRESS         addr;
 #endif
@@ -2398,8 +2353,14 @@ API_RESULT UI_app_config_server_callback (
 
     switch (opcode)
     {
-        case MS_ACCESS_CONFIG_NODE_RESET_OPCODE: 
+        case MS_ACCESS_CONFIG_NODE_RESET_OPCODE:            
             CONSOLE_OUT("[ST TimeOut CB]\n");
+            proxy_state = UI_proxy_state_get();
+            nvs_reset(NVS_BANK_PERSISTENT);
+            if(MS_PROXY_CONNECTED != proxy_state)
+            {
+                EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+            }
             break;
         case MS_ACCESS_CONFIG_MODEL_SUBSCRIPTION_ADD_OPCODE:
 #ifdef EASY_BOUNDING
@@ -2419,18 +2380,33 @@ API_RESULT UI_app_config_server_callback (
             break;
         case MS_ACCESS_CONFIG_NETWORK_TRANSMIT_SET_OPCODE:
             MS_access_cm_get_transmit_state(MS_NETWORK_TX_STATE, &tx_state);
-            CONSOLE_OUT("[NET TRX] %d \n",tx_state);
+            CONSOLE_OUT("[NET TRX] 0x%02X \n",tx_state);
             break;
         case MS_ACCESS_CONFIG_RELAY_SET_OPCODE:
             MS_access_cm_get_transmit_state(MS_RELAY_TX_STATE, &tx_state);
-            CONSOLE_OUT("[RLY TRX] %d \n",tx_state);
+            CONSOLE_OUT("[RLY TRX] 0x%02X \n",tx_state);
             break;
             
         case MS_ACCESS_CONFIG_APPKEY_ADD_OPCODE:
-#ifdef EASY_BOUNDING        
+#ifdef EASY_BOUNDING  
+            blebrr_scan_pl(FALSE);
             vm_subscriptiong_binding_cb();
-            //EM_start_timer (&thandle, 1, vm_subscriptiong_binding_cb, NULL, 0);
-#endif            
+            ms_provisioner_addr = saddr;
+#if (CFG_HEARTBEAT_MODE)             
+            UI_trn_set_heartbeat_subscription(saddr);
+#endif
+#endif 
+        break;
+
+        case MS_ACCESS_CONFIG_MODEL_APP_BIND_OPCODE:
+#ifndef EASY_BOUNDING
+            blebrr_scan_pl(FALSE);
+            vm_subscriptiong_binding_cb();
+            ms_provisioner_addr = saddr;
+#if (CFG_HEARTBEAT_MODE)           
+            UI_trn_set_heartbeat_subscription(saddr);
+#endif
+#endif
             break;
         default:
             break;
@@ -2470,6 +2446,11 @@ void appl_mesh_sample (void)
     /* Initialize Timer Module */
     EM_timer_init();
     timer_em_init();
+
+#if defined ( EM_USE_EXT_TIMER )
+    EXT_cbtimer_init();
+    ext_cbtimer_em_init();
+#endif    
 
     /* Initialize utilities */
     nvsto_init();
@@ -2515,13 +2496,6 @@ void appl_mesh_sample (void)
         /* Register foundation model servers */
         retval = UI_register_foundation_model_servers(element_handle);
     }
-
-//    retval = MS_access_register_element
-//             (
-//                 node_id,
-//                 &element,
-//                 &element_handle
-//             );
 
     if (API_SUCCESS == retval)
     {
@@ -2572,6 +2546,10 @@ void appl_mesh_sample (void)
     /* Configure as provisionee/device */
     UI_register_prov();
 
+#if (CFG_HEARTBEAT_MODE)
+    UI_register_heartbeat();
+#endif
+
 
     /**
      * Set Scan Response Data Before Starting Provisioning.
@@ -2588,8 +2566,6 @@ void appl_mesh_sample (void)
     /* Enable Relay feature */
     //MS_ENABLE_RELAY_FEATURE();
     //Composite state (3-bitsLSB of Tx Count and 5-bitsMSB of Tx Interval Steps)
-    //MS_access_cm_set_transmit_state(MS_RELAY_TX_STATE, (8<<3)|2);
-    //MS_access_cm_set_transmit_state(MS_NETWORK_TX_STATE, (8<<3)|3);
 
     APP_config_server_CB_init(UI_app_config_server_callback);
   
@@ -2603,7 +2579,6 @@ void appl_mesh_sample (void)
     UI_lprov_device.uuid[9]  = (uint8_t)ReadFlash(address ++);
     
     EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
-    //EM_start_timer (&thandle, 5, timeout_cb, NULL, 0);
 
     return;
 }
@@ -2616,9 +2591,10 @@ API_RESULT UI_sample_get_net_key(void )
     API_RESULT retval;
 
     CONSOLE_OUT("Fetching Net Key for indx 0x0000\n");
-    retval = MS_access_cm_get_netkey
+    retval = MS_access_cm_get_netkey_at_offset
              (
                  index,
+                 0,
                  key
              );
 
@@ -2730,20 +2706,16 @@ void UI_sample_reinit(void)
     retval      = API_SUCCESS;
     is_prov_req = MS_TRUE;
 
-    //re provision
-//    if(hal_gpio_read(14)==0)
-//    {
-        retval = MS_access_cm_get_primary_unicast_address(&addr);
+    retval = MS_access_cm_get_primary_unicast_address(&addr);
 
-        if (API_SUCCESS == retval)
+    if (API_SUCCESS == retval)
+    {
+        if (MS_NET_ADDR_UNASSIGNED != addr)
         {
-            if (MS_NET_ADDR_UNASSIGNED != addr)
-            {
-                /* Set Provisioning is not Required */
-                is_prov_req = MS_FALSE;
-            }
+            /* Set Provisioning is not Required */
+            is_prov_req = MS_FALSE;
         }
-//    }
+    }
 
    // MS_access_cm_set_transmit_state(MS_RELAY_TX_STATE, (8<<3)|2);
     //MS_access_cm_set_transmit_state(MS_NETWORK_TX_STATE, (8<<3)|3);
@@ -2755,12 +2727,18 @@ void UI_sample_reinit(void)
          * setup <role:[1 - Device, 2 - Provisioner]> <bearer:[1 - Adv, 2 - GATT]
          */
         role = PROV_ROLE_DEVICE;
-        brr  = PROV_BRR_GATT;
+        brr  = PROV_BRR_GATT;  //PROV_BRR_ADV,PROV_BRR_GATT
+
+        printf("Bearer type = 0x%02X(Bit0-adv, Bit1-GATT)\r\n", brr);
+//        UI_prov_brr_handle = brr;
 
         /**
          * Setting up an Unprovisioned Device over GATT
          */
+        LIGHT_ONLY_RED_ON;
+        blebrr_prov_started = MS_FALSE;
         UI_setup_prov(role, brr);
+//        UI_prov_bind(brr, 0x00);
         //ms_access_ps_store(MS_PS_RECORD_SEQ_NUMBER);
 
         CONSOLE_OUT("\r\n Setting up as an Unprovisioned Device\r\n");
@@ -2784,30 +2762,36 @@ void UI_sample_reinit(void)
 
             if (MS_ENABLE == state)
             {
-
                 light_blink_set(LIGHT_GREEN, LIGHT_BLINK_FAST,5);
-            
-                //CONSOLE_OUT("\r\n Provisioned Device - Starting Proxy with NetID on Subnet 0x0000!\r\n");
-
-                /* Start Proxy ADV with Network ID here */
-                //UI_proxy_start_adv(0x0000, MS_PROXY_NET_ID_ADV_MODE);
-
                 //for silab 2.0.0 app use NODE ID
                 CONSOLE_OUT("\r\n Provisioned Device - Starting Proxy with NODE ID on Subnet 0x0000!\r\n");
                 UI_proxy_start_adv(0x0000, MS_PROXY_NODE_ID_ADV_MODE);
+#if (CFG_HEARTBEAT_MODE)                
+                if(ms_provisioner_addr != 0)
+                {
+                    printf("sub ms_provisioner_addr 0x%04X\n",ms_provisioner_addr);
+                    UI_trn_set_heartbeat_subscription(ms_provisioner_addr);
+                }
+#endif                
             }
             else
             {
                 light_blink_set(LIGHT_GREEN, LIGHT_BLINK_SLOW,3);
-                MS_access_cm_set_features_field(MS_ENABLE,MS_FEATURE_PROXY);
+                MS_brr_bcast_end(BRR_BCON_TYPE_PROXY_NODEID, BRR_BCON_ACTIVE);
+#if (CFG_HEARTBEAT_MODE)              
+                if(ms_provisioner_addr != 0)
+                {
+                    printf("sub ms_provisioner_addr 0x%04X\n",ms_provisioner_addr);
+                    UI_trn_set_heartbeat_subscription(ms_provisioner_addr);
+                }
+#endif                
 
-                CONSOLE_OUT("\r\n Provisioned Device - Enable PROXY !!!\r\n");
+                CONSOLE_OUT("\r\n Provisioned Device!!!\r\n");
                 /**
                  * Do Nothing!
                  * Already Scaning is Enabled at Start Up
                  */
-                //blebrr_scan_enable();
-                EM_start_timer (&thandle, 5, timeout_cb, NULL, 0);
+                blebrr_scan_enable();
             }
         }
         else
@@ -2816,20 +2800,17 @@ void UI_sample_reinit(void)
             light_blink_set(LIGHT_BLUE, LIGHT_BLINK_FAST,5);
 
             //for silab 2.0.0 app use NODE ID
-            UI_proxy_start_adv(0x0000, MS_PROXY_NODE_ID_ADV_MODE);
-            
-            /**
-             * Provisioned but not configured device.
-             * Still checking if the PROXY Feature is enabled or not.
-             * Depending on the state of Proxy Feature:
-             *   - If enabled, Start Proxy ADV with Network ID
-             *   - Else, Start Proxy ADV with Node Identity.
-             */
-//             (MS_ENABLE == state) ?
-//             UI_proxy_start_adv(0x0000, MS_PROXY_NET_ID_ADV_MODE):
-//             UI_proxy_start_adv(0x0000, MS_PROXY_NODE_ID_ADV_MODE);
+            if(UI_prov_brr_handle == PROV_BRR_GATT)
+            {
+                UI_proxy_start_adv(0x0000, MS_PROXY_NODE_ID_ADV_MODE);
+            } 
+
              
         }
+    }
+    if((ms_iv_index.iv_expire_time!=0)&&(ms_iv_index.iv_expire_time!=0xffffffff))
+    {
+        MS_net_start_iv_update_timer(ms_iv_index.iv_update_state,MS_TRUE);
     }
 }
 

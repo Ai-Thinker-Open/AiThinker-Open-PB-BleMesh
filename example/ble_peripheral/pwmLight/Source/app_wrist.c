@@ -197,7 +197,7 @@ static uint16 gapConnHandle;
 // Advertising user-cancelled state
 static bool WristAdvCancelled = FALSE;
 extern uint16_t crc16(uint16_t seed, const volatile void * p_data, uint32_t size);
-
+#if(HUGE_MODE==1)
 const static unsigned char bmp_res_113[] = { 
 0x1c,0x12,0x54,0x00,
 0xff,0xff,0x03,0x03,0x03,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,0xe3,
@@ -4611,7 +4611,7 @@ const static unsigned char bmp_res_113[] = {
 0x03,0x00,0x00,0x00,};
 
 static uint8_t s_tmp_data[1024*12] = {1,2,3,4,5,6};
-
+#endif
 
 /*********************************************************************
  * LOCAL FUNCTIONS
@@ -4635,11 +4635,13 @@ static gapRolesCBs_t WristPeripheralCB =
 };
 
 // Bond Manager Callbacks
+#if 0
 static const gapBondCBs_t WristBondCB =
 {
   NULL,                   // Passcode callback
   NULL                    // Pairing state callback
 };
+#endif
 
 
 
@@ -4908,7 +4910,7 @@ uint16 appWristProcEvt( uint8 task_id, uint16 events )
     VOID GAPRole_StartDevice( &WristPeripheralCB );
 
     // Register with bond manager after starting device
-    GAPBondMgr_Register( (gapBondCBs_t *) &WristBondCB );
+//    GAPBondMgr_Register( (gapBondCBs_t *) &WristBondCB );
     
     return ( events ^ START_DEVICE_EVT );
   }

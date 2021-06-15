@@ -74,6 +74,7 @@
 #include "MS_common.h"
 #include "MS_prov_api.h"
 #include "MS_net_api.h"
+#include "MS_access_api.h"
 
 
 #include "nvs.h"
@@ -89,6 +90,8 @@
 
 extern void appl_mesh_sample (void);
 extern void appl_dump_bytes(UCHAR * buffer, UINT16 length);
+extern void timeout_cb (void * args, UINT16 size);
+
 
 /*********************************************************************
  * MACROS
@@ -118,6 +121,9 @@ UINT16 bleMesh_pdu_time;
 extern PROV_DEVICE_S UI_lprov_device;
 extern  key_contex_t key_state;
 extern Keys_message KeyCode;
+extern uint8 enable_sleep_flag;
+extern UCHAR blebrr_sleep;
+extern EM_timer_handle thandle;
 
 
 
@@ -240,9 +246,7 @@ static void bleMesh_ProcessGATTMsg( gattMsgEvent_t *pMsg );
 void bleMesh_uart_init(void);
 
 void UI_set_uuid_octet (UCHAR uuid_0);
-void UI_light_hsl_set(UINT16 lightness, UINT16 hue, UINT16 saturation);
-
-uint32  osal_memory_statics(void);  
+void UI_light_hsl_set(UINT16 lightness, UINT16 hue, UINT16 saturation); 
 /*********************************************************************
  * PROFILE CALLBACKS
  */
@@ -422,6 +426,18 @@ uint16 bleMesh_ProcessEvent( uint8 task_id, uint16 events )
         
         if (events & BLEMESH_HAL_KEY_MATRIX_EVT)
         {
+            hal_pwrmgr_lock(MOD_USR1);
+#ifdef BLEBRR_LP_SUPPORT            
+            if(enable_sleep_flag == 1)
+            {
+                enable_sleep_flag = 0;
+                printf("BLEMESH_HAL_KEY_MATRIX_EVT\n");
+                blebrr_wakeup_handler();
+                osal_start_timerEx(bleMesh_TaskID, BLEMESH_APPL_IDLE_EVT, 60*1000);
+            }
+#endif
+                       
+
             MS_NET_ADDR pub_addr;
             bleMesh_key_process(KeyCode.key,&pub_addr);
             uint8 row_index = (KeyCode.key-1)>>2;
@@ -477,7 +493,8 @@ uint16 bleMesh_ProcessEvent( uint8 task_id, uint16 events )
 //                UI_generic_onoff_set(KeyCode.key,(g_counter4_on_off++)&0x01);
 //            }
             
-            
+            // hal_pwrmgr_unlock(MOD_USR1);
+                       
             return (events ^ BLEMESH_HAL_KEY_MATRIX_EVT);
         } 
         if (events & BLEMESH_PDU_TX_OVERRUN)
@@ -506,7 +523,27 @@ uint16 bleMesh_ProcessEvent( uint8 task_id, uint16 events )
             bleMesh_pdu_time++;
             
             return (events ^ BLEMESH_PDU_TX_OVERRUN);
-        } 
+        }
+
+        if ( events & BLEMESH_PROV_COMP_EVT ) {
+            printf("BLEMESH_PROV_COMP_EVT >>>");
+
+            osal_start_timerEx(bleMesh_TaskID, BLEMESH_APPL_IDLE_EVT, 10000);
+
+            return (events ^ BLEMESH_PROV_COMP_EVT);
+        }
+
+        if ( events & BLEMESH_APPL_IDLE_EVT ) {
+            printf("BLEMESH_APPL_IDLE_EVT >>>");
+#ifdef BLEBRR_LP_SUPPORT
+            hal_pwrmgr_unlock(MOD_USR1);
+            enable_sleep_flag = 1;            
+            blebrr_sleep_handler();
+	        printf("sleep mode:%d\n", isSleepAllow());
+#endif
+
+            return (events ^ BLEMESH_APPL_IDLE_EVT);
+        }
 
     // Discard unknown events
     return 0;
@@ -597,8 +634,8 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
             break;
 
         case GAP_MAKE_DISCOVERABLE_DONE_EVENT:
-            //printf ("->%d\r\n", pMsg->opcode);
-            //printf ("MD Status - %d", pMsg->hdr.status);
+//            printf ("->%d\r\n", pMsg->opcode);
+//            printf ("MD Status - %d", pMsg->hdr.status);
         
             if (SUCCESS != pMsg->hdr.status)
             {
@@ -616,8 +653,8 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
             break;
 
         case GAP_END_DISCOVERABLE_DONE_EVENT:
-            //printf ("->%d\r\n", pMsg->opcode);
-            //printf ("ED Status - %d", pMsg->hdr.status);
+//            printf ("->%d\r\n", pMsg->opcode);
+//            printf ("ED Status - %d", pMsg->hdr.status);
 
             if (SUCCESS != pMsg->hdr.status)
             {
@@ -645,21 +682,33 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
                 else
                 {
                     bleMesh_DiscCancel = FALSE;
-                    blebrr_handle_evt_scan_complete(0);
+                    if(blebrr_sleep == MS_TRUE)
+                    {
+                        printf("enter ms sleep\n");
+                    }
+                    else
+                    {
+                        blebrr_handle_evt_scan_complete(0);
+                    }
+                    
                 }
             }
             else
             {
-                //printf (">>> %d\r\n", pMsg->hdr.status);
-                if (SUCCESS == pMsg->hdr.status)
+                printf (">>> %d\r\n", pMsg->hdr.status);
+                if (
+                    SUCCESS == pMsg->hdr.status ||
+                    LL_STATUS_ERROR_UNEXPECTED_STATE_ROLE == pMsg->hdr.status
+                    )
                 {
-                    GAP_DeviceDiscoveryRequest(&bleMesh_scanparam);
-                }
-                else if(LL_STATUS_ERROR_UNEXPECTED_STATE_ROLE == pMsg->hdr.status)
-                {   
                     printf ("GAP_DeviceDiscoveryRequest Retry - %02X\r\n", pMsg->hdr.status);
                     GAP_DeviceDiscoveryRequest(&bleMesh_scanparam);
                 }
+//                else if(LL_STATUS_ERROR_UNEXPECTED_STATE_ROLE == pMsg->hdr.status)
+//                {   
+//                    printf ("GAP_DeviceDiscoveryRequest Retry - %02X\r\n", pMsg->hdr.status);
+//                    GAP_DeviceDiscoveryRequest(&bleMesh_scanparam);
+//                }
             }
             break;
 
@@ -928,7 +977,26 @@ API_RESULT cli_seek(UINT32 argc, UCHAR *argv[])
 
 API_RESULT cli_demo_reset(UINT32 argc, UCHAR *argv[])
 {
+    UCHAR  proxy_state,proxy;
+    MS_access_cm_get_features_field(&proxy, MS_FEATURE_PROXY);
+    if(MS_TRUE == proxy)
+    {
+        MS_proxy_fetch_state(&proxy_state);
+        if(proxy_state == MS_PROXY_CONNECTED)
+        {
+            blebrr_disconnect_pl();
+        }
+        else
+        {
+            EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+        }
+    }
+    else
+    {
+        EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+    }
     nvs_reset(NVS_BANK_PERSISTENT);
+    MS_access_cm_reset();
     printf ("Done\r\n");
     
     return API_SUCCESS;
@@ -1113,7 +1181,7 @@ MS_NET_ADDR bleMesh_gkey_get(uint8 indx)
 {
     MS_NET_ADDR rslt;
 
-    if (0 <= indx && 5 >  indx ) {
+    if (/*0 <= indx &&*/ 5 >  indx ) {
         rslt = __gkey_addr[indx];
     }
 
@@ -1124,7 +1192,7 @@ MS_NET_ADDR bleMesh_gkey_get(uint8 indx)
 
 void bleMesh_gkey_set(uint8 indx, MS_NET_ADDR addr)
 {
-    if (0 <= indx && 5 >  indx ) {
+    if (/*0 <= indx &&*/ 5 >  indx ) {
         __gkey_addr[indx] = addr;
     }
 

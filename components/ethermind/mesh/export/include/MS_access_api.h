@@ -412,6 +412,8 @@ typedef struct _MS_PROV_DEV_ENTRY
     /** Number of Elements */
     UCHAR          num_elements;
 
+    /*Receive notify count*/
+    UINT16          rcv_flag;
 } MS_PROV_DEV_ENTRY;
 
 /** \} */
@@ -529,6 +531,13 @@ API_RESULT MS_access_get_model_handle
                /* IN */   MS_ACCESS_MODEL_ID            model_id,
                /* OUT */  MS_ACCESS_MODEL_HANDLE      * handle
            );
+
+API_RESULT MS_access_get_appkey_handle
+          (
+              /* IN */   MS_ACCESS_MODEL_HANDLE        * handle,
+              /* OUT */  MS_APPKEY_HANDLE               * appkey_handle
+          );
+
 
 /**
  *  \brief API to publish access layer message.
@@ -913,6 +922,15 @@ API_RESULT MS_access_cm_get_features
 #define MS_DISABLE_LPN_FEATURE() \
         MS_access_cm_set_features_field(MS_DISABLE, MS_FEATURE_LPN)
 
+/** Enable Secure Nework Beacon Feature */
+#define MS_ENABLE_SNB_FEATURE() \
+        MS_access_cm_set_features_field(MS_ENABLE, MS_FEATURE_SEC_NET_BEACON)
+
+/** Disable Secure Nework Beacon Feature */
+#define MS_DISABLE_SNB_FEATURE() \
+        MS_access_cm_set_features_field(MS_DISABLE, MS_FEATURE_SEC_NET_BEACON)
+
+
 /**
  *  \brief To get friendship role of the node
  *
@@ -1008,7 +1026,8 @@ API_RESULT MS_access_cm_remove_all_device_keys(void);
 API_RESULT MS_access_cm_get_prov_devices_list
            (
                /* IN */    MS_PROV_DEV_ENTRY   * prov_dev_list,
-               /* INOUT */ UINT16              * num_entries
+               /* OUT */ UINT16              * num_entries,
+               /* OUT */ UINT16              * pointer
            );
 
 /**
@@ -1028,6 +1047,22 @@ API_RESULT MS_access_cm_get_device_key_handle
                /* IN */  MS_NET_ADDR                  prim_elem_uaddr,
                /* OUT */ MS_ACCESS_DEV_KEY_HANDLE   * handle
            );
+/**
+ *  \brief To delete Device Key
+ *
+ *  \par Description
+ *  This routine returns status for a given Primary Element Address
+ *  entry in Device Key Table.
+ *
+ *  \param [in] handle            Device Key Table Handle, if match is found.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
+API_RESULT MS_access_cm_delete_device_key
+           (
+               /* IN */ MS_ACCESS_DEV_KEY_HANDLE       handle
+           );
+
 
 /**
  *  \brief To get AppKey
@@ -1169,11 +1204,13 @@ API_RESULT MS_access_cm_delete_netkey
  *
  *  \return API_SUCCESS or an error code indicating reason for failure
  */
-API_RESULT MS_access_cm_get_netkey
+API_RESULT MS_access_cm_get_netkey_at_offset
            (
                /* IN */  MS_SUBNET_HANDLE    subnet_handle,
+               /* IN */  UINT8               offset,
                /* OUT */ UINT8             * net_key
            );
+
 
 /**
  *  \brief To get list of all known NetKeys
@@ -1304,6 +1341,12 @@ API_RESULT MS_access_cm_set_prov_data
            (
                /* IN */ PROV_DATA_S    * prov_data
            );
+
+API_RESULT MS_access_cm_set_prov_data_provsioner
+          (
+              /* IN */ PROV_DATA_S    * prov_data
+          );
+
 
 /**
  *  \brief To get NID associated with a subnet

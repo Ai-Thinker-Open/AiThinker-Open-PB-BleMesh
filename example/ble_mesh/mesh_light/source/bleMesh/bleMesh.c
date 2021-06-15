@@ -58,6 +58,7 @@
 #include "gattservapp.h"
 #include "devinfoservice.h"
 #include "simpleGATTprofile_ota.h"
+#include "ota_app_service.h"
 
 #include "peripheral.h"
 #include "gapbondmgr.h"
@@ -82,9 +83,14 @@
 #include "cliface.h"
 
 #include "mesh_clients.h"
+#include "access_extern.h"
+#include "cli_vendor.h"
+
 
 extern void appl_mesh_sample (void);
-extern void appl_dump_bytes(UCHAR * buffer, UINT16 length);
+//extern void appl_dump_bytes(UCHAR * buffer, UINT16 length);
+//extern void timeout_cb (void * args, UINT16 size);
+
 
 
 
@@ -108,6 +114,10 @@ extern void appl_dump_bytes(UCHAR * buffer, UINT16 length);
  * EXTERNAL VARIABLES
  */
 extern PROV_DEVICE_S UI_lprov_device;
+extern EM_timer_handle thandle;
+extern EM_timer_handle procfg_timer_handle;
+
+
 
 /*********************************************************************
  * EXTERNAL FUNCTIONS
@@ -115,16 +125,14 @@ extern PROV_DEVICE_S UI_lprov_device;
 void blebrr_handle_evt_adv_complete (UINT8 enable);
 void blebrr_handle_evt_adv_report (gapDeviceInfoEvent_t * adv);
 void blebrr_handle_evt_scan_complete (UINT8 enable);
+void bleMesh_GAPMsg_Timeout_Process(void);
 
 API_RESULT blebrr_handle_le_connection_pl(uint16_t  conn_idx, uint16_t  conn_hndl, uint8_t   peer_addr_type, uint8_t   * peer_addr);
 API_RESULT blebrr_handle_le_disconnection_pl(uint16_t  conn_idx, uint16_t  conn_hndl, uint8_t   reason);
 
-// Local functions
-API_RESULT cli_demo_reset(UINT32 argc, UCHAR *argv[]);
+API_RESULT cli_demo_help(UINT32 argc, UCHAR *argv[]);
 
-// add by HZF
-API_RESULT cli_internal_status(UINT32 argc, UCHAR *argv[]);
-API_RESULT cli_disp_key(UINT32 argc, UCHAR *argv[]);
+
 
 /*********************************************************************
  * LOCAL VARIABLES
@@ -140,12 +148,14 @@ static uint8 attDeviceName[GAP_DEVICE_NAME_LEN] = "PHYPLUS MSH LIGHT";
 static gapDevDiscReq_t bleMesh_scanparam;
 static gapAdvertisingParams_t bleMesh_advparam;
 
-static UCHAR bleMesh_DiscCancel = FALSE;             // HZF£º not use???
+static UCHAR bleMesh_DiscCancel = FALSE;             // HZFï¿½ï¿½ not use???
 
-UCHAR cmdstr[64];
+UCHAR cmdstr[512];
 UCHAR cmdlen;
-DECL_CONST CLI_COMMAND cli_cmd_list[] =
+CLI_COMMAND cli_cmd_list[] =
 {
+    /* Help */
+    { "help", "Help on this CLI Demo Menu", cli_demo_help },
 
     /* Reset */
     { "reset", "Reset the device", cli_demo_reset },
@@ -154,7 +164,16 @@ DECL_CONST CLI_COMMAND cli_cmd_list[] =
     { "status", "internal status", cli_internal_status },
 
     /*display key */
-    { "key", "display key", cli_disp_key }
+    { "key", "display key", cli_disp_key },
+
+    /*heartbeat set */
+    { "hbeart", "heartbeat set", cli_modelc_config_heartbeat_publication_set },
+
+    /*AT raw data */
+    { "ATMSH80", "raw data", cli_raw_data },
+
+    /*get information */
+    { "ATMSH81", "get information", cli_get_information }
 };
 
 /*********************************************************************
@@ -211,6 +230,8 @@ void bleMesh_Init( uint8 task_id )
     GGS_AddService( GATT_ALL_SERVICES );            // GAP
     GATTServApp_AddService( GATT_ALL_SERVICES );    // GATT attributes
     DevInfo_AddService();                           // Device Information Service
+
+    ota_app_AddService();
     
     GATTServApp_RegisterForMsg(task_id);
         
@@ -276,8 +297,6 @@ uint16 bleMesh_ProcessEvent( uint8 task_id, uint16 events )
 
         light_init();
         light_blink_evt_cfg(bleMesh_TaskID,BLEMESH_LIGHT_PRCESS_EVT);
-
-        LIGHT_ONLY_RED_ON;
         
         appl_mesh_sample();
 
@@ -312,8 +331,13 @@ uint16 bleMesh_ProcessEvent( uint8 task_id, uint16 events )
 
     if (events & BLEMESH_GAP_TERMINATE)
     {
-        GAPRole_TerminateConnection();
+        blebrr_disconnect_pl();
         return (events ^ BLEMESH_GAP_TERMINATE);
+    }
+	if (events & BLEMESH_GAP_MSG_EVT)
+    {
+        bleMesh_GAPMsg_Timeout_Process();
+        return (events ^ BLEMESH_GAP_MSG_EVT);
     }
         
 
@@ -378,7 +402,7 @@ static void bleMesh_ProcessL2CAPMsg( gapEventHdr_t *pMsg )
 
         if (pRsp->result == L2CAP_CONN_PARAMS_ACCEPTED )
         {
-                      printf ("L2CAP Connection Parameter Updated!\r\n");
+            printf ("L2CAP Connection Parameter Updated!\r\n");
         }
     }
 }
@@ -391,8 +415,7 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
     if ((pMsg->hdr.status != SUCCESS)
         && (pMsg->hdr.status != bleGAPUserCanceled || pMsg->opcode != GAP_DEVICE_DISCOVERY_EVENT))
     {
-        printf ("GAP Event - %02X, status = %X\r\n", pMsg->opcode, pMsg->hdr.status); 
-        //cli_internal_status(0,0);
+//        printf ("GAP Event - %02X, status = %X\r\n", pMsg->opcode, pMsg->hdr.status); 
     }
 
     switch (pMsg->opcode)
@@ -408,14 +431,18 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
             }
             break;
 
-        case GAP_MAKE_DISCOVERABLE_DONE_EVENT:
+        case GAP_MAKE_DISCOVERABLE_DONE_EVENT:  //adv start data ready
+			osal_stop_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT);
             if (SUCCESS != pMsg->hdr.status)
             {
-                //printf ("MDReq\r\n");
                 ret = GAP_MakeDiscoverable(bleMesh_TaskID, &bleMesh_advparam);
                 if (SUCCESS != ret)
                 {
                     printf ("GAP_MakeDiscoverable Failed - %d\r\n", ret);
+                }
+                else
+                {
+                    osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT, 10*1000);
                 }
             }
             else
@@ -425,13 +452,20 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
             break;
 
         case GAP_END_DISCOVERABLE_DONE_EVENT:
+            //printf ("->%d\r\n", pMsg->opcode);
+            //printf ("ED Status - %d", pMsg->hdr.status);
+            osal_stop_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT);
+
             if (SUCCESS != pMsg->hdr.status)
             {
-                //printf ("EDReq\r\n");
                 ret = GAP_EndDiscoverable(bleMesh_TaskID);
                 if (SUCCESS != ret)
                 {
                     printf ("GAP_EndDiscoverable Failed - %d\r\n", ret);
+                }
+                else
+                {
+                    osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT, 10*1000);
                 }
             }
             else
@@ -440,13 +474,14 @@ static void bleMesh_ProcessGAPMsg( gapEventHdr_t *pMsg )
             }
             break;
 
-        case GAP_DEVICE_DISCOVERY_EVENT:
-            //printf("\r\nIn GAP_DEVICE_DISCOVERY_EVENT...\r\n");
+        case GAP_DEVICE_DISCOVERY_EVENT:    //scan start/stop
             if (TRUE == bleMesh_DiscCancel)
             {
+                osal_stop_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT);
                 if (bleGAPUserCanceled != pMsg->hdr.status)
                 {
                     GAP_DeviceDiscoveryCancel(bleMesh_TaskID);
+                    osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT, 10*1000);
                 }
                 else
                 {
@@ -540,16 +575,18 @@ bStatus_t BLE_gap_set_scan_params
 {
     GAP_SetParamValue( TGAP_GEN_DISC_SCAN_WIND, scan_window );
     GAP_SetParamValue( TGAP_GEN_DISC_SCAN_INT, scan_interval );
-      GAP_SetParamValue( TGAP_FILTER_ADV_REPORTS, FALSE);
-      GAP_SetParamValue( TGAP_GEN_DISC_SCAN, 30000 );
+    GAP_SetParamValue( TGAP_FILTER_ADV_REPORTS, FALSE);
+    GAP_SetParamValue( TGAP_GEN_DISC_SCAN, 5000 );
+    GAP_SetParamValue( TGAP_CONN_SCAN_INT,scan_interval );
+    GAP_SetParamValue( TGAP_CONN_SCAN_WIND,scan_window);
     //GAP_SetParamValue( TGAP_LIM_DISC_SCAN, 0xFFFF );
 
-        bleMesh_scanparam.activeScan = scan_type;
-        bleMesh_scanparam.mode = DEVDISC_MODE_ALL; //DEVDISC_MODE_GENERAL;
-        bleMesh_scanparam.whiteList = scan_filterpolicy;
-        bleMesh_scanparam.taskID = bleMesh_TaskID;
+    bleMesh_scanparam.activeScan = scan_type;
+    bleMesh_scanparam.mode = DEVDISC_MODE_ALL; //DEVDISC_MODE_GENERAL;
+    bleMesh_scanparam.whiteList = scan_filterpolicy;
+    bleMesh_scanparam.taskID = bleMesh_TaskID;
 
-      return 0x00;
+    return 0x00;
 }
 
 
@@ -569,15 +606,13 @@ bStatus_t BLE_gap_set_scan_enable
         }
     }
     else
-    {
-		bleMesh_DiscCancel = TRUE;
+    {		
         ret = GAP_DeviceDiscoveryCancel(bleMesh_TaskID);
-		#if 0
         if (0 == ret)
         {
             bleMesh_DiscCancel = TRUE;
+            osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT, 10*1000);
         }
-		#endif
     }
 
     return ret;
@@ -611,7 +646,7 @@ bStatus_t BLE_gap_set_advscanrsp_data
               uint16_t  adv_datalen
           )
 {
-      return GAP_UpdateAdvertisingData(bleMesh_TaskID, type, adv_datalen, adv_data);
+    return GAP_UpdateAdvertisingData(bleMesh_TaskID, type, adv_datalen, adv_data);
 }
 
 bStatus_t BLE_gap_connect
@@ -621,20 +656,20 @@ bStatus_t BLE_gap_connect
               uint8_t   addr_type
           )
 {
-  gapEstLinkReq_t params;
+    gapEstLinkReq_t params;
 
-  params.taskID = bleMesh_TaskID;
-  params.highDutyCycle = TRUE;
-  params.whiteList = whitelist;
-  params.addrTypePeer = addr_type;
-  VOID osal_memcpy( params.peerAddr, addr, B_ADDR_LEN );
+    params.taskID = bleMesh_TaskID;
+    params.highDutyCycle = TRUE;
+    params.whiteList = whitelist;
+    params.addrTypePeer = addr_type;
+    VOID osal_memcpy( params.peerAddr, addr, B_ADDR_LEN );
 
-  return GAP_EstablishLinkReq( &params );
+    return GAP_EstablishLinkReq( &params );
 }
 
 bStatus_t BLE_gap_disconnect(uint16_t   conn_handle)
 {
-  return GAP_TerminateLinkReq( bleMesh_TaskID, conn_handle, HCI_DISCONNECT_REMOTE_USER_TERM ) ;
+    return GAP_TerminateLinkReq( bleMesh_TaskID, conn_handle, HCI_DISCONNECT_REMOTE_USER_TERM ) ;
 }
 
 bStatus_t BLE_gap_set_adv_enable
@@ -642,154 +677,127 @@ bStatus_t BLE_gap_set_adv_enable
               uint8_t adv_enable
           )
 {
-      bStatus_t ret;
+    bStatus_t ret;
 
-      if (0x00 != adv_enable)
-        {
-                ret = GAP_MakeDiscoverable(bleMesh_TaskID, &bleMesh_advparam);
-        }
-        else
-        {
-              ret = GAP_EndDiscoverable(bleMesh_TaskID);
-        }
+    if (0x00 != adv_enable)
+    {
+        ret = GAP_MakeDiscoverable(bleMesh_TaskID, &bleMesh_advparam);
+    }
+    else
+    {
+        ret = GAP_EndDiscoverable(bleMesh_TaskID);
+    }
 
-        return ret;
+    if(ret == 0)
+        osal_start_timerEx(bleMesh_TaskID, BLEMESH_GAP_MSG_EVT, 10*1000);
+
+    return ret;
 }
+
+void bleMesh_GAPMsg_Timeout_Process(void)
+{
+    UCHAR state;
+    UCHAR ret;
+
+    state = BLEBRR_GET_STATE();
+
+    switch (state)
+    {
+        case BLEBRR_STATE_IN_SCAN_ENABLE:
+        break;
+
+        case BLEBRR_STATE_IN_SCAN_DISABLE:
+            ret = BLE_gap_set_scan_enable (0x00);
+            if((ret == 0x12) && (TRUE == bleMesh_DiscCancel))
+            {
+                bleMesh_DiscCancel = FALSE;
+                blebrr_handle_evt_scan_complete(0);
+            }
+        break;
+
+        case BLEBRR_STATE_IN_ADV_ENABLE:
+            ret = BLE_gap_set_adv_enable(0x01);
+            if(ret == 0x11)
+                blebrr_handle_evt_adv_complete(1);
+        break;
+
+        case BLEBRR_STATE_IN_ADV_DISABLE:
+            ret = BLE_gap_set_adv_enable(0x00);
+            if(ret == 0x12)
+                blebrr_handle_evt_adv_complete(0);
+        break;
+        default :
+        break;
+    }
+}          
 
 static void ProcessUartData(uart_Evt_t *evt)
 {
-      osal_memcpy((cmdstr + cmdlen), evt->data, evt->len);
-      cmdlen += evt->len;
+    osal_memcpy((cmdstr + cmdlen), evt->data, evt->len);
+    cmdlen += evt->len;
 
     osal_set_event( bleMesh_TaskID, BLEMESH_UART_RX_EVT );
 }
 
 void bleMesh_uart_init(void)
 {
-  uart_Cfg_t cfg = {
-  .tx_pin = P9,
-  .rx_pin = P10,
-  .rts_pin = GPIO_DUMMY,
-  .cts_pin = GPIO_DUMMY,
-  .baudrate = 115200,
-  .use_fifo = TRUE,
-  .hw_fwctrl = FALSE,
-  .use_tx_buf = FALSE,
-  .parity     = FALSE,
-  .evt_handler = ProcessUartData,
-  };
+    uart_Cfg_t cfg = {
+        .tx_pin = P9,
+        .rx_pin = P10,
+        .rts_pin = GPIO_DUMMY,
+        .cts_pin = GPIO_DUMMY,
+        .baudrate = 115200,
+        .use_fifo = TRUE,
+        .hw_fwctrl = FALSE,
+        .use_tx_buf = FALSE,
+        .parity     = FALSE,
+        .evt_handler = ProcessUartData,
+    };
 
-  hal_uart_init(cfg);//uart init
+    hal_uart_init(cfg);//uart init
 }
 
-API_RESULT cli_demo_reset(UINT32 argc, UCHAR *argv[])
+void  reset_ms_hw(void)
 {
-    nvs_reset(NVS_BANK_PERSISTENT);
-    printf ("Done\r\n");
-    
-    return API_SUCCESS;
+//    UCHAR  proxy_state,proxy;
+//    MS_access_cm_get_features_field(&proxy, MS_FEATURE_PROXY);
+//    MS_proxy_fetch_state(&proxy_state);
+//    if((MS_TRUE == proxy) && (proxy_state == MS_PROXY_CONNECTED))
+//    {
+//        blebrr_disconnect_pl();
+//    }
+//    else
+//    {
+//        EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+//    }
+//    
+//    nvs_reset(NVS_BANK_PERSISTENT);
+    MS_access_cm_reset();
+    NVIC_SystemReset();
 }
 void UI_set_uuid_octet (UCHAR uuid_0)
 {
 	  UI_lprov_device.uuid[0] = uuid_0;
 }
 
-extern llGlobalStatistics_t g_pmCounters;
-extern uint32_t g_stop_scan_t1;
-extern uint32_t g_stop_scan_t1_err;
-extern uint8_t llModeDbg[6];
-
-void ll_dumpConnectionInfo(void )
+API_RESULT cli_demo_help(UINT32 argc, UCHAR *argv[])
 {
-    printf("========== LL PM counters ================\r\n");
-    printf("ll_send_undirect_adv_cnt = %d\r\n", g_pmCounters.ll_send_undirect_adv_cnt);
-    printf("ll_send_nonconn_adv_cnt = %d\r\n", g_pmCounters.ll_send_nonconn_adv_cnt);
-    printf("ll_recv_scan_req_cnt = %d\r\n", g_pmCounters.ll_recv_scan_req_cnt);
-    printf("ll_send_scan_rsp_cnt = %d\r\n", g_pmCounters.ll_send_scan_rsp_cnt);
-    printf("ll_recv_conn_req_cnt = %d\r\n", g_pmCounters.ll_recv_conn_req_cnt);
-    
-    printf("ll_filter_scan_req_cnt = %d\r\n", g_pmCounters.ll_filter_scan_req_cnt);
-    printf("ll_filter_conn_req_cnt = %d\r\n", g_pmCounters.ll_filter_conn_req_cnt);
-    
-    printf("ll_recv_adv_pkt_cnt = %d\r\n", g_pmCounters.ll_recv_adv_pkt_cnt);
-    printf("ll_recv_scan_rsp_cnt = %d\r\n", g_pmCounters.ll_recv_scan_rsp_cnt);
-    
-    printf("ll_conn_succ_cnt = %d\r\n", g_pmCounters.ll_conn_succ_cnt);
-    printf("ll_link_lost_cnt = %d\r\n", g_pmCounters.ll_link_lost_cnt);
-    printf("ll_link_estab_fail_cnt = %d\r\n", g_pmCounters.ll_link_estab_fail_cnt);
-    printf("ll_recv_ctrl_pkt_cnt = %d\r\n", g_pmCounters.ll_recv_ctrl_pkt_cnt);
-    printf("ll_recv_data_pkt_cnt = %d\r\n", g_pmCounters.ll_recv_data_pkt_cnt);
-    printf("ll_recv_invalid_pkt_cnt = %d\r\n", g_pmCounters.ll_recv_invalid_pkt_cnt);
-    
-    printf("ll_recv_abnormal_cnt = %d\r\n", g_pmCounters.ll_recv_abnormal_cnt);
-    printf("ll_send_data_pkt_cnt = %d\r\n", g_pmCounters.ll_send_data_pkt_cnt);
-    printf("ll_conn_event_cnt = %d\r\n", g_pmCounters.ll_conn_event_cnt);
-    printf("ll_recv_crcerr_event_cnt = %d\r\n", g_pmCounters.ll_recv_crcerr_event_cnt);
-    printf("ll_conn_event_timeout_cnt = %d\r\n", g_pmCounters.ll_conn_event_timeout_cnt);
-    
-    printf("ll_to_hci_pkt_cnt = %d\r\n", g_pmCounters.ll_to_hci_pkt_cnt);
-    printf("ll_hci_to_ll_pkt_cnt = %d\r\n", g_pmCounters.ll_hci_to_ll_pkt_cnt);
-    printf("ll_hci_buffer_alloc_err_cnt = %d\r\n", g_pmCounters.ll_hci_buffer_alloc_err_cnt);
+    UINT32 index;
 
-    printf("ll_ScanStop t1 %d \r\n",g_stop_scan_t1);
-    
-    printf("ll_trigger_err = %d %d %d \r\n", g_pmCounters.ll_trigger_err,0x0f&g_pmCounters.ll_trigger_err,g_stop_scan_t1_err);
-    printf("llModeDbg[] ");
-    for(uint8 i=0;i<16;i++)
-        printf("[%02d] %02x, ",i,llModeDbg[i]);
-
-    printf("\r\n ");
-    
-}
-
-extern uint32  osal_memory_statics(void);
-extern uint8 llState;
-extern uint8 llSecondaryState;
-extern llGlobalStatistics_t g_pmCounters;
-extern UCHAR blebrr_state;  
-extern uint32 blebrr_advscan_timeout_count;
-extern UINT32 blebrr_scanTimeOut;
-
-API_RESULT cli_internal_status(UINT32 argc, UCHAR *argv[])
-{
     MS_IGNORE_UNUSED_PARAM(argc);
     MS_IGNORE_UNUSED_PARAM(argv);
 
-    printf("\r\n===== internal status ============\r\n");
-    printf("llState = %d, llSecondaryState = %d\r\n", llState, llSecondaryState);
-    
-    printf("conn_event cnt = %d, crc err count = %d\r\n", g_pmCounters.ll_conn_event_cnt, 
-             g_pmCounters.ll_recv_crcerr_event_cnt);
+    printf("\r\nCLI Demo\r\n");
 
-	printf("blebrr_state = %d\r\n", blebrr_state);
-	printf("blebrr_scanTimOut = %d\r\n", blebrr_scanTimeOut);
-    printf("blebrr_advscan_timeout_count = %d\r\n", blebrr_advscan_timeout_count);
-    
-    osal_memory_statics();    
-    
-    printf("Mac Address: %2X %2X %2X %2X %2X %2X", UI_lprov_device.uuid[8], UI_lprov_device.uuid[9],
-                                                       UI_lprov_device.uuid[10], UI_lprov_device.uuid[11],
-                                                       UI_lprov_device.uuid[12], UI_lprov_device.uuid[13]);    
-    printf("\r\n");
+    /* Print all the available commands */
+    for (index = 0; index < (sizeof (cli_cmd_list)/sizeof(CLI_COMMAND)); index++)
+    {
+        printf("    %s: %s\n",
+        cli_cmd_list[index].cmd,
+        cli_cmd_list[index].desc);
+    }
 
-    ll_dumpConnectionInfo();
-
-    return API_SUCCESS;    
-}
-
-extern API_RESULT UI_sample_get_net_key(void );
-extern API_RESULT UI_sample_get_device_key(void);
-extern API_RESULT UI_sample_check_app_key(void);
-API_RESULT cli_disp_key(UINT32 argc, UCHAR *argv[])
-{
-    MS_IGNORE_UNUSED_PARAM(argc);
-    MS_IGNORE_UNUSED_PARAM(argv);
-
-    UI_sample_get_net_key();
-    UI_sample_get_device_key();
-    UI_sample_check_app_key();
-
-    return API_SUCCESS;    
+    return API_SUCCESS;
 }
 
 /*********************************************************************

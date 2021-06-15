@@ -1,1307 +1,0 @@
-Dependencies for Project 'mesh_switch', Target 'Target 1': (DO NOT MODIFY !)
-F (.\source\main.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\flash\flash.h)(0x5D4B7ECB)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\inc\rf_phy_driver.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_hw_drv.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_debug.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-F (..\..\..\misc\rom1Sym.txt)(0x5C8F00C6)()
-F (..\..\..\lib\rf.lib)(0x5D75F560)()
-F (..\..\..\components\driver\common\common.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\common.o --omf_browse .\objects\common.crf --depend .\objects\common.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\driver\pwm\pwm.c)(0x5CFCC54E)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\pwm.o --omf_browse .\objects\pwm.crf --depend .\objects\pwm.d)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwm\pwm.h)(0x5CAF0748)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\flash\flash.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\flash.o --omf_browse .\objects\flash.crf --depend .\objects\flash.d)
-I (..\..\..\components\driver\flash\flash.h)(0x5D4B7ECB)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\clock\clock.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\clock.o --omf_browse .\objects\clock.crf --depend .\objects\clock.d)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-F (..\..\..\components\driver\log\my_printf.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\my_printf.o --omf_browse .\objects\my_printf.crf --depend .\objects\my_printf.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\driver\gpio\gpio.c)(0x5CC2B03B)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\gpio.o --omf_browse .\objects\gpio.crf --depend .\objects\gpio.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-F (..\..\..\components\driver\uart\uart.c)(0x5D367D49)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\uart.o --omf_browse .\objects\uart.crf --depend .\objects\uart.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-F (..\..\..\components\driver\pwrmgr\pwrmgr.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\pwrmgr.o --omf_browse .\objects\pwrmgr.crf --depend .\objects\pwrmgr.d)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\clock\clock.h)(0x5C8B3CCF)
-F (.\source\bleMesh\dongleKey.c)(0x5D27297C)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\donglekey.o --omf_browse .\objects\donglekey.crf --depend .\objects\donglekey.d)
-I (source\bleMesh\dongleKey.h)(0x5D27297C)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (source\bleMesh\bleMesh.h)(0x5D75E750)
-F (..\..\..\components\driver\kscan\kscan.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\kscan.o --omf_browse .\objects\kscan.crf --depend .\objects\kscan.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-F (..\..\..\components\profiles\DevInfo\devinfoservice.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\devinfoservice.o --omf_browse .\objects\devinfoservice.crf --depend .\objects\devinfoservice.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gatt_profile_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\profiles\DevInfo\devinfoservice.h)(0x5C8B3CCF)
-F (..\..\..\components\profiles\GATT\gattservapp.c)(0x5CB057A7)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\gattservapp.o --omf_browse .\objects\gattservapp.crf --depend .\objects\gattservapp.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-F (..\..\..\components\profiles\Roles\peripheral.c)(0x5D4CCF13)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\peripheral.o --omf_browse .\objects\peripheral.crf --depend .\objects\peripheral.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_tl.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\hci\hci_data.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_event.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\profiles\Roles\peripheral.h)(0x5D4CCF13)
-I (..\..\..\components\profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-F (..\..\..\components\profiles\Roles\gapgattserver.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\gapgattserver.o --omf_browse .\objects\gapgattserver.crf --depend .\objects\gapgattserver.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\gapgattserver.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-F (..\..\..\components\profiles\Roles\gap.c)(0x5C8F00C6)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\gap.o --omf_browse .\objects\gap.crf --depend .\objects\gap.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-F (..\..\..\components\profiles\Roles\observer.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\observer.o --omf_browse .\objects\observer.crf --depend .\objects\observer.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_cbTimer.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_tl.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\hci\hci_data.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_event.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\profiles\Roles\observer.h)(0x5C8B3CCF)
-F (..\..\..\components\profiles\Roles\central.c)(0x5CD4E9EA)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\central.o --omf_browse .\objects\central.crf --depend .\objects\central.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_cbTimer.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_tl.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\hci\hci_data.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_event.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\profiles\Roles\central.h)(0x5C8B3CCF)
-F (..\..\..\components\profiles\Roles\gapbondmgr.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\gapbondmgr.o --omf_browse .\objects\gapbondmgr.crf --depend .\objects\gapbondmgr.d)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\ble\host\gapgattserver.h)(0x5C8B3CCF)
-I (..\..\..\components\profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-F (.\source\jump_table.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\jump_table.o --omf_browse .\objects\jump_table.crf --depend .\objects\jump_table.d)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\inc\global_config.h)(0x5C8F00C6)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (.\source\bleMesh\bleMesh.h)(0x5D75E750)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\rf_phy_driver.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_hw_drv.h)(0x5C8F00C6)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-F (..\..\..\components\osal\snv\osal_snv.c)(0x5C8B3CCF)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\osal_snv.o --omf_browse .\objects\osal_snv.crf --depend .\objects\osal_snv.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\flash\flash.h)(0x5D4B7ECB)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-I (..\..\..\components\osal\include\osal_snv.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-F (.\source\bleMesh\bleMesh.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\blemesh.o --omf_browse .\objects\blemesh.crf --depend .\objects\blemesh.d)
-I (..\..\..\components\inc\rf_phy_driver.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_hw_drv.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\ble\controller\include\ll_def.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_buf.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\jump_function.h)(0x5C8F00C6)
-I (..\..\..\components\ble\controller\include\ll_sleep.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\inc\timer.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll_common.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_tl.h)(0x5C8F00C6)
-I (..\..\..\components\ble\hci\hci_data.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_event.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\gapgattserver.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\Profiles\DevInfo\devinfoservice.h)(0x5C8B3CCF)
-I (..\..\..\components\Profiles\SimpleProfile\simpleGATTprofile_ota.h)(0x5C8B3CCF)
-I (..\..\..\components\Profiles\Roles\peripheral.h)(0x5D4CCF13)
-I (..\..\..\components\Profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (source\bleMesh\bleMesh.h)(0x5D75E750)
-I (source\bleMesh\led_light.h)(0x5CD9339F)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\cliface.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_clients.h)(0x5CD13721)
-I (source\bleMesh\dongleKey.h)(0x5D27297C)
-I (source\bleMesh\hal_keyboard_matrix.h)(0x5D75E750)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-F (.\source\bleMesh\bleMesh_Main.c)(0x5CD9339F)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\blemesh_main.o --omf_browse .\objects\blemesh_main.crf --depend .\objects\blemesh_main.d)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-F (.\source\bleMesh\OSAL_bleMesh.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\osal_blemesh.o --omf_browse .\objects\osal_blemesh.crf --depend .\objects\osal_blemesh.d)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Tasks.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\hci\hci_tl.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\hci\hci_data.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\hci\hci_event.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\gapgattserver.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\osal\include\osal_cbTimer.h)(0x5C8B3CCF)
-I (source\bleMesh\bleMesh.h)(0x5D75E750)
-I (source\bleMesh\hal_keyboard_matrix.h)(0x5D75E750)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-F (.\source\bleMesh\led_light.c)(0x5CD9339F)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\led_light.o --omf_browse .\objects\led_light.crf --depend .\objects\led_light.d)
-I (source\bleMesh\led_light.h)(0x5CD9339F)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\driver\pwm\pwm.h)(0x5CAF0748)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\common\error.h)(0x5D0366FC)
-F (.\source\bleMesh\hal_keyboard_matrix.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\hal_keyboard_matrix.o --omf_browse .\objects\hal_keyboard_matrix.crf --depend .\objects\hal_keyboard_matrix.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_PwrMgr.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\common\common.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\kscan\kscan.h)(0x5C8B3CCF)
-I (source\bleMesh\hal_keyboard_matrix.h)(0x5D75E750)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (source\bleMesh\bleMesh.h)(0x5D75E750)
-F (..\..\..\components\ethermind\platforms\phy6200\EM_platform.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\em_platform.o --omf_browse .\objects\em_platform.crf --depend .\objects\em_platform.d)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\ethermind\external\crypto\aes\aes.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\aes.o --omf_browse .\objects\aes.crf --depend .\objects\aes.d)
-I (..\..\..\components\ethermind\external\crypto\aes\aes.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto\cry.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-F (..\..\..\components\ethermind\external\crypto\aes\aes-ccm.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\aes-ccm.o --omf_browse .\objects\aes-ccm.crf --depend .\objects\aes-ccm.d)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (..\..\..\components\ethermind\external\crypto\aes\aes.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-F (..\..\..\components\ethermind\osal\src\phyos\EM_debug.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\em_debug.o --omf_browse .\objects\em_debug.crf --depend .\objects\em_debug.d)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_internal.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-F (..\..\..\components\ethermind\osal\src\phyos\EM_os.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\em_os.o --omf_browse .\objects\em_os.crf --depend .\objects\em_os.d)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-F (..\..\..\components\ethermind\osal\src\phyos\EM_timer.c)(0x5CE26C3A)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\em_timer.o --omf_browse .\objects\em_timer.crf --depend .\objects\em_timer.d)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer_internal.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\osal\include\OSAL_Clock.h)(0x5C8B3CCF)
-F (..\..\..\components\ethermind\platforms\phy6200\mesh\blebrr_pl.c)(0x5D2ED305)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\blebrr_pl.o --omf_browse .\objects\blebrr_pl.crf --depend .\objects\blebrr_pl.d)
-I (..\..\..\components\ble\include\hci.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\osal\include\OSAL.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_services.h)(0x5CD13721)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\Profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\appl\appl_main.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_access_api.h)(0x5CE26C3A)
-I (..\..\..\components\ethermind\mesh\export\include\MS_trn_api.h)(0x5D2F0925)
-I (..\..\..\components\ethermind\mesh\export\include\MS_ltrn_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\nvsto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_config_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_clients.h)(0x5CD13721)
-I (.\source\bleMesh\bleMesh.h)(0x5D75E750)
-F (..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto\cry.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\cry.o --omf_browse .\objects\cry.crf --depend .\objects\cry.d)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto\cry.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ethermind\utils\include\aes_cmac.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\crypto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\btypes.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\mpal.h)(0x5CD13721)
-I (..\..\..\components\ethermind\external\crypto\aes\aes.h)(0x5CD13721)
-I (..\..\..\components\ethermind\external\crypto\asm_ecdh_p256\P256-cortex-ecdh.h)(0x5CD13721)
-F (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\nvs.o --omf_browse .\objects\nvs.crf --depend .\objects\nvs.d)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\flash\flash.h)(0x5D4B7ECB)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\access_internal.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_access_api.h)(0x5CE26C3A)
-I (..\..\..\components\ethermind\mesh\export\include\MS_trn_api.h)(0x5D2F0925)
-I (..\..\..\components\ethermind\mesh\export\include\MS_ltrn_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\nvsto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\bitarray.h)(0x5CD13721)
-F (..\..\..\components\ethermind\mesh\export\bearer\blebrr.c)(0x5D4B7ECB)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\blebrr.o --omf_browse .\objects\blebrr.crf --depend .\objects\blebrr.d)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ble\controller\include\ll.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-F (..\..\..\components\ethermind\mesh\export\bearer\blebrr_gatt.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\blebrr_gatt.o --omf_browse .\objects\blebrr_gatt.crf --depend .\objects\blebrr_gatt.d)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-F (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\ms_common_pl.o --omf_browse .\objects\ms_common_pl.crf --depend .\objects\ms_common_pl.d)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-F (..\..\..\components\ethermind\mesh\export\platforms\ext\prov_pl.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\prov_pl.o --omf_browse .\objects\prov_pl.crf --depend .\objects\prov_pl.d)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\prov_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-F (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_services.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\mesh_services.o --omf_browse .\objects\mesh_services.crf --depend .\objects\mesh_services.d)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_services.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\host\linkdb.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\host\gattservapp.h)(0x5CB057A7)
-I (..\..\..\components\Profiles\Roles\gapbondmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\gap.h)(0x5C8B3CCF)
-I (..\..\..\components\ble\include\sm.h)(0x5C8F00C6)
-F (..\..\..\components\ethermind\mesh\export\appl\appl_prov.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\appl_prov.o --omf_browse .\objects\appl_prov.crf --depend .\objects\appl_prov.d)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\prov_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\appl\appl_main.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_access_api.h)(0x5CE26C3A)
-I (..\..\..\components\ethermind\mesh\export\include\MS_trn_api.h)(0x5D2F0925)
-I (..\..\..\components\ethermind\mesh\export\include\MS_ltrn_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\nvsto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_config_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto\cry.h)(0x5CD13721)
-F (..\..\..\components\ethermind\mesh\export\appl\appl_proxy.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\appl_proxy.o --omf_browse .\objects\appl_proxy.crf --depend .\objects\appl_proxy.d)
-I (..\..\..\components\ethermind\mesh\export\appl\appl_main.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_access_api.h)(0x5CE26C3A)
-I (..\..\..\components\ethermind\mesh\export\include\MS_trn_api.h)(0x5D2F0925)
-I (..\..\..\components\ethermind\mesh\export\include\MS_ltrn_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\nvsto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_config_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-F (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_clients.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\mesh_clients.o --omf_browse .\objects\mesh_clients.crf --depend .\objects\mesh_clients.d)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\mesh_clients.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ble\include\gatt.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\bcomdef.h)(0x5C8F00C6)
-I (..\..\..\components\driver\log\log.h)(0x5CD9339F)
-I (..\..\..\components\driver\uart\uart.h)(0x5C8B3CCF)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\ble\include\att.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\l2cap.h)(0x5C8F00C6)
-I (..\..\..\components\ble\include\gatt_uuid.h)(0x5C8B3CCF)
-I (.\source\bleMesh\bleMesh.h)(0x5D75E750)
-F (..\..\..\components\ethermind\lib\phy6200\phyos\keil\libethermind_mesh_core.lib)(0x5D75E750)()
-F (..\..\..\components\ethermind\lib\phy6200\phyos\keil\libethermind_ecdh.lib)(0x5CD13721)()
-F (..\..\..\components\ethermind\lib\phy6200\phyos\keil\libethermind_mesh_models.lib)(0x5D75E750)()
-F (..\..\..\components\ethermind\lib\phy6200\phyos\keil\libethermind_utils.lib)(0x5D75E750)()
-F (.\source\bleMesh\appl_sample_mesh_switch.c)(0x5D75E750)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\appl_sample_mesh_switch.o --omf_browse .\objects\appl_sample_mesh_switch.crf --depend .\objects\appl_sample_mesh_switch.d)
-I (..\..\..\components\ethermind\mesh\export\include\MS_common.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_os.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\EM_platform.h)(0x5CD13721)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\string.h)(0x5E5C7056)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdarg.h)(0x5475F2FA)
-I (..\..\..\components\osal\include\osal.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\comdef.h)(0x5C8F00C6)
-I (..\..\..\components\inc\types.h)(0x5C8F00C6)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-I (..\..\..\components\common\hal_defs.h)(0x5C8B3CCF)
-I (..\..\..\components\osal\include\OSAL_Memory.h)(0x5C8F00C6)
-I (..\..\..\components\osal\include\OSAL_Timers.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_features.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\MS_limits.h)(0x5D75E750)
-I (..\..\..\components\ethermind\mesh\export\include\MS_assigned_numbers.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_error.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_debug_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_assert.h)(0x5CD13721)
-I (..\..\..\components\ethermind\osal\src\phyos\EM_timer.h)(0x5CD13721)
-I (..\..\..\components\osal\include\osal_cbtimer.h)(0x5C8B3CCF)
-I (..\..\..\components\ethermind\mesh\export\platforms\ext\MS_common_pl.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_model_states.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_access_api.h)(0x5CE26C3A)
-I (..\..\..\components\ethermind\mesh\export\include\MS_trn_api.h)(0x5D2F0925)
-I (..\..\..\components\ethermind\mesh\export\include\MS_ltrn_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_net_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_brr_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_prov_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\utils\include\nvsto.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs\nvs.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_config_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_health_server_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_generic_onoff_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_light_hsl_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_light_ctl_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\include\MS_scene_api.h)(0x5CD13721)
-I (..\..\..\components\ethermind\mesh\export\bearer\blebrr.h)(0x5CD13721)
-I (..\..\..\components\ethermind\platforms\phy6200\mesh\model_state_handler_pl.h)(0x5D006E71)
-I (..\..\..\components\driver\flash\flash.h)(0x5D4B7ECB)
-I (..\..\..\components\driver\gpio\gpio.h)(0x5CC2B03B)
-I (..\..\..\components\inc\ap_cp.h)(0x5C8B3CCF)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)
-I (..\..\..\components\driver\pwrmgr\pwrmgr.h)(0x5C8B3CCF)
-I (..\..\..\components\common\hal_mcu.h)(0x5C8B3CCF)
-I (source\bleMesh\led_light.h)(0x5CD9339F)
-I (source\bleMesh\bleMesh.h)(0x5D75E750)
-I (..\..\..\components\ethermind\utils\include\access_internal.h)(0x5D75E750)
-I (..\..\..\components\ethermind\utils\include\bitarray.h)(0x5CD13721)
-F (..\..\..\components\ethermind\external\crypto\asm_ecdh_p256\P256-cortex-m0-ecdh-keil.s)(0x5CD13721)(--cpu Cortex-M0 --li -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1" --pd "ARMCM0 SETA 1"--list .\listings\p256-cortex-m0-ecdh-keil.lst --xref -o .\objects\p256-cortex-m0-ecdh-keil.o --depend .\objects\p256-cortex-m0-ecdh-keil.d)
-F (RTE\Device\ARMCM0\startup_ARMCM0.s)(0x5CD13721)(--cpu Cortex-M0 --li -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1" --pd "ARMCM0 SETA 1"--list .\listings\startup_armcm0.lst --xref -o .\objects\startup_armcm0.o --depend .\objects\startup_armcm0.d)
-F (RTE\Device\ARMCM0\system_ARMCM0.c)(0x5CD13721)(--c99 -c --cpu Cortex-M0 -D__MICROLIB --li -g -O3 --apcs=interwork --split_sections -I..\..\..\components\inc -I..\..\..\components\ble\controller\include -I..\..\..\components\osal\include -I..\..\..\components\common -I..\..\..\components\ble\include -I..\..\..\components\ble\hci -I..\..\..\components\ble\host -I..\..\..\components\Profiles\DevInfo -I..\..\..\components\Profiles\SimpleProfile -I..\..\..\components\Profiles\Roles -I..\..\..\components\driver\common -I..\..\..\components\driver\clock -I..\..\..\components\driver\gpio -I..\..\..\components\driver\pwrmgr -I..\..\..\components\driver\log -I..\..\..\components\driver\uart -I..\..\..\components\driver\flash -I..\..\..\components\driver\pwm -I.\source -I.\source\bleMesh -I..\..\..\components\ethermind\external\crypto\aes -I..\..\..\components\ethermind\mesh\export\include -I..\..\..\components\ethermind\mesh\export\bearer -I..\..\..\components\ethermind\mesh\export\platforms\ext -I..\..\..\components\ethermind\osal\src\phyos -I..\..\..\components\ethermind\platforms\phy6200 -I..\..\..\components\ethermind\platforms\phy6200\mesh -I..\..\..\components\ethermind\platforms\phy6200\interfaces\crypto -I..\..\..\components\ethermind\platforms\phy6200\interfaces\nvs -I..\..\..\components\ethermind\utils\include -I..\..\..\components\ethermind\mesh\export\cli -I..\..\..\components\ethermind\mesh\export\cli\model\client -I..\..\..\components\ethermind\mesh\export\appl -I..\..\..\components\driver\pwrmgr -I..\..\..\components\osal\snv -I..\..\..\components\ethermind\external\crypto\asm_ecdh_p256 -I..\..\..\components\ethermind\lib -I..\..\..\components\driver\kscan -DADV_NCONN_CFG=0x01  -DADV_CONN_CFG=0x02  -DSCAN_CFG=0x04   -DINIT_CFG=0x08   -DBROADCASTER_CFG=0x01 -DOBSERVER_CFG=0x02  -DPERIPHERAL_CFG=0x04  -DCENTRAL_CFG=0x08 -DHOST_CONFIG=0x0c-I C:\Users\zifeng\Desktop\test\PHY6212开发资料_20190909\SDK1\PHY62XX_SDK_2.1.0\example\ble_mesh\mesh_switch\RTE-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include-I D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include-D__UVISION_VERSION="514" -D_RTE_ -DARMCM0 -DCFG_CP -DOSAL_CBTIMER_NUM_TASKS="1" -DOSALMEM_METRICS="0" -DDEBUG_INFO="0" -DCFG_SLEEP_MODE="PWR_MODE_SLEEP"-o .\objects\system_armcm0.o --omf_browse .\objects\system_armcm0.crf --depend .\objects\system_armcm0.d)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\ARMCM0.h)(0x540FF94C)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cm0.h)(0x53FC31DA)
-I (D:\Johhn\kile5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmInstr.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include\core_cmFunc.h)(0x53FEF2AA)
-I (D:\Johhn\kile5\ARM\PACK\ARM\CMSIS\4.2.0\Device\ARM\ARMCM0\Include\system_ARMCM0.h)(0x50B2CC4C)

@@ -396,7 +396,7 @@ bool hal_gpio_read(GPIO_Pin_e pin)
 int hal_gpio_pin_init(GPIO_Pin_e pin, GPIO_ioe type) {
   uint32_t bit;
 
-  if (pin < 4 || (pin <= 34 && pin >= 31))
+  if ((pin < P4) || ((pin <= P34) && (pin >= P31)))
     gpio_pin0to3_pin31to34_control(pin, 1);
 
   hal_gpio_fmux(pin, Bit_DISABLE);     //disable fullmux function
@@ -461,17 +461,17 @@ int hal_gpio_DS_control(GPIO_Pin_e pin, BitAction_e value){
 	return PPlus_SUCCESS;
 }
 
-
 int hal_gpio_fmux(GPIO_Pin_e pin, BitAction_e value)
 {
-  uint32_t  bit = BIT(pin & 0x1f);
-  if (value) {
-    BM_SET(REG_FMUX_EN_FUC(pin), bit);       //set bit
-  }
-  else {
-    BM_CLR(REG_FMUX_EN_FUC(pin), bit);       //clear bit
-  }
-  return PPlus_SUCCESS;
+    uint32_t  bit = BIT(pin & 0x1f);
+    
+    if (value) { 
+        BM_SET(REG_FMUX_EN_FUC(pin), bit);
+    }
+    else {
+        BM_CLR(REG_FMUX_EN_FUC(pin), bit);
+    }
+    return PPlus_SUCCESS;
 }
 
 int hal_gpio_fmux_set(GPIO_Pin_e pin, Fmux_Type_e type) {
@@ -614,10 +614,6 @@ int hal_gpio_init(void)
   NVIC_EnableIRQ((IRQn_Type)GPIO_IRQ);
 
   hal_pwrmgr_register(MOD_GPIO, gpio_sleep_handler, gpio_wakeup_handler);
-	Switch1_Wakeup_Init();
-	hal_gpio_pull_set(P23, PULL_DOWN);
-  hal_gpio_pull_set(P14, PULL_DOWN);
-  hal_gpio_pull_set(P18, PULL_DOWN);
 
   return PPlus_SUCCESS;
 }

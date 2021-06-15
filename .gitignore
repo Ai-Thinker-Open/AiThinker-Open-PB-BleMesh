@@ -1,18 +1,50 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+*.d
+*.o
+*.obj
+*.out
+*.dep
+*.i
+*.hex*
+*.htm
+*.crf
+*.iex
+*.csv
+*.dep
+*.lst
+*.map
+*.uvguix*
+*.uvoptx
+*.bin
+JLinkLog.txt
+JlinkSettings.ini
+*.zip
+*.asf
+*.asm
+*.scvd
+*.axf
+*.elf
+*.lnp
+ArInp.Scr
+_bld.txt
+buildlog_*.txt
+ER_IROM*
+JUMP_TABLE
 
-# Other files and folders
-.settings/
+# ignor folder
+#RTE/
+bin/
+components/driver_rom/
+lib/generate_mesh_lib/ethermind/build/*
+!lib/generate_mesh_lib/ethermind/build/*.bat
+!lib/generate_mesh_lib/ethermind/build/*.py
+!lib/generate_mesh_lib/ethermind/build/*.defines*
+!lib/generate_mesh_lib/ethermind/build/*phy6200
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+#VS Coder
+.vscode
+*.code-workspace
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+#Force include file/folder
+!example/OTA/OTA_internal_flash/bin/
+!**/OTA/*/bin/ota*.hex
+!lib/font/*.bin

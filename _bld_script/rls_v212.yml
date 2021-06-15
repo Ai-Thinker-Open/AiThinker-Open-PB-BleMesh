@@ -1,0 +1,30 @@
+---
+#release tag name @ current repo
+ReleaseTagName: 
+- tag_v212
+
+ReleaseBranchName:
+- PHY62XX_SDK_2.1.2
+
+#build config
+# - yaml file
+BuildConfig: 
+- bld_v212
+
+#Protect file config
+ProtectFile:
+# rls example config yaml: u
+- rls_example:
+  - bld_v212
+- remove_file:
+  - lib\rf_mst.lib
+  - lib\rf_dtm_HopeRF_*.lib
+  - '*.py'
+  - '*.txt'
+- remove_folder:
+  - freertos\
+  - lib\generate_lib\
+  - lib\generate_mesh_lib\
+  - lib\generate_multiConn_lib\
+  - components\libraries\dfl\
+  - components\libraries\slb\

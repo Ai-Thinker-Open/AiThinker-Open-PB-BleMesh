@@ -45,12 +45,13 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 #include "uart.h"
-int phy_printf(const char *format, ...);
+void phy_printf(const char *format, ...);
 void phy_printf_init(void);
 
 #ifndef DEBUG_INFO
 #error "DEBUG_INFO undefined!"
 #endif
+typedef void(*std_putc)(char* data, uint16_t size);
 
 
 #if(DEBUG_INFO == 1)
@@ -66,6 +67,11 @@ void phy_printf_init(void);
     #define LOG(...)  phy_printf(##__VA_ARGS__)
     #define AT_LOG(...)  phy_printf(##__VA_ARGS__)
 	#define LOG_INIT() phy_printf_init()
+#elif(DEBUG_INFO == 4)
+    extern void bleMesh_uart_init(void);
+    #define AT_LOG(...)
+	#define LOG(...)
+	#define LOG_INIT() bleMesh_uart_init()    
 #else
     #define AT_LOG(...)
 	#define LOG(...)

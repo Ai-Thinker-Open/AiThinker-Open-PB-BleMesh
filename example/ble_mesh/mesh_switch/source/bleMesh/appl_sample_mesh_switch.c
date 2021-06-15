@@ -59,11 +59,14 @@
 #include "model_state_handler_pl.h"
 
 #include "flash.h"
+#include "MS_net_api.h"
+
 
 #include "pwrmgr.h"
 #include "led_light.h"
 #include "bleMesh.h"
-#include "access_internal.h"
+#include "access_extern.h"
+#include "EXT_cbtimer.h"
 
 #define USE_HSL                 // enable Light HSL server model
 #undef USE_LIGHTNESS            // enable Light Lightness server model
@@ -90,7 +93,7 @@ void appl_mesh_sample (void);
 #define UI_FRND_POLLTIMEOUT_100MS       100
 #define UI_FRND_SETUPTIMEOUT            10000
 
-#define MS_MODEL_ID_VENDOR_EXAMPLE_CLIENT                           0x00010504
+#define MS_MODEL_ID_VENDOR_EXAMPLE_CLIENT                         0x00010504
 
 #define MS_ACCESS_VENDOR_EXAMPLE_GET_OPCODE                         0x00D00405
 #define MS_ACCESS_VENDOR_EXAMPLE_SET_OPCODE                         0x00D10405
@@ -104,8 +107,7 @@ extern uint32            osal_sys_tick;
 
 uint16  src_uaddr;
 
-
-
+EM_timer_handle thandle;
 
 /** Vendor Model specific state parameters in a request or response message */
 typedef struct _MS_access_vendor_model_state_params
@@ -347,6 +349,13 @@ API_RESULT UI_register_foundation_model_servers
     return retval;
 }
 
+UCHAR UI_proxy_state_get(void)
+{
+    UCHAR  proxy_state;
+    MS_proxy_fetch_state(&proxy_state);
+    return proxy_state;
+}             
+
 // ================= Vendor model Client model Functions  ========
 void UI_vendor_model_set(UCHAR test_len,UINT16 test_index)
 {
@@ -376,7 +385,7 @@ void UI_vendor_model_set(UCHAR test_len,UINT16 test_index)
 //        ("Send Vendor Model Set\n");
 
         /* Get Model Publication Address and check if valid */
-        retval = ms_access_get_publish_addr
+        retval = MS_access_get_publish_addr
              (
                  &UI_vendor_defined_client_model_handle,
                  &dst_addr
@@ -415,10 +424,7 @@ API_RESULT UI_access_publish
 {
     API_RESULT     retval;
     MS_NET_ADDR    dst_addr;
-
-    ACCESS_TRC(
-    "[ACCESS] Publish. Opcode: 0x%08X. Param Len: 0x%04X. Reliable: %s\n",
-    opcode, data_len, ((MS_TRUE == reliable)?"True":"False"));
+    
     printf(
     "[ACCESS] Publish. Opcode: 0x%08X. Param Len: 0x%04X. Reliable: %s\n",
     opcode, data_len, ((MS_TRUE == reliable)?"True":"False"));
@@ -426,7 +432,7 @@ API_RESULT UI_access_publish
     /* TODO: Validate parameters */
     dst_addr = pub_addr;
 
-    retval = ms_access_publish_ex
+    retval = MS_access_publish_ex
              (
                  handle,
                  opcode,
@@ -2187,6 +2193,7 @@ void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      &UI_lprov_device,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -2200,6 +2207,7 @@ void UI_setup_prov(UCHAR role, UCHAR brr)
                      brr,
                      role,
                      NULL,
+                     UI_PROV_SETUP_TIMEOUT_SECS,
                      UI_PROV_SETUP_TIMEOUT_SECS
                  );
 
@@ -2335,9 +2343,8 @@ API_RESULT UI_set_brr_scan_rsp_data (void)
     return API_SUCCESS;
 }
 
-EM_timer_handle thandle;
 void timeout_cb (void * args, UINT16 size)
-{
+{    
     thandle = EM_TIMER_HANDLE_INIT_VAL;
     UI_sample_reinit();
 }
@@ -2477,7 +2484,7 @@ void vm_subscriptiong_binding_cb (void)
     thandle = EM_TIMER_HANDLE_INIT_VAL;
     UI_sample_binding_app_key(); 
     MS_DISABLE_RELAY_FEATURE();
-    MS_ENABLE_PROXY_FEATURE();
+    MS_DISABLE_PROXY_FEATURE();
     MS_DISABLE_FRIEND_FEATURE();
     //MS_access_cm_set_transmit_state(MS_RELAY_TX_STATE, (8<<3)|1);
     MS_access_cm_set_transmit_state(MS_NETWORK_TX_STATE, (8<<3)|3);
@@ -2576,9 +2583,9 @@ void vm_publication_add (UCHAR           *  data_parm)
     MS_access_cm_set_model_publication(UI_scene_client_model_handle,&publish_info);
 #endif
            
-#ifdef  USE_VENDORMODEL
-    MS_access_cm_set_model_publication(UI_vendor_defined_client_model_handle,&publish_info);
-#endif
+//#ifdef  USE_VENDORMODEL
+//    MS_access_cm_set_model_publication(UI_vendor_defined_client_model_handle,&publish_info);
+//#endif
            
 }
 
@@ -2599,6 +2606,7 @@ API_RESULT UI_app_config_server_callback (
 {
 
     uint8_t tx_state;
+    UCHAR  proxy_state;
     
     CONSOLE_OUT("[APP_CFG_SERV_CB] %04x \n", opcode);
 
@@ -2606,6 +2614,12 @@ API_RESULT UI_app_config_server_callback (
     {
         case MS_ACCESS_CONFIG_NODE_RESET_OPCODE: 
             CONSOLE_OUT("[ST TimeOut CB]\n");
+            proxy_state = UI_proxy_state_get();
+            nvs_reset(NVS_BANK_PERSISTENT);
+            if(MS_PROXY_CONNECTED != proxy_state)
+            {
+                EM_start_timer (&thandle, 3, timeout_cb, NULL, 0);
+            }
             break;
         case MS_ACCESS_CONFIG_MODEL_SUBSCRIPTION_ADD_OPCODE:
             break;
@@ -2669,6 +2683,11 @@ void appl_mesh_sample (void)
     /* Initialize Timer Module */
     EM_timer_init();
     timer_em_init();
+
+#if defined ( EM_USE_EXT_TIMER )
+    EXT_cbtimer_init();
+    ext_cbtimer_em_init();
+#endif    
 
     /* Initialize utilities */
     nvsto_init();
@@ -2924,16 +2943,23 @@ void UI_sample_reinit(void)
                 //for silab 2.0.0 app use NODE ID
                 CONSOLE_OUT("\r\n Provisioned Device - Starting Proxy with NODE ID on Subnet 0x0000!\r\n");
                 UI_proxy_start_adv(0x0000, MS_PROXY_NODE_ID_ADV_MODE);
+
+                // >>>, PANDA,
+                //osal_set_event(bleMesh_TaskID, BLEMESH_PROV_COMP_EVT);
             }
             else
             {
                 light_blink_set(LIGHT_GREEN, LIGHT_BLINK_SLOW,3);
                 CONSOLE_OUT("\r\n Provisioned Device\r\n");
+//                CONSOLE_OUT("\r\n BLEBRR_GET_STATE()= %d\r\n",BLEBRR_GET_STATE());
                 /**
                  * Do Nothing!
                  * Already Scaning is Enabled at Start Up
                  */
-                blebrr_scan_enable();
+                // blebrr_scan_enable();
+
+                // >>>, PANDA,
+                osal_set_event(bleMesh_TaskID, BLEMESH_PROV_COMP_EVT);
             }
         }
         else

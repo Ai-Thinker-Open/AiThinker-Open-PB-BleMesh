@@ -503,7 +503,7 @@ bStatus_t app_attrs_get(ancs_ctx_t  * p_ancs, const uint8_t * p_app_id, uint8_t 
     p_ancs->parse_info.expected_number_of_attrs = ANCS_NB_OF_APP_ATTR;
 
     if(index > 20){
-      gattPrepareWriteReq_t lreq;
+      gattPrepareWriteReq_t lreq = {0,0};
       
       lreq.pValue = osal_mem_alloc(index);
       osal_memcpy(lreq.pValue, tx_buf, index);
@@ -585,7 +585,7 @@ bStatus_t notif_attrs_get(ancs_ctx_t  * p_ancs,const uint8_t * pNotificationUID)
     print_hex(tx_buf, index);
     p_ancs->parse_info.expected_number_of_attrs = number_of_requested_attr;
     if(index > 20){
-      gattPrepareWriteReq_t lreq;
+      gattPrepareWriteReq_t lreq = {0,0};
       
       lreq.pValue = osal_mem_alloc(index);
       osal_memcpy(lreq.pValue, tx_buf, index);

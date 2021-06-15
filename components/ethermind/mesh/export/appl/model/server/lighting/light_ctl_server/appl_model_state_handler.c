@@ -295,9 +295,7 @@ static void appl_light_ctl_temperature_transition_start_cb(void *blob)
 static void appl_light_ctl_temperature_transition_complete_cb(void *blob)
 {
     appl_light_ctl_temp_set_actual(0, appl_light_ctl_temperature[0].target_ctl_temperature);
-
-    appl_light_ctl_temperature[0].target_ctl_delta_uv = appl_light_ctl_temperature[0].target_ctl_delta_uv;
-
+//    appl_light_ctl_temperature[0].target_ctl_delta_uv = appl_light_ctl_temperature[0].target_ctl_delta_uv;
     /* appl_light_lightness[0].light_lightness_actual.lightness_actual = appl_light_ctl[0].ctl_lightness; */
 
     appl_light_ctl_temperature[0].target_ctl_temperature = 0x0000;

@@ -70,7 +70,7 @@ extern int app_main(void);
 
 extern void disableSleep(void);
 extern void uart_hw_config(void);
-extern void bleMesh_uart_init(void);
+//extern void bleMesh_uart_init(void);
 extern void hal_rom_code_ini(void);
 /*********************************************************************
  * GLOBAL VARIABLES
@@ -174,7 +174,7 @@ int  main(void)
 
     LOG_INIT();
     
-    bleMesh_uart_init();    
+//    bleMesh_uart_init();    
     hal_pwrmgr_register(MOD_USR1, app_sleep_process, app_wakeup_process);
         
     app_main();	
@@ -189,60 +189,6 @@ void app_sleep_process(void)
 void app_wakeup_process(void)
 {
 
-}
-
-#define OSALMEM_BIGBLK_IDX 157
-// ===========================================================
-// ptr: the header of osal heap
-//uint32  osal_memory_statics(void *ptr)
-uint32  osal_memory_statics(void)    
-{
-    osalMemHdr_t *header, *current;
-    void *ptr;
-    uint32  sum_alloc = 0;
-    uint32  sum_free = 0;
-    uint32  max_block = 0;
-//    halIntState_t intState;    
-
-    ptr = (void *)g_largeHeap;
-
-    header = (osalMemHdr_t *)ptr;
-    current = (osalMemHdr_t *)ptr;
-    
-//    HAL_ENTER_CRITICAL_SECTION1( intState );  // Hold off interrupts.
-
-    do
-    {     
-        if ((uint32)ptr > (uint32)header + 4096)
-        {
-            printf("==========error: memory audit failed===============\r\n");
-            break;
-        }      
-
-        // seek to the last block, return
-        if ( current->val == 0 )       /// val = 0, so len = 0
-        {
-            break;
-        }
-        
-        if (current->hdr.inUse)
-            sum_alloc += current->hdr.len;
-        else
-        {            
-            sum_free += current->hdr.len;
-            if (current->hdr.len > max_block && (void *)(&current->hdr) > (void *)(header + OSALMEM_BIGBLK_IDX))
-                max_block = current->hdr.len;
-        }
-    
-        current = (osalMemHdr_t *)((uint8 *)current + current->hdr.len);    
-    } while (1);
-
-//    HAL_EXIT_CRITICAL_SECTION1( intState );  // Re-enable interrupts. 
-    
-//    printf("sum_alloc = %d, sum_free = %d, max_free_block = %d\r\n", sum_alloc, sum_free, max_block);
-    printf("sum_alloc = %d, max_free_block = %d ", sum_alloc, max_block);
-  
-    return sum_alloc;
 }
 
 

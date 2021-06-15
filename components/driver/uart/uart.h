@@ -168,6 +168,7 @@ typedef struct _uart_Tx_Buf_t{
 }uart_Tx_Buf_t;
 
   
+int hal_uart_deinit(void);
 int hal_uart_init(uart_Cfg_t cfg);
 int hal_uart_set_tx_buf(uint8_t* buf, uint16_t size);
 int hal_uart_get_tx_ready(void);

@@ -714,8 +714,8 @@ API_RESULT UI_vendor_example_server_cb
     /* Check message type */
     if (MS_ACCESS_MODEL_REQ_MSG_T_GET == req_type->type)
     {
-        CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] GET Request.\n");
+//        CONSOLE_OUT(
+//        "[VENDOR_EXAMPLE] GET Request.\n");
 
         UI_vendor_example_model_state_get(state_params->state_type, 0, &param, 0);
 
@@ -724,8 +724,8 @@ API_RESULT UI_vendor_example_server_cb
     }
     else if (MS_ACCESS_MODEL_REQ_MSG_T_SET == req_type->type)
     {
-        CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] SET Request.\n");
+//        CONSOLE_OUT(
+//        "[VENDOR_EXAMPLE] SET Request.\n");
 
         UI_vendor_example_model_state_set(state_params->state_type, 0, (MS_STATE_VENDOR_EXAMPLE_STRUCT *)state_params->state, 0);
 
@@ -736,8 +736,8 @@ API_RESULT UI_vendor_example_server_cb
     /* See if to be acknowledged */
     if (0x01 == req_type->to_be_acked)
     {
-        CONSOLE_OUT(
-        "[VENDOR_EXAMPLE] Sending Response.\n");
+//        CONSOLE_OUT(
+//        "[VENDOR_EXAMPLE] Sending Response.\n");
 
         /* Parameters: Request Context, Current State, Target State (NULL: to be ignored), Remaining Time (0: to be ignored), Additional Parameters (NULL: to be ignored) */
         retval = MS_vendor_example_server_state_update(ctx, &current_state_params, NULL, 0, NULL);

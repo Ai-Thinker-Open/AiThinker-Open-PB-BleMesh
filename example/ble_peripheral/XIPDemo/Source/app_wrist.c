@@ -220,11 +220,13 @@ static gapRolesCBs_t WristPeripheralCB =
 };
 
 // Bond Manager Callbacks
+#if 0
 static const gapBondCBs_t WristBondCB =
 {
   NULL,                   // Passcode callback
   NULL                    // Pairing state callback
 };
+#endif
 
 
 
@@ -510,7 +512,7 @@ uint16 appWristProcEvt( uint8 task_id, uint16 events )
     VOID GAPRole_StartDevice( &WristPeripheralCB );
 
     // Register with bond manager after starting device
-    GAPBondMgr_Register( (gapBondCBs_t *) &WristBondCB );
+//    GAPBondMgr_Register( (gapBondCBs_t *) &WristBondCB );
     
     return ( events ^ START_DEVICE_EVT );
   }

@@ -364,7 +364,9 @@ void otaApp_Init( uint8 task_id )
     GAPRole_SetParameter( GAPROLE_ADVERT_OFF_TIME, sizeof( uint16 ), &gapRole_AdvertOffTime );
 
 		//update public address
-  	pubaddr[0]++; 
+  	if(otaProtocol_address_plus()){
+    	pubaddr[0]++;
+  	}
     //set macaddress to advertising data
     {
       uint8_t* pmac_field = advertData + sizeof(advertData) - 8;

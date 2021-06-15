@@ -72,6 +72,54 @@ uint32_t clk_pclk(void)
   return pclk;
 }
 
+/*
+cp pclk domain:kscan,cp timer,bb.
+ap pclk domain:other modules except pwm.
+*/
+uint32_t clk_ap_pclk(void)
+{
+  return (hclk/((AP_PCR->APB_CLK & 0x0F) + 1));
+}
+
+uint32_t clk_cp_pclk(void)
+{
+	return (hclk/(((AP_PCR->APB_CLK & 0xF0) >> 4) + 1));
+}
+														
+bool clk_div_ap_pclk(uint32_t div)
+{
+	uint8_t divider;
+	if((div == 0) || (div > 16))
+	{
+		return FALSE;
+	}
+	
+	divider = div -1;
+	if((AP_PCR->APB_CLK & 0x0F) != divider)	
+	{			
+		subWriteReg((uint32_t)(&(AP_PCR->APB_CLK)),3,0,divider);
+		AP_PCR->APB_CLK_U = 3;		
+	}
+	return TRUE;
+}
+
+bool clk_div_cp_pclk(uint32_t div)
+{
+	uint8_t divider;
+	if((div == 0) || (div > 16))
+	{
+		return FALSE;
+	}
+	divider = div -1;
+	if(((AP_PCR->APB_CLK & 0xF0)>>4) != divider)
+	{
+		subWriteReg((uint32_t)(&(AP_PCR->APB_CLK)),7,4,divider);
+		AP_PCR->APB_CLK_U = 3;
+	    pclk = (hclk/(divider + 1));
+	}
+	return TRUE;
+}
+
 
 /**************************************************************************************
  * @fn          hal_rtc_clock_config

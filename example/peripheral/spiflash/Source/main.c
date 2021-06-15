@@ -68,19 +68,19 @@ static void rf_wakeup_handler(void){
 
 void hal_init(void)
 {
-  hal_system_init(g_system_clk);
-    
-	hal_pwrmgr_RAM_retention(RET_SRAM0|RET_SRAM1|RET_SRAM2|RET_SRAM3|RET_SRAM4);
-  
-  hal_rtc_clock_config(CLK_32K_XTAL);//CLK_32K_RCOSC);
+	hal_system_init(g_system_clk);
 
-  LOG_INIT();
-    
+	hal_pwrmgr_RAM_retention(RET_SRAM0|RET_SRAM1|RET_SRAM2|RET_SRAM3|RET_SRAM4);
+
+	hal_rtc_clock_config(CLK_32K_XTAL);//CLK_32K_RCOSC);
+
+	LOG_INIT();
+
 	hal_gpio_init();
 	hal_adc_init();
 	hal_spi_init(SPI0);
-	
-  LOG("all driver init OK!\n");
+
+	LOG("all driver init OK!\n");
 }
 
 static void hal_rfphy_init(void)

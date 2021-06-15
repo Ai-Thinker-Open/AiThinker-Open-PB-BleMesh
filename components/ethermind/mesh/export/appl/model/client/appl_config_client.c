@@ -2062,10 +2062,10 @@ API_RESULT appl_config_client_cb
 
     retval = API_SUCCESS;
 
-    CONSOLE_OUT (
-    "[CONFIG_CLIENT] Callback. Opcode 0x%04X\n", opcode);
+//    CONSOLE_OUT (
+//    "[CONFIG_CLIENT] Callback. Opcode 0x%04X\n", opcode);
 
-    appl_dump_bytes(data_param, data_len);
+//    appl_dump_bytes(data_param, data_len);
 
     switch(opcode)
     {

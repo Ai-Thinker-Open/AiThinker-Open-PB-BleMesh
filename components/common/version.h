@@ -42,7 +42,7 @@
  
 #define SDK_VER_MAJOR 2
 #define SDK_VER_MINOR 1
-#define SDK_VER_REVISION 0
+#define SDK_VER_REVISION 1
 //#define SDK_VER_TEST_BUILD ""
 #endif
 

@@ -56,6 +56,8 @@
 #define OTA_MODE_OTA_FCT          1
 #define OTA_MODE_OTA              2
 #define OTA_MODE_RESOURCE         3
+#define OTA_MODE_OTA_NADDR  6     //ota no address plus
+
 
 #define OTA_MODE_SELECT_REG 0x4000f034
 
@@ -123,6 +125,7 @@ uint8_t ota_patition_buffer[OTA_PBUF_SIZE] __attribute__((section("ota_partition
 static uint16_t s_ota_burst_size = 16;
 
 static bool s_ota_resource = FALSE;
+static bool s_ota_address_plus = TRUE;
 
 static ota_context_t s_ota_ctx;
 
@@ -398,6 +401,11 @@ void process_ctrl_cmd(uint8_t* cmdbuf, uint8_t size){
     Bytes2U16(ppart->checksum,cmd.p.part.checksum);
 
     //check parameter
+    if(!s_ota_ctx.ota_resource){
+      if(ppart->run_addr > OTAF_BASE_ADDR && ppart->run_addr <OTAF_END_ADDR){
+        ppart->flash_addr = ppart->run_addr;
+      }
+    }
     if(!validate_partition_parameter(ppart)){
       handle_error(PPlus_ERR_INVALID_PARAM);
       break;
@@ -820,11 +828,17 @@ void otaProtocol_BootMode(void)
   case OTA_MODE_RESOURCE:
     s_ota_resource = TRUE;
     break;
+  case OTA_MODE_OTA_NADDR:
+    s_ota_address_plus = FALSE;
   default:
     break;
   }
 }
 
+bool otaProtocol_address_plus(void)
+{
+  return s_ota_address_plus;
+}
 
 
 int otaProtocol_init(uint8_t task_id, uint16_t tm_evt)

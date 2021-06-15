@@ -85,15 +85,15 @@ void blebrr_handle_evt_scan_complete (UINT8 enable);
 /* --------------------------------------------- Global Definitions */
 #define BLEBRR_ADVDATA_OFFSET                  0 /* 3 */
 
-#define BLEBRR_NCON_ADVINTMIN              	0xA0 /* ADV for NON_CONN_IND should be greater than 0x00A0 160*0625 广播间隔100ms*/
+#define BLEBRR_NCON_ADVINTMIN               0xA0 /* ADV for NON_CONN_IND should be greater than 0x00A0 */
 #define BLEBRR_NCON_ADVINTMAX               0xA0 /* ADV for NON_CONN_IND should be greater than 0x00A0 */
 #define BLEBRR_NCON_ADVTYPE                 0x03
 #define BLEBRR_NCON_DIRADDRTYPE             0x00
 #define BLEBRR_NCON_ADVCHMAP                0x07
 #define BLEBRR_NCON_ADVFILTERPOLICY         0x00
 
-#define BLEBRR_CON_ADVINTMIN                0x200//
-#define BLEBRR_CON_ADVINTMAX                0x200//
+#define BLEBRR_CON_ADVINTMIN                0x320
+#define BLEBRR_CON_ADVINTMAX                0x320
 #define BLEBRR_CON_ADVTYPE                  0x00
 #define BLEBRR_CON_DIRADDRTYPE              0x00
 #define BLEBRR_CON_ADVCHMAP                 0x07
@@ -101,8 +101,8 @@ void blebrr_handle_evt_scan_complete (UINT8 enable);
 #define BLEBRR_CON_SCANRSP_DATALEN          31
 
 #define BLEBRR_SCANTYPE                     0x00
-#define BLEBRR_SCANINTERVAL                 0x10            //0x18->15ms 0x20->20ms   scan window/interval/period分别为10ms/10ms/100ms 16*0.062=10ms change by johhn
-#define BLEBRR_SCANWINDOW                   0x10            //0x18->15ms 0x20->20ms
+#define BLEBRR_SCANINTERVAL                 0x18            //0x18->15ms 0x20->20ms
+#define BLEBRR_SCANWINDOW                   0x18            //0x18->15ms 0x20->20ms
 #define BLEBRR_SCANFILTERPOLICY             0x00
 #define BLEBRR_SCANFILTERDUPS               0x00
 
@@ -310,10 +310,10 @@ void blebrr_handle_evt_adv_report (gapDeviceInfoEvent_t * adv)
         /* Pass advertising data to the bearer */
         if ((MESH_AD_TYPE_BCON == pdata[1]) || (MESH_AD_TYPE_PB_ADV == pdata[1]) || (MESH_AD_TYPE_PKT == pdata[1]))
         {
-                if (BRR_BCON_PASSIVE == type)
-                {
-                        blebrr_pl_recv_advpacket (type, &pdata[1], pdata[0], (UCHAR)adv->rssi);
-                }
+            if (BRR_BCON_PASSIVE == type)
+            {
+                blebrr_pl_recv_advpacket (type, &pdata[1], pdata[0], (UCHAR)adv->rssi);
+            }
         }
 }
 
@@ -416,9 +416,9 @@ void blebrr_init_pl (void)
 void blebrr_scan_pl (UCHAR enable)
 {
     hciStatus_t ret;
-    UCHAR prevstate;
+//    UCHAR prevstate;
 
-    prevstate = blebrr_scanstate;
+//    prevstate = blebrr_scanstate;
 
     /* Is request to enable? */
     if (MS_TRUE == enable)
@@ -449,7 +449,7 @@ void blebrr_scan_pl (UCHAR enable)
     /* Is operation failed? */
     if (0 != ret)
     {
-        BLEBRRPL_LOG ("Scan Operation (%d - %d) failed with reason 0x%04X", blebrr_scanstate, prevstate, ret);
+        //BLEBRRPL_LOG ("Scan Operation (%d - %d) failed with reason 0x%04X", blebrr_scanstate, prevstate, ret);
     }
 }
 
@@ -492,8 +492,6 @@ API_RESULT blebrr_set_adv_scanrsp_data_pl
 
 void blebrr_advertise_data_pl (CHAR type, UCHAR * pdata, UINT16 pdatalen)
 {
-//    bool ret;
-
     /* Is request to enable? */
     if ((NULL != pdata) && (0 != pdatalen))
     {
@@ -535,7 +533,8 @@ void blebrr_advertise_data_pl (CHAR type, UCHAR * pdata, UINT16 pdatalen)
         /* Set Advertising Data */
         BLE_gap_set_advscanrsp_data(TRUE, pdata, pdatalen);
 
-        //BLEBRRPL_LOG ("Adv Data - Retval: %d\r\n",ret);
+//        BLEBRRPL_LOG ("Adv Data - Retval: \r\n");
+
 
         /* Enable Advertising */
         blebrr_advertise_pl(MS_TRUE);
@@ -612,13 +611,17 @@ API_RESULT blebrr_gatt_send_pl(BRR_HANDLE * handle, UCHAR * data, UINT16 datalen
 
         if (BLEBRR_SERVER_ROLE == blebrr_gatt_role)
         {
-            mesh_prov_notify_data_out
+            retval = mesh_prov_notify_data_out
             (
                 active_conn_hndl,
                 MESH_PROV_DATA_OUT_VALUE_VAL,
                 data,
                 datalen
             );
+            if(retval)
+            {
+                return retval;
+            }
         }
 #ifdef BLE_CLIENT_ROLE
         else
@@ -969,8 +972,8 @@ void appl_mesh_prov_notif_config_status_cb
         flag ?  "enabled" : "disabled");
 
         blebrr_gatt_mode_set(BLEBRR_GATT_PROV_MODE);
-        appl_prov_register();
-        appl_prov_setup(PROV_ROLE_PROVISIONER, PROV_BRR_GATT);
+//        appl_prov_register();
+//        appl_prov_setup(PROV_ROLE_PROVISIONER, PROV_BRR_GATT);
 
         blebrr_gatt_com_channel_setup_pl
         (

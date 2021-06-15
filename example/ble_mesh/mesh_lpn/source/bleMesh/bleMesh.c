@@ -228,9 +228,7 @@ static void key_press_process(key_evt_t key_evt,uint8 index);
 void bleMesh_uart_init(void);
 
 void UI_set_uuid_octet (UCHAR uuid_0);
-void UI_light_hsl_set(UINT16 lightness, UINT16 hue, UINT16 saturation);
-
-uint32  osal_memory_statics(void);  
+void UI_light_hsl_set(UINT16 lightness, UINT16 hue, UINT16 saturation);  
 /*********************************************************************
  * PROFILE CALLBACKS
  */

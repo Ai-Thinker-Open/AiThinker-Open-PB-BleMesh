@@ -49,7 +49,7 @@
 
 #define DEFAULT_UART_BAUD   115200
 
-#define     LARGE_HEAP_SIZE  6*1024
+#define     LARGE_HEAP_SIZE  4*1024
 uint8       g_largeHeap[LARGE_HEAP_SIZE];
 
 extern void hal_rom_code_ini(void);
@@ -60,6 +60,9 @@ extern int         pclk;
 volatile uint8 g_current_advType;
 volatile uint8 g_clk32K_config;
 /////////////////////////
+
+
+#define _BUILD_FOR_DTM_IN_APP_ 0
 
 
 static void rf_wakeup_handler(void){
@@ -94,7 +97,8 @@ static void hal_rfphy_init(void)
 
     DCDC_CONFIG_SETTING(0x0d);
 
-
+    hal_pwrmgr_LowCurrentLdo_enable();
+   
     NVIC_SetPriority((IRQn_Type)BB_IRQ, IRQ_PRIO_REALTIME);
     NVIC_SetPriority((IRQn_Type)CP_TIMER_IRQ, IRQ_PRIO_HIGH);
 
@@ -104,19 +108,19 @@ static void hal_rfphy_init(void)
 
 static void hal_init(void)
 {
-    
     hal_system_init(g_system_clk); //system init
 
-    hal_rtc_clock_config(g_clk32K_config);
+    hal_rtc_clock_config(g_clk32K_config); 
 
  	hal_pwrmgr_RAM_retention(RET_SRAM0|RET_SRAM1);
 
     hal_gpio_init();
-				
+    
 }
 
 
 
+#if( 1==_BUILD_FOR_DTM_IN_APP_ )   
 static void simple_rfphy_dtm_ext_demo(void)
 {
 
@@ -193,17 +197,33 @@ static void simple_rfphy_dtm_ext_demo(void)
     }
     
 }
+#endif
+
 
 static void simple_demo_init(void)
 {
-    if(hal_gpio_read(P23))
-        simple_rfphy_dtm_ext_demo();
-    
+#if( 1==_BUILD_FOR_DTM_IN_APP_ )       
     if(hal_gpio_read(P25))
     {
+
+        //RF PHY DTM Manul Config for PhyPlusKit RF_QuickSet Test
+        //Set g_dtmManualConfig, PhyPlusKit could config the FreqOff, xtal cap , txPower manully
+
+        // You shold also config the g_rfPhyFreqOffSet, g_rfPhyXtalCap, g_rfPhyTxPower, in hal_rfphy_init
+        g_dtmManualConfig =      RF_PHY_DTM_MANUL_FOFF \
+                                |RF_PHY_DTM_MANUL_TXPOWER \
+                                |RF_PHY_DTM_MANUL_XTAL_CAP;
+
+
+//        g_dtmManualConfig = RF_PHY_DTM_MANUL_NULL;
+        
         //enter RF DTM no return
         rf_phy_direct_test();
     }
+
+     if(hal_gpio_read(P23))
+        simple_rfphy_dtm_ext_demo();
+
 
     if(hal_gpio_read(P24))
     {
@@ -215,17 +235,17 @@ static void simple_demo_init(void)
         g_current_advType = LL_ADV_CONNECTABLE_UNDIRECTED_EVT;
         pGlobal_config[ADV_CHANNEL_INTERVAL] = 1400;//6250;
     }
-
+#endif
     //only for demo case, 
     hal_gpio_pull_set(P24,FLOATING);
     hal_gpio_pull_set(P25,FLOATING);
 
+    
     LOG_INIT();
     LOG_CHIP_ID();
     LOG_CHIP_MADDR();
     LOG_PATCH_DATA_TIME();
-    LOG("SYS_CLK %d %d \n",g_clk32K_config,g_system_clk);
-
+    LOG("SYS_CLK %d %d %d\n %d %d \n",g_clk32K_config,g_system_clk,g_rfPhyClkSel,g_rfPhyTpCal0,g_rfPhyTpCal1);
 }
 
 #if (SYS_CLK_TEST_UCDS)
@@ -247,14 +267,14 @@ void sys_clock_test_config(void)
 #endif
 
 int  main(void)  
-{     
-    g_system_clk = SYS_CLK_XTAL_16M;//SYS_CLK_XTAL_16M;//SYS_CLK_DLL_48M;
-    g_clk32K_config = CLK_32K_XTAL;//CLK_32K_XTAL,CLK_32K_RCOSC
-    
+{    
+    g_system_clk = SYS_CLK_XTAL_16M;//SYS_CLK_XTAL_16M;//SYS_CLK_XTAL_16M;//SYS_CLK_DLL_48M;
+    g_clk32K_config = CLK_32K_XTAL;//CLK_32K_XTAL;//CLK_32K_XTAL,CLK_32K_RCOSC
+    //g_rfPhyClkSel  = RF_PHY_CLK_SEL_32M_DBL;//
+     
 #if( SYS_CLK_TEST_UCDS)
-    sys_clock_test_config();
+    //sys_clock_test_config();
 #endif
-
     osal_mem_set_heap((osalMemHdr_t *)g_largeHeap, LARGE_HEAP_SIZE);
     
     init_config();
@@ -262,7 +282,7 @@ int  main(void)
     hal_pwrmgr_init();
 
     hal_rfphy_init();
-    
+   
     hal_init();
 
     simple_demo_init();

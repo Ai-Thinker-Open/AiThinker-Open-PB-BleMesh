@@ -60,9 +60,9 @@ extern "C"
 
 #define TIMER_1S_ONCE                               0x0001
 #define TIMER_2S_CYCLE                              0x0002
-#define TIMER_1MIN_CYCLE														0x0004
+#define TIMER_1MIN_CYCLE						    0x0004
 #define TIMER_HALF_SECOND                           0x0008
-#define TIMER_10MS_CYCLE                            0x0010
+#define TIMER_1000MS_CYCLE                          0x0010
 /*********************************************************************
  * MACROS
  */

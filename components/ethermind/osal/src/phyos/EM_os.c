@@ -16,9 +16,11 @@
 
 /* -------------------------------------------- Header File Inclusion */
 #include "EM_os.h"
+#include "common.h"
 
 
 /* -------------------------------------------- External Global Variables */
+extern uint32_t osal_sys_tick;
 
 /* -------------------------------------------- Exported Global Variables */
 
@@ -230,18 +232,14 @@ INT32 EM_thread_cond_init
  *
  *  \return INT32 : 0 on Success. -1 on Failure.
  */
-INT32 EM_thread_cond_wait
+void EM_thread_cond_wait
       (
           /* INOUT */ EM_thread_cond_type *     cond,
           /* INOUT */ EM_thread_mutex_type *    cond_mutex
       )
 {
-    INT32 retval;
-
     EM_thread_mutex_unlock (cond_mutex);
     EM_thread_mutex_lock (cond_mutex);
-
-    return retval;
 }
 
 
@@ -268,8 +266,7 @@ INT32 EM_thread_cond_signal
 {
     return 0;
 }
-
-extern uint32  osal_memory_statics(void);  
+ 
 /**
  *  \fn EM_alloc_mem
  *
@@ -289,18 +286,20 @@ extern uint32  osal_memory_statics(void);
 void * EM_alloc_mem ( /* IN */ UINT32 size )
 {
     void * buf;
-	
-    buf = osal_mem_alloc (size);
-	  
-    if (NULL == buf)
+    uint32 max_block;
+
+    max_block = osal_memory_statics();
+
+    if(max_block > 2048)
     {
-        printf ("Memory Allocation Failed!, size = %d ", size);
-		osal_memory_statics();
+        buf = osal_mem_alloc (size);
+        return buf;
     }
-
-//	printf("<+%d> ", size);
-
-    return buf;
+    else
+    {
+        return NULL;
+    }
+	
 }
 
 
@@ -388,8 +387,9 @@ void EM_usleep( /* IN */ UINT32 tm )
  *
  *  \return None
  */
-void EM_get_current_time (/* OUT */ EM_time_type * curtime)
+void EM_get_current_time (/* OUT */ UINT32 * curtime)
 {
+    *curtime = osal_sys_tick;
     return;
 }
 

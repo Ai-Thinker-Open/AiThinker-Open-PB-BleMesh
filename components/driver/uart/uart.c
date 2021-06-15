@@ -100,14 +100,13 @@ static int txmit_buf_use_tx_buf(uint8_t *buf,uint16_t len)
     AP_UART0->THR = p_data[p_txbuf->tx_data_offset++];
   }
 
-  AP_UART0->IER |= IER_ETBEI;
+	hal_pwrmgr_lock(MOD_UART);
+	AP_UART0->IER |= IER_ETBEI;
 
-  hal_pwrmgr_lock(MOD_UART);
-  
 	return PPlus_SUCCESS;
 }
 
-static int txmit_buf_polling(uint8_t *buf,uint16_t len)
+ int txmit_buf_polling(uint8_t *buf,uint16_t len)
 {
   
   volatile int timeout=0;     
@@ -192,14 +191,13 @@ static void irq_tx_empty_handler(void)
 
   while(len--){
     AP_UART0->THR = p_data[p_txbuf->tx_data_offset++];
-  }
-  
+  }  
 }
 
 static void uart_hw_config(void)
 {
   uart_Cfg_t* pcfg = &(m_uartCtx.cfg);
-  int pclk = clk_pclk();
+  int pclk = clk_ap_pclk();
   uint32_t dll;
   
   //enable clk gate
@@ -211,8 +209,7 @@ static void uart_hw_config(void)
     hal_gpio_fmux(P10, Bit_DISABLE);   //set fmux(uart rx)
   }
   
-  hal_gpio_fmux_set(pcfg->tx_pin, UART_TX);   //set fmux(uart tx)
-  hal_gpio_fmux_set(pcfg->rx_pin, UART_RX);   //set fmux(uart rx)
+
   
   AP_UART0->LCR =0;
   
@@ -256,8 +253,30 @@ static void uart_hw_config(void)
   NVIC_EnableIRQ((IRQn_Type)UART_IRQ);
   NVIC_SetPriority((IRQn_Type)UART_IRQ, IRQ_PRIO_HAL);
 
+	hal_gpio_fmux_set(pcfg->tx_pin, UART_TX);   //set fmux(uart tx)
+	hal_gpio_fmux_set(pcfg->rx_pin, UART_RX);   //set fmux(uart rx)
+  
 }
 
+
+static int uart_hw_deinit(void)
+{
+    AP_UART0->LCR=0x80; 
+    AP_UART0->DLM=0;   
+    AP_UART0->DLL=0;   
+    AP_UART0->LCR =0;  
+
+    AP_UART0->FCR=0;       
+    AP_UART0->IER = 0;
+    NVIC_DisableIRQ((IRQn_Type)UART_IRQ);
+    hal_gpio_fmux(m_uartCtx.cfg.tx_pin,Bit_DISABLE);
+    hal_gpio_fmux(m_uartCtx.cfg.rx_pin,Bit_DISABLE);
+
+    clk_reset(MOD_UART);
+    clk_gate_disable(MOD_UART);
+    
+    return PPlus_SUCCESS;
+}
 
 /**************************************************************************************
  * @fn          hal_UART0_IRQHandler
@@ -296,6 +315,13 @@ void __attribute__((used)) hal_UART0_IRQHandler(void)
     }
 }
 
+int hal_uart_deinit(void)
+{
+    uart_hw_deinit();
+    memset(&m_uartCtx, 0, sizeof(m_uartCtx));
+    hal_pwrmgr_unregister(MOD_UART);
+    return PPlus_SUCCESS;
+}
 
 int hal_uart_init(uart_Cfg_t cfg)
 {
@@ -360,7 +386,6 @@ int hal_uart_get_tx_ready(void)
 
 int hal_uart_send_buff(uint8_t *buff,uint16_t len)
 {
-	//return 0;//change by johhn
   if(m_uartCtx.cfg.use_tx_buf){
     return txmit_buf_use_tx_buf(buff,len);
   }

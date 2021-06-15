@@ -244,6 +244,18 @@
 /** GATT Proxy State - Connected */
 #define MS_PROXY_CONNECTED               0x02
 
+
+/* Secure Beacon Network Timer (minimum of 10 s) */
+extern EM_timer_handle ms_snb_timer_handle;
+
+extern EM_timer_handle ms_iv_update_timer_handle;
+
+extern EM_timer_handle net_key_refresh_timer_handle;
+
+/* Secure Beacon Network Beacon Timeout value - default 10s */
+#define MS_SNB_TIMEOUT     (10 * 1000) /* in ms */
+
+
 /** \} */
 /** \} */
 
@@ -723,6 +735,9 @@ API_RESULT MS_proxy_server_adv_start
                /* IN */ UCHAR              proxy_adv_mode
            );
 
+API_RESULT MS_proxy_server_stop_timer(void);
+
+
 /**
  *  \brief Stop Connectable Advertisements for a Proxy Server.
  *
@@ -748,6 +763,10 @@ API_RESULT MS_proxy_server_adv_stop (void);
  */
 API_RESULT MS_net_alloc_seq_num(/* OUT */ UINT32   * seq_num);
 
+API_RESULT MS_net_start_iv_update_timer(UINT8 timer_flag,UINT8 reset_en);
+
+void MS_net_stop_iv_update_timer(void);
+
 /**
  *  \brief To get current Sequence Number state.
  *
@@ -771,6 +790,51 @@ API_RESULT MS_net_get_seq_num_state(/* OUT */ NET_SEQ_NUMBER_STATE * seq_num_sta
  *  \return API_SUCCESS or Error Code on failure
  */
 API_RESULT MS_net_set_seq_num_state(/* IN */ NET_SEQ_NUMBER_STATE * seq_num_state);
+
+/* Start Secure Network Beacon Timer */
+void MS_net_start_snb_timer
+            (
+                /* IN */    MS_SUBNET_HANDLE         subnet_handle
+            );
+
+/* Stop Timer */
+void MS_net_stop_snb_timer
+            (
+                /* IN */ MS_SUBNET_HANDLE         subnet_handle
+            );
+
+void MS_net_iv_update_rcv_pro
+    (
+        /* IN */ UINT32    iv_index,
+        /* IN */ UINT8     iv_update_flag
+    );
+
+void MS_net_key_refresh
+            (
+                /* IN */ MS_NET_ADDR            *key_refresh_whitelist,
+                /* IN */ UINT16                 num,
+                /* IN */ UINT8                  *new_net_key               
+            );
+
+
+/* Start Secure Network Beacon Timer */
+void MS_net_start_key_refresh_timer
+            (
+                /* IN */    UINT16              context,
+                /* IN */    UINT32              time
+            );
+
+/* Stop Key refresh Timer */
+void MS_net_stop_key_refresh_timer
+            (
+                void
+            );
+
+
+void MS_net_key_refresh_init(void);
+
+
+
 
 #ifdef __cplusplus
 };
