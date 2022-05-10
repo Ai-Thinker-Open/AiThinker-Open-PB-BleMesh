@@ -1,4 +1,4 @@
-# SKD Release Notes
+# SDK Release Notes
 
 ## ModuleSet
 
