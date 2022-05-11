@@ -1,0 +1,111 @@
+---
+sec_boot: 
+- 'lib\generate_sec_lib\sec_boot.uvprojx'
+- [Objects\sec_boot.lib, ..\sec_boot.lib]
+
+rf: 
+- 'lib\generate_lib\rf.uvprojx'
+- [Objects\rf.lib, ..\rf.lib]
+
+ble_host:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- {'MAX_NUM_LL_CONN':'1'}
+- [Objects\ble_host.lib, ..\ble_host.lib]
+
+ble_host_multi5:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- {'MAX_NUM_LL_CONN':'5'}
+- [Objects\ble_host.lib, ..\ble_host_multi5.lib]
+
+sbp:
+- example\ble_peripheral\simpleBlePeripheral\simpleBlePeripheral.uvprojx
+- {'_BUILD_FOR_DTM_':'0'}
+- [Objects\simpleBlePeripheral.hex, bin\sbp.hex]
+
+sbc:
+- example\ble_central\simpleBleCentral\simpleBleCentral.uvprojx
+- {'_BUILD_FOR_DTM_':'0'}
+- [Objects\simpleBleCentral.hex, bin\sbc.hex]
+
+sbm:
+- example\ble_multi\simpleBleMultiConnection\simpleBleMulti.uvprojx
+
+smart_rf:
+- example\PhyPlusPhy\smart_rf\smart_rf.uvprojx
+
+wrist:
+- example\ble_peripheral\wrist\wrist.uvprojx
+
+pwmLight:
+- example\ble_peripheral\pwmLight\pwmLight.uvprojx
+
+hidkb:
+- example\ble_peripheral\HIDKeyboard\HIDKeyBoard.uvprojx
+
+bleUart_AT:
+- example\ble_peripheral\bleUart_AT\bleUart_AT.uvprojx
+
+spiflash:
+- example\peripheral\spiflash\spiflash.uvprojx
+
+adc:
+- example\peripheral\adc\adc.uvprojx
+
+dmac:
+- example\peripheral\dmac\dmac.uvprojx
+
+fs:
+- example\peripheral\fs\fs.uvprojx
+
+gpio:
+- example\peripheral\gpio\gpio.uvprojx
+
+timer:
+- example\peripheral\timer\timer.uvprojx
+
+watchdog:
+- example\peripheral\watchdog\watchdog.uvprojx
+
+bsp_btn:
+- example\peripheral\bsp_btn\bsp_btn.uvprojx
+
+ota_sbk:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_SINGLE_BANK','USE_FCT':'0'}
+- ['bin\ota.hex','bin\ota_single_bank.hex',ota_sbk.asm,'Objects\ota.axf']
+
+slb:
+- example\OTA\slboot\slboot.uvprojx
+
+mesh_switch:
+- example\ble_mesh\mesh_switch\mesh_switch.uvprojx
+
+mesh_light:
+- example\ble_mesh\mesh_light\mesh_light.uvprojx
+
+mesh_gateway:
+- example\ble_mesh\mesh_gateway\mesh_gateway.uvprojx
+
+mesh_ali_curtain:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_curtain\aliGenie_mesh_curtain.uvprojx
+
+mesh_ali_3key:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_3KeySwitch\aliGenie_mesh_3Keyswitch.uvprojx
+
+mesh_ali_fan:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_fan\aliGenie_mesh_fan.uvprojx
+
+mesh_ali_fanlight:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_fanlight\aliGenie_mesh_fanlight.uvprojx
+
+mesh_ali_fogger:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_fogger\aliGenie_mesh_fogger.uvprojx
+
+mesh_ali_heater:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_heater\aliGenie_mesh_heater.uvprojx
+
+mesh_ali_light:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_light\aliGenie_mesh_light.uvprojx
+
+mesh_ali_socket:
+- example\ble_mesh\aliGenie_bleMesh\aliGenie_bleMesh_socket\aliGenie_mesh_socket.uvprojx

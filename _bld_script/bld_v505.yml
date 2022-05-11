@@ -1,0 +1,41 @@
+---
+sec_boot: 
+- 'lib\generate_sec_lib\sec_boot.uvprojx'
+- [Objects\sec_boot.lib, ..\sec_boot.lib]
+
+rfslave: 
+- 'lib\generate_lib\rf.uvprojx'
+- [Objects\rf.lib, ..\rf.lib]
+
+ble_host:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- [Objects\ble_host.lib, ..\ble_host.lib]
+
+sbp:
+- example\ble_peripheral\simpleBlePeripheral\simpleBlePeripheral.uvprojx
+- {_BUILD_FOR_DTM_: '0'}
+- [Objects\simpleBlePeripheral.hex, bin\simpleBlePeripheral.hex]
+
+hidkb:
+- example\ble_peripheral\HIDKeyboard\HIDKeyBoard.uvprojx
+
+spiflash:
+- example\peripheral\spiflash\spiflash.uvprojx
+
+adc:
+- example\peripheral\adc\adc.uvprojx
+
+dmac:
+- example\peripheral\dmac\dmac.uvprojx
+
+fs:
+- example\peripheral\fs\fs.uvprojx
+
+gpio:
+- example\peripheral\gpio\gpio.uvprojx
+
+timer:
+- example\peripheral\timer\timer.uvprojx
+
+watchdog:
+- example\peripheral\watchdog\watchdog.uvprojx

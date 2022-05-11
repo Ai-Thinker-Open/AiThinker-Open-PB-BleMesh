@@ -1,0 +1,16 @@
+---
+sec_boot: 
+- 'lib\generate_sec_lib\sec_boot.uvprojx'
+- [Objects\sec_boot.lib, ..\sec_boot.lib]
+
+rf: 
+- 'lib\generate_lib\rf.uvprojx'
+- [Objects\rf.lib, ..\rf.lib]
+
+ble_host:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- [Objects\ble_host.lib, ..\ble_host.lib]
+
+aox_lib:
+- lib\generate_aoxEst_lib\aoxEst.uvprojx
+- [Objects\aoxEst.lib, ..\aoxEst.lib]

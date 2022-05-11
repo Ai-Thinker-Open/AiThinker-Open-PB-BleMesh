@@ -1,0 +1,132 @@
+---
+sec_boot: 
+- 'lib\generate_sec_lib\sec_boot.uvprojx'
+- [Objects\sec_boot.lib, ..\sec_boot.lib]
+
+rf: 
+- 'lib\generate_lib\rf.uvprojx'
+- [Objects\rf.lib, ..\rf.lib]
+
+ble_host:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- {'MAX_NUM_LL_CONN':'1'}
+- [Objects\ble_host.lib, ..\ble_host.lib]
+
+ble_host_multi5:
+- lib\generate_ble_host_lib\ble_host.uvprojx
+- {'MAX_NUM_LL_CONN':'5'}
+- [Objects\ble_host.lib, ..\ble_host_multi5.lib]
+
+aox_lib:
+- lib\generate_aoxEst_lib\aoxEst.uvprojx
+- [Objects\aoxEst.lib, ..\aoxEst.lib]
+
+smart_rf:
+- example\PhyPlusPhy\smart_rf\smart_rf.uvprojx
+
+phy_tx:
+- example\PhyPlusPhy\aoa_test\PhyPlusPhy.uvprojx
+- {'PHY_MODE_DEF':'0'}
+- [Objects\PhyPlusPhy.hex, bin\ppp_tx.hex]
+
+phy_rx:
+- example\PhyPlusPhy\aoa_test\PhyPlusPhy.uvprojx
+- {'PHY_MODE_DEF':'1'}
+- [Objects\PhyPlusPhy.hex, bin\ppp_rx.hex]
+
+dtm:
+- example\ble_peripheral\simpleBlePeripheral\simpleBlePeripheral.uvprojx
+- {'_BUILD_FOR_DTM_':'1'}
+- [Objects\simpleBlePeripheral.hex, bin\dtm_sbp.hex, dtm.asm]
+
+sbp:
+- example\ble_peripheral\simpleBlePeripheral\simpleBlePeripheral.uvprojx
+- {'_BUILD_FOR_DTM_':'0'}
+- [Objects\simpleBlePeripheral.hex, bin\sbp.hex,sbp.asm]
+
+wrist:
+- example\ble_peripheral\wrist\wrist.uvprojx
+
+pwmLight:
+- example\ble_peripheral\pwmLight\pwmLight.uvprojx
+
+ppsp_demo:
+- example\ble_peripheral\ppsp_demo\bleSmartPeripheral.uvprojx
+
+hidkb:
+- example\ble_peripheral\HIDKeyboard\HIDKeyBoard.uvprojx
+
+hidvr:
+- example\ble_peripheral\HIDAdvRemote\HIDAdvRemote.uvprojx
+- [Objects\HidAdvRemote.hex, bin\hidvr.hex,hidvr.asm]
+
+sbc:
+- example\ble_central\simpleBleCentral\simpleBleCentral.uvprojx
+
+spiflash:
+- example\peripheral\spiflash\spiflash.uvprojx
+
+adc:
+- example\peripheral\adc\adc.uvprojx
+
+dmac:
+- example\peripheral\dmac\dmac.uvprojx
+
+fs:
+- example\peripheral\fs\fs.uvprojx
+
+gpio:
+- example\peripheral\gpio\gpio.uvprojx
+
+kscan:
+- example\peripheral\kscan\kscan.uvprojx
+
+spim:
+- example\peripheral\spi_demo\spi_demo.uvprojx
+
+spis:
+- example\peripheral\spis_demo\spis_demo.uvprojx
+
+timer:
+- example\peripheral\timer\timer.uvprojx
+
+watchdog:
+- example\peripheral\watchdog\watchdog.uvprojx
+
+pwm:
+- example\peripheral\pwm\pwm.uvprojx
+
+bsp_btn:
+- example\peripheral\bsp_btn\bsp_btn.uvprojx
+
+ota_sbk:
+- example\OTA\OTA_internal_flash\ota_if.uvprojx
+- {'CFG_OTA_BANK_MODE':'OTA_SINGLE_BANK','USE_FCT':'0'}
+- ['bin\ota.hex','bin\ota_single_bank.hex',ota_sbk.asm,'Objects\ota.axf']
+
+slb:
+- example\OTA\slboot\slboot.uvprojx
+
+mesh_ali_light:
+- example\ble_mesh\aliGenie_mesh_light\aliGenie_mesh_light.uvprojx
+
+mesh_ali_multi:
+- example\ble_mesh\aliGenie_mesh_multi\aliGenie_mesh_multi.uvprojx
+
+mesh_switch:
+- example\ble_mesh\mesh_switch\mesh_switch.uvprojx
+
+mesh_light:
+- example\ble_mesh\mesh_light\mesh_light.uvprojx
+
+mesh_gateway:
+- example\ble_mesh\mesh_gateway\mesh_gateway.uvprojx
+
+mesh_lpn:
+- example\ble_mesh\mesh_lpn\mesh_lpn.uvprojx
+
+mesh_sensor:
+- example\ble_mesh\mesh_sensor\mesh_sensor.uvprojx
+
+sbm:
+- example\ble_multi\simpleBleMultiConnection\simpleBleMulti.uvprojx
